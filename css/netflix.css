@@ -1,0 +1,967 @@
+/* ==========================================================================
+   Netflix Theme Stylesheet
+   ========================================================================== */
+
+#theme-netflix {
+  background: var(--nf-bg);
+  color: var(--nf-text);
+  font-family: var(--font-sans);
+  position: relative;
+}
+
+/* ==========================================================================
+   1. Profile Selection Screen ("Who's watching?")
+   ========================================================================== */
+
+.nf-profile-overlay {
+  position: fixed;
+  top: var(--switch-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 900;
+  background: radial-gradient(circle at center, #1b1b1b 0%, #0d0d0d 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.nf-profile-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.nf-profile-overlay h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+}
+
+.nf-profile-overlay p.sub {
+  color: #888888;
+  font-size: 15px;
+  max-width: 520px;
+  margin: 0 0 40px 0;
+}
+
+.nf-profiles-grid {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 860px;
+}
+
+.nf-profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 140px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.nf-profile-card:hover {
+  transform: translateY(-8px);
+}
+
+.nf-profile-avatar-wrap {
+  width: 130px;
+  height: 130px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 3px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #222222;
+}
+
+.nf-profile-card:hover .nf-profile-avatar-wrap,
+.nf-profile-card:focus-visible .nf-profile-avatar-wrap {
+  border-color: #ffffff;
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
+}
+
+.nf-profile-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nf-profile-name {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #808080;
+  transition: color 0.2s;
+}
+
+.nf-profile-badge {
+  font-size: 11px;
+  color: #555555;
+  margin-top: 4px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.nf-profile-card:hover .nf-profile-name {
+  color: #ffffff;
+}
+
+.nf-profile-card:hover .nf-profile-badge {
+  color: #aaaaaa;
+}
+
+.nf-manage-profiles-btn {
+  margin-top: 45px;
+  border: 1px solid #555555;
+  color: #888888;
+  padding: 10px 28px;
+  letter-spacing: 2px;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.nf-manage-profiles-btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   2. Navbar
+   ========================================================================== */
+
+.nf-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  transition: background-color 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
+}
+
+.nf-navbar.scrolled {
+  background: #141414;
+  padding: 10px 4%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.nf-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nf-logo {
+  font-family: var(--font-display);
+  font-size: 38px;
+  letter-spacing: 2.5px;
+  color: var(--nf-red);
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);
+  cursor: pointer;
+  user-select: none;
+}
+
+.nf-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nf-nav-links li a {
+  font-size: 14px;
+  font-weight: 400;
+  color: #e5e5e5;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nf-nav-links li a:hover,
+.nf-nav-links li a.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nf-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nf-active-profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px 4px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nf-active-profile-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.nf-avatar-mini {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000;
+  overflow: hidden;
+}
+
+.nf-avatar-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nf-profile-label {
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.nf-switch-profile-btn {
+  font-size: 11px;
+  color: #aaaaaa;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.nf-switch-profile-btn:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   3. Hero Section & Carousel
+   ========================================================================== */
+
+.nf-hero {
+  position: relative;
+  height: min(85vh, 760px);
+  min-height: 520px;
+  margin-top: -70px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.nf-hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 4%;
+}
+
+.nf-hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+/* Cinematic Vignette Overlays */
+.nf-hero-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.8) 40%, rgba(20, 20, 20, 0.3) 70%, rgba(20, 20, 20, 0.1) 100%),
+    linear-gradient(0deg, #141414 0%, rgba(20, 20, 20, 0.5) 20%, transparent 60%);
+  z-index: 1;
+}
+
+.nf-hero-slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  z-index: 1;
+}
+
+.nf-hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 680px;
+  padding-top: 60px;
+}
+
+.nf-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--nf-red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.nf-hero-badge .nf-n-icon {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--nf-red);
+  line-height: 1;
+}
+
+.nf-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: 0.92;
+  letter-spacing: 1px;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+}
+
+.nf-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.nf-hero-meta .match {
+  color: var(--nf-green);
+  font-weight: 700;
+}
+
+.nf-hero-meta .badge-hd {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.nf-hero-meta .cat-badge {
+  color: #cccccc;
+  font-weight: 500;
+}
+
+.nf-hero-desc {
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.5;
+  color: #dddddd;
+  margin: 0 0 24px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  max-width: 580px;
+}
+
+.nf-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.nf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 4px;
+  padding: 12px 28px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.nf-btn-primary {
+  background: #ffffff;
+  color: #000000;
+}
+
+.nf-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.nf-btn-secondary {
+  background: rgba(109, 109, 110, 0.7);
+  color: #ffffff;
+}
+
+.nf-btn-secondary:hover {
+  background: rgba(109, 109, 110, 0.4);
+}
+
+.nf-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Hero Carousel Controls */
+.nf-hero-dots {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.nf-hero-dot {
+  width: 24px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.nf-hero-dot.active {
+  background: #ffffff;
+  width: 36px;
+}
+
+.nf-hero-now-playing {
+  position: absolute;
+  right: 0;
+  bottom: 15%;
+  z-index: 10;
+  background: rgba(30, 30, 30, 0.75);
+  backdrop-filter: blur(8px);
+  border-left: 3px solid var(--nf-red);
+  padding: 8px 24px 8px 14px;
+  font-size: 13px;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.nf-hero-now-playing:hover {
+  background: rgba(50, 50, 50, 0.9);
+}
+
+/* ==========================================================================
+   4. Portfolio Rows & Carousels
+   ========================================================================== */
+
+.nf-section-row {
+  position: relative;
+  z-index: 5;
+  padding: 0 4%;
+  margin-bottom: 40px;
+}
+
+.nf-section-row.first-row {
+  margin-top: -60px;
+}
+
+.nf-row-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.nf-row-title {
+  font-family: var(--font-sans);
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.nf-row-see-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: #54b9c5;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.nf-section-row:hover .nf-row-see-all {
+  opacity: 1;
+}
+
+.nf-carousel-wrapper {
+  position: relative;
+}
+
+.nf-carousel-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 24px 0 36px 0;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.nf-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Regular Card */
+.nf-card {
+  flex: 0 0 260px;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  background-color: var(--nf-bg-card);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.3s;
+  overflow: hidden;
+}
+
+.nf-card:hover {
+  transform: scale(1.15) translateY(-8px);
+  z-index: 20;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+}
+
+.nf-card-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nf-card-fallback-grad {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  position: relative;
+}
+
+.nf-card-title-overlay {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  line-height: 1.1;
+  z-index: 1;
+}
+
+/* Card Hover Info Drawer */
+.nf-card-hover-drawer {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: #181818;
+  padding: 12px;
+  font-size: 12px;
+  transform: translateY(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.nf-card:hover .nf-card-hover-drawer {
+  transform: translateY(0);
+}
+
+.nf-card-hover-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.nf-hover-circle-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #ffffff;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.nf-hover-circle-btn.play-btn {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.nf-hover-circle-btn:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nf-hover-circle-btn.play-btn:hover {
+  background: #e5e5e5;
+}
+
+.nf-card-hover-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.nf-card-hover-meta .match {
+  color: var(--nf-green);
+  font-weight: 700;
+}
+
+.nf-card-hover-meta .duration {
+  color: #aaaaaa;
+}
+
+.nf-card-hover-tags {
+  color: #888888;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   5. Top 8 Projects This Week (Numbered Netflix Cards)
+   ========================================================================== */
+
+.nf-top-item {
+  display: flex;
+  align-items: flex-end;
+  flex: 0 0 auto;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nf-top-item:hover {
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+.nf-top-rank-number {
+  font-family: var(--font-display);
+  font-size: clamp(160px, 20vw, 220px);
+  line-height: 0.8;
+  color: #141414;
+  -webkit-text-stroke: 4px #595959;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  margin-right: -24px;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+
+.nf-top-poster {
+  width: 140px;
+  aspect-ratio: 2 / 3;
+  border-radius: 4px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  background-color: #222222;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.nf-top-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nf-top-poster .nf-top-label {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* ==========================================================================
+   6. About Ishant Section
+   ========================================================================== */
+
+.nf-about-section {
+  padding: 60px 4%;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1150px;
+  margin: 0 auto 40px auto;
+}
+
+.nf-about-poster-wrap {
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: #1c1c1e;
+}
+
+.nf-about-poster-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nf-about-info h2 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 68px);
+  letter-spacing: 1.5px;
+  margin: 0 0 10px 0;
+  line-height: 1;
+}
+
+.nf-about-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.nf-about-meta .match {
+  color: var(--nf-green);
+  font-weight: 700;
+}
+
+.nf-about-meta .badge {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.nf-about-bio {
+  color: #d2d2d2;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+  max-width: 640px;
+}
+
+.nf-specs-list {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px 18px;
+  font-size: 14px;
+  margin: 0 0 24px 0;
+}
+
+.nf-specs-list dt {
+  color: #777777;
+  font-weight: 500;
+}
+
+.nf-specs-list dd {
+  margin: 0;
+  color: #ffffff;
+}
+
+.nf-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nf-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #cccccc;
+}
+
+/* ==========================================================================
+   7. Contact Form ("Request a New Title")
+   ========================================================================== */
+
+.nf-contact-section {
+  padding: 40px 4% 80px 4%;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.nf-contact-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 56px);
+  margin: 0 0 8px 0;
+  letter-spacing: 1px;
+}
+
+.nf-contact-section .sub {
+  color: #aaaaaa;
+  font-size: 15px;
+  margin: 0 0 28px 0;
+}
+
+.nf-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.nf-form-full {
+  grid-column: 1 / -1;
+}
+
+.nf-input,
+.nf-select,
+.nf-textarea {
+  width: 100%;
+  padding: 16px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #ffffff;
+  background: #333333;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nf-input:focus,
+.nf-select:focus,
+.nf-textarea:focus {
+  background: #444444;
+  border-color: #777777;
+}
+
+.nf-select option {
+  background: #222222;
+  color: #ffffff;
+}
+
+.nf-submit-btn {
+  background: var(--nf-red);
+  color: #ffffff;
+  padding: 14px 34px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.nf-submit-btn:hover {
+  background: var(--nf-red-hover);
+}
+
+.nf-form-feedback {
+  display: none;
+  color: var(--nf-green);
+  font-size: 14px;
+  margin-top: 14px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   8. Footer
+   ========================================================================== */
+
+.nf-footer {
+  padding: 40px 4% 60px 4%;
+  border-top: 1px solid #222222;
+  color: #757575;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nf-footer a {
+  color: #757575;
+  text-decoration: underline;
+}
+
+.nf-footer a:hover {
+  color: #aaaaaa;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .nf-navbar-left {
+    gap: 16px;
+  }
+  .nf-nav-links {
+    display: none; /* Mobile nav menu can be toggled or minimalist */
+  }
+  .nf-hero {
+    height: auto;
+    min-height: 520px;
+    padding: 80px 0 40px 0;
+  }
+  .nf-about-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .nf-about-poster-wrap {
+    max-width: 220px;
+  }
+  .nf-top-rank-number {
+    font-size: 140px;
+    margin-right: -16px;
+  }
+  .nf-top-poster {
+    width: 110px;
+  }
+  .nf-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .nf-hero-now-playing {
+    display: none;
+  }
+}

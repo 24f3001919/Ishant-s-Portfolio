@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <defs>
+    <linearGradient id="pgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141414" />
+      <stop offset="50%" stop-color="#2a2a2a" />
+      <stop offset="100%" stop-color="#101010" />
+    </linearGradient>
+    <radialGradient id="pglow" cx="50%" cy="35%" r="45%">
+      <stop offset="0%" stop-color="#e50914" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#pgrad)" />
+  <circle cx="300" cy="320" r="260" fill="url(#pglow)" />
+  <rect x="20" y="20" width="560" height="760" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" rx="16" />
+  <!-- Silhouette / Monogram -->
+  <g transform="translate(300, 320)" text-anchor="middle">
+    <circle cx="0" cy="0" r="100" fill="rgba(229,9,20,0.12)" stroke="#e50914" stroke-width="3" />
+    <text y="38" font-family="Bebas Neue, Impact, sans-serif" font-size="110" fill="#ffffff" letter-spacing="2">I</text>
+  </g>
+  <g transform="translate(300, 520)" text-anchor="middle">
+    <text font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="700" font-size="30" fill="#ffffff" letter-spacing="1">ISHANT</text>
+    <text y="34" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="500" font-size="18" fill="#e50914" letter-spacing="1.5">VIDEO EDITOR &amp; 3D MOTION</text>
+    <text y="70" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="14" fill="rgba(255,255,255,0.5)">[Profile Photo Placeholder]</text>
+    <text y="92" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" fill="rgba(255,255,255,0.35)">Recommended ratio: 3:4 portrait</text>
+  </g>
+</svg>

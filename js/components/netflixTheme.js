@@ -1,0 +1,351 @@
+/**
+ * Netflix Theme Component
+ * Handles Profile Selection, Hero Carousel, Category Rails, and Interactions
+ */
+
+import { SITE_CONFIG } from '../data/config.js';
+import { PROJECTS } from '../data/projects.js';
+import { projectModal } from './projectModal.js';
+
+export class NetflixTheme {
+  constructor(containerEl) {
+    this.container = containerEl;
+    this.currentProfile = SITE_CONFIG.profiles[0]; // Default Recruiter
+    this.heroSlides = PROJECTS.filter(p => p.isHeroFeatured);
+    this.currentHeroIndex = 0;
+    this.heroInterval = null;
+    this.hasSelectedProfile = false;
+  }
+
+  render() {
+    this.container.innerHTML = `
+      <!-- Profile Selection Screen -->
+      <div class="nf-profile-overlay ${this.hasSelectedProfile ? 'hidden' : ''}" id="nf-profile-screen">
+        <h1>Who's watching?</h1>
+        <p class="sub">Choose a profile tailored to your visit to Ishant's creative portfolio.</p>
+        <div class="nf-profiles-grid">
+          ${SITE_CONFIG.profiles.map(p => `
+            <div class="nf-profile-card" data-profile-id="${p.id}" tabindex="0">
+              <div class="nf-profile-avatar-wrap">
+                <img src="${p.avatar}" alt="${p.name}">
+              </div>
+              <div class="nf-profile-name">${p.name}</div>
+              <div class="nf-profile-badge">${p.badge}</div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter Portfolio</button>
+      </div>
+
+      <!-- Main Netflix Interface -->
+      <nav class="nf-navbar" id="nf-nav">
+        <div class="nf-navbar-left">
+          <div class="nf-logo" data-scroll-to="nf-hero-anchor">ISHANT</div>
+          <ul class="nf-nav-links">
+            <li><a data-scroll-to="nf-hero-anchor" class="active">Home</a></li>
+            <li><a data-scroll-to="nf-about-anchor">About</a></li>
+            <li><a data-scroll-to="nf-category-3d-motion-graphics">My Dedicated Portfolio</a></li>
+            <li><a data-scroll-to="nf-contact-anchor">Contact Me</a></li>
+          </ul>
+        </div>
+        <div class="nf-navbar-right">
+          <div class="nf-active-profile-pill" id="nf-profile-pill" title="Click to change profile">
+            <div class="nf-avatar-mini">
+              <img id="nf-nav-avatar" src="${this.currentProfile.avatar}" alt="${this.currentProfile.name}">
+            </div>
+            <span class="nf-profile-label" id="nf-nav-profile-name">${this.currentProfile.name}</span>
+          </div>
+          <button class="nf-switch-profile-btn" id="nf-switch-profile-btn">Switch Profile</button>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <header class="nf-hero" id="nf-hero-anchor">
+        ${this.heroSlides.map((p, idx) => `
+          <div class="nf-hero-slide ${idx === 0 ? 'active' : ''}" data-hero-index="${idx}" style="background-image: url('${p.thumbnail}');">
+            <div class="nf-hero-content">
+              <div class="nf-hero-badge">
+                <span class="nf-n-icon">I</span> MOTION SERIES · ${p.category}
+              </div>
+              <h1 class="nf-hero-title">${p.title}</h1>
+              <div class="nf-hero-meta">
+                <span class="match">${p.match}</span>
+                <span class="badge-hd">4K UHD</span>
+                <span>${p.year}</span>
+                <span class="cat-badge">${p.duration}</span>
+              </div>
+              <p class="nf-hero-desc">${p.description}</p>
+              <div class="nf-hero-actions">
+                <button class="nf-btn nf-btn-primary" data-play-project="${p.id}">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  Play Showreel
+                </button>
+                <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-about-anchor">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  More Info
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+
+        <!-- Carousel Indicators & Status -->
+        <div class="nf-hero-dots">
+          ${this.heroSlides.map((_, idx) => `
+            <div class="nf-hero-dot ${idx === 0 ? 'active' : ''}" data-goto-hero="${idx}"></div>
+          `).join('')}
+        </div>
+        <div class="nf-hero-now-playing" id="nf-hero-np" data-play-project="${this.heroSlides[0].id}">
+          <span>▶ Now Featured: <b>${this.heroSlides[0].title}</b></span>
+        </div>
+      </header>
+
+      <!-- Top 8 Projects This Week -->
+      <section class="nf-section-row first-row">
+        <div class="nf-row-header">
+          <h2 class="nf-row-title">Top 8 Projects This Week</h2>
+        </div>
+        <div class="nf-carousel-wrapper">
+          <div class="nf-carousel-track">
+            ${PROJECTS.filter(p => p.topRank).sort((a, b) => a.topRank - b.topRank).map(p => `
+              <div class="nf-top-item" data-project-id="${p.id}">
+                <div class="nf-top-rank-number">${p.topRank}</div>
+                <div class="nf-top-poster">
+                  <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+                  <div class="nf-top-label">${p.title}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>
+
+      <!-- Categories Rails -->
+      ${SITE_CONFIG.categories.map(cat => {
+        const catSlug = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const catProjects = PROJECTS.filter(p => p.category === cat);
+        return `
+          <section class="nf-section-row" id="nf-category-${catSlug}">
+            <div class="nf-row-header">
+              <h2 class="nf-row-title">${cat}</h2>
+              <span class="nf-row-see-all">${catProjects.length} Projects</span>
+            </div>
+            <div class="nf-carousel-wrapper">
+              <div class="nf-carousel-track">
+                ${catProjects.map(p => `
+                  <div class="nf-card" data-project-id="${p.id}">
+                    <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+                    <div class="nf-card-title-overlay">${p.title}</div>
+                    <div class="nf-card-hover-drawer">
+                      <div class="nf-card-hover-icons">
+                        <div class="nf-hover-circle-btn play-btn" data-play-project="${p.id}" title="Play preview">▶</div>
+                        <div class="nf-hover-circle-btn" title="Add to Watchlist">+</div>
+                        <div class="nf-hover-circle-btn" title="Like">♥</div>
+                      </div>
+                      <div class="nf-card-hover-meta">
+                        <span class="match">${p.match}</span>
+                        <span class="duration">${p.duration}</span>
+                      </div>
+                      <div class="nf-card-hover-tags">${(p.tags || []).join(' · ')}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+      }).join('')}
+
+      <!-- About Ishant Section -->
+      <section class="nf-about-section" id="nf-about-anchor">
+        <div class="nf-about-poster-wrap">
+          <img src="${SITE_CONFIG.assets.profilePhoto}" alt="${SITE_CONFIG.author.name}">
+        </div>
+        <div class="nf-about-info">
+          <h2>ABOUT ISHANT</h2>
+          <div class="nf-about-meta">
+            <span class="match">100% Match</span>
+            <span class="badge">PRODUCER / ARTIST</span>
+            <span>2026</span>
+          </div>
+          <p class="nf-about-bio">${SITE_CONFIG.author.bio}</p>
+          <dl class="nf-specs-list">
+            <dt>Role</dt>
+            <dd>${SITE_CONFIG.author.role}</dd>
+            <dt>Education</dt>
+            <dd>${SITE_CONFIG.author.education}</dd>
+            <dt>Location</dt>
+            <dd>${SITE_CONFIG.author.location}</dd>
+          </dl>
+          <div class="nf-pills-wrap">
+            ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="nf-contact-section" id="nf-contact-anchor">
+        <h2>REQUEST A NEW TITLE</h2>
+        <p class="sub">Have a project or film in mind? Send an inquiry and let's put your story on screen.</p>
+        <form class="nf-contact-form" id="nf-inquiry-form">
+          <div class="nf-form-grid">
+            <input class="nf-input" type="text" name="name" placeholder="Your name" required>
+            <input class="nf-input" type="email" name="email" placeholder="Email address" required>
+            <select class="nf-select nf-form-full" name="projectType">
+              <option value="3D Motion Graphics">3D Motion Graphics</option>
+              <option value="Video Editing">Commercial Video Editing</option>
+              <option value="Reels & Shorts">High-Retention Reels / Shorts</option>
+              <option value="Showreel / Brand Film">Showreel / Brand Film</option>
+            </select>
+            <textarea class="nf-textarea nf-form-full" name="message" rows="4" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
+            <div class="nf-form-full">
+              <button type="submit" class="nf-submit-btn">Send Request</button>
+              <div class="nf-form-feedback" id="nf-form-success">
+                ✓ Request received! (Prototype mode: Connected to client frontend)
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Footer -->
+      <footer class="nf-footer">
+        <div>© 2026 ${SITE_CONFIG.author.name} · ${SITE_CONFIG.author.role}</div>
+        <div>Personal portfolio built with Netflix & Google Themes. All media placeholders prepared for final assets.</div>
+      </footer>
+    `;
+
+    this.bindEvents();
+    this.startHeroCarousel();
+  }
+
+  bindEvents() {
+    // 1. Profile selection clicks
+    const profileOverlay = this.container.querySelector('#nf-profile-screen');
+    const profileCards = this.container.querySelectorAll('.nf-profile-card');
+    const skipBtn = this.container.querySelector('#nf-skip-profiles');
+    const switchProfileBtn = this.container.querySelector('#nf-switch-profile-btn');
+    const profilePill = this.container.querySelector('#nf-profile-pill');
+
+    const selectProfile = (profile) => {
+      this.currentProfile = profile;
+      this.hasSelectedProfile = true;
+      profileOverlay.classList.add('hidden');
+      const avatarEl = this.container.querySelector('#nf-nav-avatar');
+      const nameEl = this.container.querySelector('#nf-nav-profile-name');
+      if (avatarEl) avatarEl.src = profile.avatar;
+      if (nameEl) nameEl.textContent = profile.name;
+    };
+
+    profileCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const pId = card.dataset.profileId;
+        const profile = SITE_CONFIG.profiles.find(p => p.id === pId);
+        if (profile) selectProfile(profile);
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') card.click();
+      });
+    });
+
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        selectProfile(SITE_CONFIG.profiles[0]);
+      });
+    }
+
+    const showProfileSelector = () => {
+      profileOverlay.classList.remove('hidden');
+    };
+
+    if (switchProfileBtn) switchProfileBtn.addEventListener('click', showProfileSelector);
+    if (profilePill) profilePill.addEventListener('click', showProfileSelector);
+
+    // 2. Smooth scrolling for nav links
+    this.container.querySelectorAll('[data-scroll-to]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.dataset.scrollTo;
+        const targetEl = this.container.querySelector(`#${targetId}`);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // 3. Project Click to Open Modal
+    this.container.addEventListener('click', (e) => {
+      const playBtn = e.target.closest('[data-play-project]');
+      if (playBtn) {
+        e.stopPropagation();
+        projectModal.open(playBtn.dataset.playProject, 'netflix');
+        return;
+      }
+
+      const card = e.target.closest('.nf-card') || e.target.closest('.nf-top-item');
+      if (card && card.dataset.projectId) {
+        projectModal.open(card.dataset.projectId, 'netflix');
+        return;
+      }
+
+      const heroDot = e.target.closest('[data-goto-hero]');
+      if (heroDot) {
+        this.goToHeroSlide(parseInt(heroDot.dataset.gotoHero, 10));
+      }
+    });
+
+    // 4. Navbar scroll class
+    this.container.addEventListener('scroll', () => {
+      const nav = this.container.querySelector('#nf-nav');
+      if (nav) {
+        nav.classList.toggle('scrolled', this.container.scrollTop > 50);
+      }
+    });
+
+    // 5. Contact form submission
+    const form = this.container.querySelector('#nf-inquiry-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const success = this.container.querySelector('#nf-form-success');
+        if (success) {
+          success.style.display = 'block';
+          form.reset();
+        }
+      });
+    }
+  }
+
+  startHeroCarousel() {
+    clearInterval(this.heroInterval);
+    this.heroInterval = setInterval(() => {
+      const nextIndex = (this.currentHeroIndex + 1) % this.heroSlides.length;
+      this.goToHeroSlide(nextIndex);
+    }, 6500);
+  }
+
+  goToHeroSlide(index) {
+    this.currentHeroIndex = index;
+    const slides = this.container.querySelectorAll('.nf-hero-slide');
+    const dots = this.container.querySelectorAll('.nf-hero-dot');
+    const np = this.container.querySelector('#nf-hero-np');
+
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === index);
+    });
+
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === index);
+    });
+
+    if (np && this.heroSlides[index]) {
+      const project = this.heroSlides[index];
+      np.dataset.playProject = project.id;
+      np.innerHTML = `<span>▶ Now Featured: <b>${project.title}</b></span>`;
+    }
+  }
+
+  destroy() {
+    clearInterval(this.heroInterval);
+  }
+}
