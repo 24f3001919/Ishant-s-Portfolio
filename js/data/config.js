@@ -36,7 +36,7 @@ export const SITE_CONFIG = {
   assets: {
     profilePhoto: "assets/images/profiles/ishant-profile.jpg",
     heroBanner: "assets/images/hero/hero-banner.svg",
-    heroShowreel: "assets/videos/showreel-2026.mp4"
+    heroShowreel: "assets/videos/farm-reel.mp4"
   },
 
   // Netflix Profile Options

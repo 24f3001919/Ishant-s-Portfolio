@@ -179,10 +179,10 @@ export class NetflixTheme {
               <h2 class="nf-row-title">${cat}</h2>
               <span class="nf-row-see-all">${catProjects.length} Projects</span>
             </div>
-            <div class="nf-carousel-wrapper">
+            <div class="nf-carousel-wrapper ${cat === 'Reels & Shorts' ? 'nf-reels-rail' : ''}">
               <div class="nf-carousel-track">
                 ${catProjects.map(p => `
-                  <div class="nf-card" data-project-id="${p.id}">
+                  <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}">
                     <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
                     <div class="nf-card-title-overlay">${p.title}</div>
                     <div class="nf-card-hover-drawer">

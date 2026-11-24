@@ -1,5 +1,6 @@
 /**
  * Project Details & Video Preview Modal Component
+ * Netflix-Style Cinematic Modal with Vertical & Landscape Video Support
  */
 
 import { PROJECTS } from '../data/projects.js';
@@ -22,12 +23,17 @@ class ProjectModalManager {
     this.modalEl.innerHTML = `
       <div class="pv-modal-box" role="dialog" aria-modal="true">
         <button class="pv-modal-close-btn" aria-label="Close modal">✕</button>
-        <div class="pv-player-container">
+        <div class="pv-player-container" id="pv-player-container">
+          <!-- Ambient blurred backdrop for atmospheric glow -->
+          <img class="pv-player-backdrop-blur" src="" alt="" aria-hidden="true">
           <img class="pv-player-poster" src="" alt="Project Poster">
-          <video class="pv-video-element" playsinline controls></video>
+          <video class="pv-video-element" playsinline controls controlsList="nodownload"></video>
           <div class="pv-player-vignette"></div>
           <div class="pv-player-controls-overlay">
-            <span class="pv-player-badge">PREVIEW PLAYER</span>
+            <div class="pv-player-top-bar">
+              <span class="pv-player-badge">PREVIEW PLAYER</span>
+              <span class="pv-ratio-badge">VERTICAL 9:16</span>
+            </div>
             <div class="pv-player-center-action">
               <button class="pv-play-action-btn" aria-label="Play Video">▶</button>
             </div>
@@ -38,7 +44,7 @@ class ProjectModalManager {
               </div>
               <div class="pv-playback-status-row">
                 <span class="pv-time-indicator">0:00 / 0:30</span>
-                <span class="pv-source-indicator">[Video file placeholder: Replace in assets/videos/]</span>
+                <span class="pv-source-indicator"></span>
               </div>
             </div>
           </div>
@@ -83,8 +89,68 @@ class ProjectModalManager {
 
     const playActionBtn = this.modalEl.querySelector('.pv-play-action-btn');
     const playBarBtn = this.modalEl.querySelector('.pv-btn-play');
-    playActionBtn.addEventListener('click', () => this.togglePlayback());
+    playActionBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.togglePlayback();
+    });
     playBarBtn.addEventListener('click', () => this.togglePlayback());
+
+    // Connect video element native events for synchronization
+    const videoEl = this.modalEl.querySelector('.pv-video-element');
+    const playerContainer = this.modalEl.querySelector('.pv-player-container');
+    const timeIndicator = this.modalEl.querySelector('.pv-time-indicator');
+
+    videoEl.addEventListener('play', () => {
+      this.isPlaying = true;
+      playerContainer.classList.add('is-playing');
+      playActionBtn.textContent = '❚❚';
+      playBarBtn.textContent = '❚❚ Pause';
+    });
+
+    videoEl.addEventListener('pause', () => {
+      this.isPlaying = false;
+      playerContainer.classList.remove('is-playing');
+      playActionBtn.textContent = '▶';
+      playBarBtn.textContent = '▶ Play Full Preview';
+    });
+
+    videoEl.addEventListener('ended', () => {
+      this.isPlaying = false;
+      playerContainer.classList.remove('is-playing');
+      playActionBtn.textContent = '▶';
+      playBarBtn.textContent = '▶ Replay';
+      this.updateScrubber(100);
+    });
+
+    videoEl.addEventListener('timeupdate', () => {
+      if (!videoEl.duration) return;
+      const pct = (videoEl.currentTime / videoEl.duration) * 100;
+      this.updateScrubber(pct);
+      const curr = this.formatTime(videoEl.currentTime);
+      const dur = this.formatTime(videoEl.duration);
+      timeIndicator.textContent = `${curr} / ${dur}`;
+    });
+
+    // Scrubber click to seek
+    const scrubberTrack = this.modalEl.querySelector('.pv-scrubber-track');
+    scrubberTrack.addEventListener('click', (e) => {
+      const rect = scrubberTrack.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      if (videoEl.classList.contains('has-source') && videoEl.duration) {
+        videoEl.currentTime = pct * videoEl.duration;
+      } else {
+        this.playbackProgress = pct * 100;
+        this.updateScrubber(this.playbackProgress);
+      }
+    });
+  }
+
+  formatTime(secs) {
+    if (isNaN(secs)) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
   }
 
   isOpen() {
@@ -99,7 +165,9 @@ class ProjectModalManager {
     if (!project) return;
     this.currentProject = project;
 
-    // Populate data
+    // Elements
+    const playerContainer = this.modalEl.querySelector('.pv-player-container');
+    const backdropBlur = this.modalEl.querySelector('.pv-player-backdrop-blur');
     const poster = this.modalEl.querySelector('.pv-player-poster');
     const title = this.modalEl.querySelector('.pv-player-title');
     const match = this.modalEl.querySelector('.pv-meta-match');
@@ -111,7 +179,10 @@ class ProjectModalManager {
     const timeIndicator = this.modalEl.querySelector('.pv-time-indicator');
     const videoEl = this.modalEl.querySelector('.pv-video-element');
     const sourceIndicator = this.modalEl.querySelector('.pv-source-indicator');
+    const ratioBadge = this.modalEl.querySelector('.pv-ratio-badge');
 
+    // Populate data
+    backdropBlur.src = project.thumbnail;
     poster.src = project.thumbnail;
     title.textContent = project.title;
     match.textContent = project.match || '98% Match';
@@ -120,12 +191,24 @@ class ProjectModalManager {
     category.textContent = project.category;
     desc.textContent = project.fullDescription || project.description;
     timeIndicator.textContent = `0:00 / ${project.duration}`;
-    sourceIndicator.textContent = `[Target: ${project.videoUrl}]`;
+    sourceIndicator.textContent = project.hasRealVideo ? 'Master ProRes/HEVC stream' : 'Concept Preview';
+
+    // Vertical format styling
+    if (project.isVertical) {
+      playerContainer.classList.add('vertical-mode');
+      ratioBadge.textContent = '9:16 VERTICAL';
+      ratioBadge.style.display = 'inline-block';
+    } else {
+      playerContainer.classList.remove('vertical-mode');
+      ratioBadge.textContent = '16:9 WIDESCREEN';
+      ratioBadge.style.display = 'inline-block';
+    }
 
     // Reset playback
     this.stopPlayback();
     this.playbackProgress = 0;
     this.updateScrubber(0);
+    playerContainer.classList.remove('is-playing');
 
     // Render tags
     tagsList.innerHTML = (project.tags || [])
@@ -137,10 +220,12 @@ class ProjectModalManager {
       videoEl.src = project.videoUrl;
       videoEl.classList.add('has-source');
       poster.style.display = 'none';
+      backdropBlur.style.display = 'block';
     } else {
       videoEl.removeAttribute('src');
       videoEl.classList.remove('has-source');
       poster.style.display = 'block';
+      backdropBlur.style.display = 'none';
     }
 
     this.modalEl.classList.add('active');
@@ -152,21 +237,16 @@ class ProjectModalManager {
     const playActionBtn = this.modalEl.querySelector('.pv-play-action-btn');
     const playBarBtn = this.modalEl.querySelector('.pv-btn-play');
 
-    if (videoEl.classList.contains('has-source') && !videoEl.paused) {
-      videoEl.pause();
-      this.isPlaying = false;
-      playActionBtn.textContent = '▶';
-      playBarBtn.textContent = '▶ Play Full Preview';
-      return;
-    } else if (videoEl.classList.contains('has-source')) {
-      videoEl.play();
-      this.isPlaying = true;
-      playActionBtn.textContent = '❚❚';
-      playBarBtn.textContent = '❚❚ Pause';
+    if (videoEl.classList.contains('has-source')) {
+      if (!videoEl.paused) {
+        videoEl.pause();
+      } else {
+        videoEl.play().catch(err => console.log('Autoplay blocked:', err));
+      }
       return;
     }
 
-    // Fallback interactive simulated player
+    // Fallback simulated player for concept 3D placeholders
     if (this.isPlaying) {
       this.stopPlayback();
       playActionBtn.textContent = '▶';
