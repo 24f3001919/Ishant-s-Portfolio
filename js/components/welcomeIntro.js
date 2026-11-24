@@ -1,6 +1,6 @@
 /**
  * Netflix-Style Welcome Intro Animation Component
- * Full-screen sequence: Black screen -> Ribbon 'N' -> ISHANT wordmark -> "Who's watching?"
+ * The Red Light Sequence: Black Screen -> Anamorphic Beam -> ISHANT Illumination -> Seamless Profile Transition
  */
 
 export class WelcomeIntro {
@@ -19,7 +19,7 @@ export class WelcomeIntro {
       return;
     }
 
-    // Lock scrolling while intro is playing
+    // Keep body scrolling locked while intro is active
     document.body.classList.add('profile-active');
 
     // Create DOM structure
@@ -27,43 +27,27 @@ export class WelcomeIntro {
     this.overlayEl.className = 'nf-intro-overlay';
     this.overlayEl.id = 'nf-welcome-intro';
     this.overlayEl.setAttribute('role', 'dialog');
-    this.overlayEl.setAttribute('aria-label', 'Welcome to Ishant Portfolio');
+    this.overlayEl.setAttribute('aria-label', 'Welcome to Ishant Creative Portfolio');
 
     this.overlayEl.innerHTML = `
       <button class="nf-intro-skip-btn" id="nf-skip-intro" aria-label="Skip Introduction">Skip Intro ✕</button>
-      <div class="nf-intro-glow"></div>
       <div class="nf-intro-stage">
-        <!-- Phase 1: Animated Red Ribbon N Logo -->
-        <div class="nf-intro-n-wrap">
-          <svg class="nf-intro-n-svg" viewBox="0 0 120 180" width="120" height="180">
-            <defs>
-              <linearGradient id="nLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b1060f"/>
-                <stop offset="100%" stop-color="#e50914"/>
-              </linearGradient>
-              <linearGradient id="nDiag" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ff1e27"/>
-                <stop offset="50%" stop-color="#e50914"/>
-                <stop offset="100%" stop-color="#b1060f"/>
-              </linearGradient>
-              <linearGradient id="nRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#83060c"/>
-                <stop offset="100%" stop-color="#b1060f"/>
-              </linearGradient>
-              <filter id="nShadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="-4" dy="0" stdDeviation="6" flood-color="#000000" flood-opacity="0.8"/>
-              </filter>
-            </defs>
-            <rect class="n-stem-left" x="10" y="10" width="30" height="160" fill="url(#nLeft)"/>
-            <rect class="n-stem-right" x="80" y="10" width="30" height="160" fill="url(#nRight)"/>
-            <polygon class="n-diagonal" points="10,10 40,10 110,170 80,170" fill="url(#nDiag)" filter="url(#nShadow)"/>
-          </svg>
-        </div>
+        <!-- Ambient Red Atmosphere -->
+        <div class="nf-ambient-flare"></div>
 
-        <!-- Phase 2: Bold Red ISHANT Wordmark -->
-        <div class="nf-intro-wordmark-wrap">
-          <h1 class="nf-intro-wordmark">ISHANT</h1>
-          <div class="nf-intro-subtitle">Video Editor &amp; 3D Motion Graphics</div>
+        <!-- Anamorphic Horizontal Red Light Beam -->
+        <div class="nf-light-beam"></div>
+
+        <!-- ISHANT Wordmark with Light Sweep & Studio Reflection -->
+        <div class="nf-brand-container">
+          <div class="nf-brand-reveal">
+            <h1 class="nf-brand-text">ISHANT</h1>
+            <div class="nf-light-sweep"></div>
+          </div>
+          <div class="nf-brand-reflection" aria-hidden="true">
+            <div class="nf-brand-text">ISHANT</div>
+          </div>
+          <div class="nf-brand-sub">Video Editor &amp; 3D Motion Graphics</div>
         </div>
       </div>
     `;
@@ -79,10 +63,10 @@ export class WelcomeIntro {
       });
     }
 
-    // Schedule sequence completion (~2.9 seconds to start fade-out)
+    // Schedule sequence completion (~2.7s reveal, then 450ms clean fade)
     this.timeoutId = setTimeout(() => {
       this.finish(false);
-    }, 2900);
+    }, 2700);
   }
 
   finish(instant = false) {
@@ -92,10 +76,18 @@ export class WelcomeIntro {
 
     if (!this.overlayEl) return;
 
-    this.overlayEl.classList.add('fade-out');
-    setTimeout(() => {
-      this.cleanup();
-    }, instant ? 200 : 450);
+    if (instant) {
+      this.overlayEl.style.transition = 'opacity 0.15s ease';
+      this.overlayEl.classList.add('fade-out');
+      setTimeout(() => {
+        this.cleanup();
+      }, 150);
+    } else {
+      this.overlayEl.classList.add('fade-out');
+      setTimeout(() => {
+        this.cleanup();
+      }, 450);
+    }
   }
 
   cleanup() {
