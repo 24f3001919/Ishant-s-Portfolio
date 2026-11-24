@@ -49,6 +49,9 @@ const server = http.createServer((req, res) => {
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     const total = stats.size;
 
+    const isCode = ['.html', '.js', '.css', '.json'].includes(ext);
+    const cacheHeader = isCode ? 'no-cache, no-store, must-revalidate' : 'public, max-age=3600';
+
     // Handle HTTP Range Requests (essential for video scrubbing and playback)
     const range = req.headers.range;
     if (range) {
@@ -69,6 +72,7 @@ const server = http.createServer((req, res) => {
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
         'Content-Type': contentType,
+        'Cache-Control': cacheHeader,
         'Access-Control-Allow-Origin': '*'
       });
       fileStream.pipe(res);
@@ -77,6 +81,7 @@ const server = http.createServer((req, res) => {
         'Content-Length': total,
         'Accept-Ranges': 'bytes',
         'Content-Type': contentType,
+        'Cache-Control': cacheHeader,
         'Access-Control-Allow-Origin': '*'
       });
       fs.createReadStream(filePath).pipe(res);

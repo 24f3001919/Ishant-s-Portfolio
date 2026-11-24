@@ -51,8 +51,11 @@ export class NetflixTheme {
           <ul class="nf-nav-links">
             <li><a data-scroll-to="nf-hero-anchor" class="active">Home</a></li>
             <li><a data-scroll-to="nf-about-anchor">About</a></li>
-            <li><a data-scroll-to="nf-category-3d-motion-graphics">My Dedicated Portfolio</a></li>
-            <li><a data-scroll-to="nf-contact-anchor">Contact Me</a></li>
+            <li><a data-scroll-to="nf-top8-section">Top 8</a></li>
+            <li><a data-scroll-to="nf-category-commercials">Commercials</a></li>
+            <li><a data-scroll-to="nf-category-video-editing">Video Editing</a></li>
+            <li><a data-scroll-to="nf-category-reels---shorts">Reels &amp; Shorts</a></li>
+            <li><a data-scroll-to="nf-contact-anchor">Contact</a></li>
           </ul>
         </div>
         <div class="nf-navbar-right">
@@ -133,7 +136,7 @@ export class NetflixTheme {
             ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
           </div>
           <div class="nf-about-actions">
-            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-category-3d-motion-graphics">
+            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-top8-section">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
               </svg>
@@ -173,6 +176,7 @@ export class NetflixTheme {
       ${SITE_CONFIG.categories.map(cat => {
         const catSlug = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
         const catProjects = PROJECTS.filter(p => p.category === cat);
+        if (catProjects.length === 0) return '';
         return `
           <section class="nf-section-row" id="nf-category-${catSlug}">
             <div class="nf-row-header">

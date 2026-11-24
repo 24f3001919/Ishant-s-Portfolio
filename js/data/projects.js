@@ -1,7 +1,7 @@
 /**
  * Projects Data Source
- * Centralized list of all projects shown in Ishant's portfolio.
- * Thumbnails and video URLs point directly to the assets/ directory.
+ * Centralized list of all 10 genuine projects extracted from Ishant's Google Drive portfolio.
+ * Thumbnails and video URLs point directly to real assets in the assets/ directory.
  */
 
 export const PROJECTS = [
@@ -184,77 +184,5 @@ export const PROJECTS = [
     isHeroFeatured: false,
     topRank: null,
     isVertical: true
-  },
-  {
-    id: "neon-city-teaser",
-    title: "Neon City Teaser",
-    category: "3D Motion Graphics",
-    duration: "0:32",
-    year: "2026",
-    match: "98% Match",
-    gradientIndex: 0,
-    tags: ["Blender", "After Effects", "Octane", "Cyberpunk"],
-    description: "A neon-soaked cyberpunk fly-through built in Blender with full motion-graphics overlays, volumetric haze, and atmospheric sound design.",
-    fullDescription: "Designed from ground up in Blender featuring high-density procedural geometry, customized procedural shaders, and octane render passes. Composite and particle distortion effects were layered in After Effects with synchronized sound design to deliver an intense cinematic trailer experience.",
-    thumbnail: "assets/images/thumbnails/neon-city-teaser.svg",
-    videoUrl: "assets/videos/neon-city-teaser.mp4",
-    hasRealVideo: false,
-    isHeroFeatured: true,
-    topRank: null,
-    isVertical: false
-  },
-  {
-    id: "product-spin-360",
-    title: "Product Spin 360",
-    category: "3D Motion Graphics",
-    duration: "0:20",
-    year: "2026",
-    match: "97% Match",
-    gradientIndex: 3,
-    tags: ["Cinema 4D", "Redshift", "Hard Surface", "Commercial 3D"],
-    description: "A photoreal 360-degree turntable with studio lighting, floating callout badges, and exploded assembly mechanics.",
-    fullDescription: "Created to highlight intricate engineering details with realistic metallic micro-scratches, glass refraction, and sleek floating UI tracking graphics.",
-    thumbnail: "assets/images/thumbnails/product-spin-360.svg",
-    videoUrl: "assets/videos/product-spin-360.mp4",
-    hasRealVideo: false,
-    isHeroFeatured: false,
-    topRank: null,
-    isVertical: false
-  },
-  {
-    id: "logo-reveal-pack",
-    title: "Logo Reveal Pack",
-    category: "3D Motion Graphics",
-    duration: "0:12",
-    year: "2026",
-    match: "94% Match",
-    gradientIndex: 6,
-    tags: ["Particles", "Stings", "Motion Identity", "Branding"],
-    description: "Five punchy logo stings with dynamic particle simulations, refractive glass optics, and custom bass drops.",
-    fullDescription: "Modular motion identity stingers created for modern digital brands, optimized for intro bumpers, stream overlays, and corporate keynotes.",
-    thumbnail: "assets/images/thumbnails/logo-reveal-pack.svg",
-    videoUrl: "assets/videos/logo-reveal-pack.mp4",
-    hasRealVideo: false,
-    isHeroFeatured: false,
-    topRank: null,
-    isVertical: false
-  },
-  {
-    id: "title-sequence",
-    title: "Title Sequence",
-    category: "3D Motion Graphics",
-    duration: "0:40",
-    year: "2026",
-    match: "96% Match",
-    gradientIndex: 10,
-    tags: ["Cinematic Type", "Atmospheric", "3D Camera"],
-    description: "A cinematic film title sequence blending tracked 3D typography into gritty live-action plate footage.",
-    fullDescription: "High-concept atmospheric sequence utilizing camera projection mapping, depth-of-field rack focuses, and cinematic grain.",
-    thumbnail: "assets/images/thumbnails/title-sequence.svg",
-    videoUrl: "assets/videos/title-sequence.mp4",
-    hasRealVideo: false,
-    isHeroFeatured: false,
-    topRank: null,
-    isVertical: false
   }
 ];

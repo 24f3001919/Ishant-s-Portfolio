@@ -77,9 +77,8 @@ export const SITE_CONFIG = {
 
   // Portfolio Categories
   categories: [
-    "3D Motion Graphics",
-    "Video Editing",
     "Commercials",
+    "Video Editing",
     "Reels & Shorts"
   ],
 
