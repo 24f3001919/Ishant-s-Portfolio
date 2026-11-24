@@ -25,7 +25,7 @@ export class NetflixTheme {
         <p class="sub">Choose a profile tailored to your visit to Ishant's creative portfolio.</p>
         <div class="nf-profiles-grid">
           ${SITE_CONFIG.profiles.map(p => `
-            <div class="nf-profile-card" data-profile-id="${p.id}" tabindex="0">
+            <div class="nf-profile-card" data-profile-id="${p.id}" tabindex="0" style="--profile-accent: ${p.color};">
               <div class="nf-profile-avatar-wrap">
                 <img src="${p.avatar}" alt="${p.name}">
               </div>
@@ -100,8 +100,50 @@ export class NetflixTheme {
         </div>
       </header>
 
+      <!-- About Ishant Section (Placed prominently directly below Hero) -->
+      <section class="nf-about-section" id="nf-about-anchor">
+        <div class="nf-about-poster-wrap">
+          <img src="${SITE_CONFIG.assets.profilePhoto}" alt="${SITE_CONFIG.author.name}">
+        </div>
+        <div class="nf-about-info">
+          <h2>ABOUT ISHANT</h2>
+          <div class="nf-about-meta">
+            <span class="match">100% Match</span>
+            <span class="badge">PRODUCER / ARTIST</span>
+            <span class="badge-hd">4K UHD</span>
+            <span>2026</span>
+          </div>
+          <p class="nf-about-bio">${SITE_CONFIG.author.bio}</p>
+          <dl class="nf-specs-list">
+            <dt>Role</dt>
+            <dd>${SITE_CONFIG.author.role}</dd>
+            <dt>Education</dt>
+            <dd>${SITE_CONFIG.author.education}</dd>
+            <dt>Location</dt>
+            <dd>${SITE_CONFIG.author.location}</dd>
+          </dl>
+          <div class="nf-pills-wrap">
+            ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
+          </div>
+          <div class="nf-about-actions">
+            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-category-3d-motion-graphics">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Explore Projects
+            </button>
+            <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-contact-anchor">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+              Get In Touch
+            </button>
+          </div>
+        </div>
+      </section>
+
       <!-- Top 8 Projects This Week -->
-      <section class="nf-section-row first-row" id="nf-top8-section">
+      <section class="nf-section-row" id="nf-top8-section">
         <div class="nf-row-header">
           <h2 class="nf-row-title">Top 8 Projects This Week</h2>
         </div>
@@ -155,33 +197,6 @@ export class NetflixTheme {
           </section>
         `;
       }).join('')}
-
-      <!-- About Ishant Section -->
-      <section class="nf-about-section" id="nf-about-anchor">
-        <div class="nf-about-poster-wrap">
-          <img src="${SITE_CONFIG.assets.profilePhoto}" alt="${SITE_CONFIG.author.name}">
-        </div>
-        <div class="nf-about-info">
-          <h2>ABOUT ISHANT</h2>
-          <div class="nf-about-meta">
-            <span class="match">100% Match</span>
-            <span class="badge">PRODUCER / ARTIST</span>
-            <span>2026</span>
-          </div>
-          <p class="nf-about-bio">${SITE_CONFIG.author.bio}</p>
-          <dl class="nf-specs-list">
-            <dt>Role</dt>
-            <dd>${SITE_CONFIG.author.role}</dd>
-            <dt>Education</dt>
-            <dd>${SITE_CONFIG.author.education}</dd>
-            <dt>Location</dt>
-            <dd>${SITE_CONFIG.author.location}</dd>
-          </dl>
-          <div class="nf-pills-wrap">
-            ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
-          </div>
-        </div>
-      </section>
 
       <!-- Contact Section -->
       <section class="nf-contact-section" id="nf-contact-anchor">
