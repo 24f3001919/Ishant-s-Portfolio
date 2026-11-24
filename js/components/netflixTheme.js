@@ -1,6 +1,12 @@
 /**
  * Netflix Theme Component
- * Handles Profile Selection, Hero Carousel, Category Rails, and Smooth Page Scrolling
+ * Ishant Singh's Creative Portfolio
+ * Restructured with exactly 4 main categories:
+ * 1. Commercials
+ * 2. Events
+ * 3. 3D Motion Graphics
+ * 4. Personal Projects
+ * Content strictly aligned with Ishant Singh's official resume.
  */
 
 import { SITE_CONFIG } from '../data/config.js';
@@ -19,11 +25,11 @@ export class NetflixTheme {
 
   render() {
     this.container.innerHTML = `
-      <!-- Profile Selection Screen -->
+      <!-- Profile Selection Screen ("Who's watching?") -->
       <div class="nf-profile-overlay ${this.hasSelectedProfile ? 'hidden' : ''}" id="nf-profile-screen">
         <div class="nf-profile-content">
           <h1>Who's watching?</h1>
-          <p class="sub">Choose a profile tailored to your visit to Ishant's creative portfolio.</p>
+          <p class="sub">Choose a profile tailored to your visit to Ishant Singh's creative portfolio.</p>
           <div class="nf-profiles-grid">
             ${SITE_CONFIG.profiles.map(p => `
               <div class="nf-profile-card ${p.id === this.currentProfile.id ? 'selected' : ''}" data-profile-id="${p.id}" tabindex="0" style="--profile-accent: ${p.color};">
@@ -44,17 +50,17 @@ export class NetflixTheme {
         </div>
       </div>
 
-      <!-- Main Netflix Interface -->
+      <!-- Main Netflix Navigation Bar -->
       <nav class="nf-navbar" id="nf-nav">
         <div class="nf-navbar-left">
           <div class="nf-logo" data-scroll-to="nf-hero-anchor">ISHANT</div>
           <ul class="nf-nav-links">
             <li><a data-scroll-to="nf-hero-anchor" class="active">Home</a></li>
             <li><a data-scroll-to="nf-about-anchor">About</a></li>
-            <li><a data-scroll-to="nf-top8-section">Top 8</a></li>
             <li><a data-scroll-to="nf-category-commercials">Commercials</a></li>
-            <li><a data-scroll-to="nf-category-video-editing">Video Editing</a></li>
-            <li><a data-scroll-to="nf-category-reels---shorts">Reels &amp; Shorts</a></li>
+            <li><a data-scroll-to="nf-category-events">Events</a></li>
+            <li><a data-scroll-to="nf-category-3d-motion-graphics">3D Motion Graphics</a></li>
+            <li><a data-scroll-to="nf-category-personal-projects">Personal Projects</a></li>
             <li><a data-scroll-to="nf-contact-anchor">Contact</a></li>
           </ul>
         </div>
@@ -75,12 +81,12 @@ export class NetflixTheme {
           <div class="nf-hero-slide ${idx === 0 ? 'active' : ''}" data-hero-index="${idx}" style="background-image: url('${p.thumbnail}');">
             <div class="nf-hero-content">
               <div class="nf-hero-badge">
-                <span class="nf-n-icon">I</span> MOTION SERIES · ${p.category}
+                <span class="nf-n-icon">I</span> FEATURED WORK · ${p.category}
               </div>
               <h1 class="nf-hero-title">${p.title}</h1>
               <div class="nf-hero-meta">
                 <span class="match">${p.match}</span>
-                <span class="badge-hd">4K UHD</span>
+                <span class="badge-hd">HD 1080P</span>
                 <span>${p.year}</span>
                 <span class="cat-badge">${p.duration}</span>
               </div>
@@ -88,11 +94,11 @@ export class NetflixTheme {
               <div class="nf-hero-actions">
                 <button class="nf-btn nf-btn-primary" data-play-project="${p.id}">
                   <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                  Play Showreel
+                  Play Video
                 </button>
                 <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-about-anchor">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                  More Info
+                  About Ishant
                 </button>
               </div>
             </div>
@@ -116,31 +122,61 @@ export class NetflixTheme {
           <img src="${SITE_CONFIG.assets.profilePhoto}" alt="${SITE_CONFIG.author.name}">
         </div>
         <div class="nf-about-info">
-          <h2>ABOUT ISHANT</h2>
+          <h2>ABOUT ISHANT SINGH</h2>
           <div class="nf-about-meta">
-            <span class="match">100% Match</span>
-            <span class="badge">PRODUCER / ARTIST</span>
-            <span class="badge-hd">4K UHD</span>
+            <span class="match">2+ Years Experience</span>
+            <span class="badge">VIDEO EDITOR | MOTION GRAPHICS ARTIST</span>
+            <span class="badge-hd">RAIPUR, CHHATTISGARH</span>
             <span>2026</span>
           </div>
           <p class="nf-about-bio">${SITE_CONFIG.author.bio}</p>
+
           <dl class="nf-specs-list">
             <dt>Role</dt>
             <dd>${SITE_CONFIG.author.role}</dd>
             <dt>Education</dt>
-            <dd>${SITE_CONFIG.author.education}</dd>
+            <dd>
+              <strong>B.Sc. in 3D Animation and VFX</strong> (2023 – 2027)<br>
+              AAFT University of Media and Arts, Raipur, Chhattisgarh<br>
+              <span style="color:#888; font-size:12px;">Higher Secondary (2022–2023), CGBSE</span>
+            </dd>
+            <dt>Experience</dt>
+            <dd>
+              <strong>Freelance Video Editor &amp; Motion Graphics Artist</strong> (2025 – 2026)<br>
+              <span style="color:#bbb; font-size:13px;">Social media edits, event coverage &amp; audience-focused pacing</span><br>
+              <strong>Video Editor &amp; Social Media Handler</strong> — Elvn8 Clothing Brand (Nov 2025 – May 2026)<br>
+              <span style="color:#bbb; font-size:13px;">Primary editor &amp; social handler; creative trend-led content strategy</span>
+            </dd>
+            <dt>Selected Work</dt>
+            <dd>
+              • Promotional Reel — FarmHouse | Villa Omnia<br>
+              • Rajyostav Mela, Raipur — Event video coverage &amp; visual highlights
+            </dd>
             <dt>Location</dt>
             <dd>${SITE_CONFIG.author.location}</dd>
+            <dt>Languages</dt>
+            <dd>${SITE_CONFIG.author.languages.join(' · ')}</dd>
+            <dt>Contact</dt>
+            <dd>
+              <a href="mailto:${SITE_CONFIG.author.email}" style="color:var(--nf-red); text-decoration:none;">${SITE_CONFIG.author.email}</a>
+              · <span>${SITE_CONFIG.author.phone}</span>
+            </dd>
           </dl>
+
+          <div style="margin-bottom: 12px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+            Core Software &amp; Editing Skills
+          </div>
           <div class="nf-pills-wrap">
             ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
+            ${SITE_CONFIG.author.skills.map(s => `<span class="nf-pill skill-pill">${s}</span>`).join('')}
           </div>
+
           <div class="nf-about-actions">
-            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-top8-section">
+            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-category-commercials">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
               </svg>
-              Explore Projects
+              Explore Commercials
             </button>
             <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-contact-anchor">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -152,82 +188,120 @@ export class NetflixTheme {
         </div>
       </section>
 
-      <!-- Top 8 Projects This Week -->
-      <section class="nf-section-row" id="nf-top8-section">
+      <!-- ========================================== -->
+      <!-- 4 Main Portfolio Categories                -->
+      <!-- ========================================== -->
+
+      <!-- 1. Commercials -->
+      <section class="nf-section-row" id="nf-category-commercials">
         <div class="nf-row-header">
-          <h2 class="nf-row-title">Top 8 Projects This Week</h2>
+          <h2 class="nf-row-title">Commercials</h2>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Commercials').length} Projects</span>
         </div>
         <div class="nf-carousel-wrapper">
           <div class="nf-carousel-track">
-            ${PROJECTS.filter(p => p.topRank).sort((a, b) => a.topRank - b.topRank).map(p => `
-              <div class="nf-top-item" data-project-id="${p.id}">
-                <div class="nf-top-rank-number">${p.topRank}</div>
-                <div class="nf-top-poster">
-                  <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
-                  <div class="nf-top-label">${p.title}</div>
-                </div>
-              </div>
-            `).join('')}
+            ${PROJECTS.filter(p => p.category === 'Commercials').map(p => this.renderProjectCard(p)).join('')}
           </div>
         </div>
       </section>
 
-      <!-- Categories Rails -->
-      ${SITE_CONFIG.categories.map(cat => {
-        const catSlug = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
-        const catProjects = PROJECTS.filter(p => p.category === cat);
-        if (catProjects.length === 0) return '';
-        return `
-          <section class="nf-section-row" id="nf-category-${catSlug}">
-            <div class="nf-row-header">
-              <h2 class="nf-row-title">${cat}</h2>
-              <span class="nf-row-see-all">${catProjects.length} Projects</span>
-            </div>
-            <div class="nf-carousel-wrapper ${cat === 'Reels & Shorts' ? 'nf-reels-rail' : ''}">
-              <div class="nf-carousel-track">
-                ${catProjects.map(p => `
-                  <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}">
-                    <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
-                    <div class="nf-card-title-overlay">${p.title}</div>
-                    <div class="nf-card-hover-drawer">
-                      <div class="nf-card-hover-icons">
-                        <div class="nf-hover-circle-btn play-btn" data-play-project="${p.id}" title="Play preview">▶</div>
-                        <div class="nf-hover-circle-btn" title="Add to Watchlist">+</div>
-                        <div class="nf-hover-circle-btn" title="Like">♥</div>
-                      </div>
-                      <div class="nf-card-hover-meta">
-                        <span class="match">${p.match}</span>
-                        <span class="duration">${p.duration}</span>
-                      </div>
-                      <div class="nf-card-hover-tags">${(p.tags || []).join(' · ')}</div>
-                    </div>
-                  </div>
-                `).join('')}
+      <!-- 2. Events -->
+      <section class="nf-section-row" id="nf-category-events">
+        <div class="nf-row-header">
+          <h2 class="nf-row-title">Events</h2>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Events').length} Projects</span>
+        </div>
+        <div class="nf-carousel-wrapper">
+          <div class="nf-carousel-track">
+            ${PROJECTS.filter(p => p.category === 'Events').map(p => this.renderProjectCard(p)).join('')}
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 3D Motion Graphics -->
+      <section class="nf-section-row" id="nf-category-3d-motion-graphics">
+        <div class="nf-row-header">
+          <h2 class="nf-row-title">3D Motion Graphics</h2>
+          <span class="nf-row-see-all">AAFT University of Media and Arts</span>
+        </div>
+        <div class="nf-carousel-wrapper">
+          <div class="nf-carousel-track">
+            <div class="nf-3d-showcase-card">
+              <div>
+                <span class="nf-3d-badge">Degree in Progress · 2023 – 2027</span>
+                <h3 class="nf-3d-title">B.Sc. in 3D Animation and VFX</h3>
+                <p class="nf-3d-desc">
+                  Currently pursuing academic training in 3D modeling, lighting, dynamics, and visual effects pipelines at AAFT University of Media and Arts, Raipur. Semester CGI showreels and procedural motion design projects are actively in production.
+                </p>
+                <div class="nf-3d-meta">
+                  <span>📍 AAFT University, Raipur</span>
+                  <span>•</span>
+                  <span>🎬 3D Motion Graphics &amp; VFX</span>
+                </div>
+              </div>
+              <div style="margin-top: 20px;">
+                <button class="nf-btn nf-btn-primary" data-scroll-to="nf-contact-anchor" style="font-size: 13px; padding: 9px 18px;">
+                  Inquire for 3D Projects &amp; Collaboration
+                </button>
               </div>
             </div>
-          </section>
-        `;
-      }).join('')}
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Personal Projects -->
+      <section class="nf-section-row" id="nf-category-personal-projects">
+        <div class="nf-row-header">
+          <h2 class="nf-row-title">Personal Projects</h2>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Personal Projects').length} Projects</span>
+        </div>
+        <div class="nf-carousel-wrapper">
+          <div class="nf-carousel-track">
+            ${PROJECTS.filter(p => p.category === 'Personal Projects').map(p => this.renderProjectCard(p)).join('')}
+          </div>
+        </div>
+      </section>
 
       <!-- Contact Section -->
       <section class="nf-contact-section" id="nf-contact-anchor">
-        <h2>REQUEST A NEW TITLE</h2>
-        <p class="sub">Have a project or film in mind? Send an inquiry and let's put your story on screen.</p>
+        <h2>GET IN TOUCH</h2>
+        <p class="sub">Have a commercial, event film, or creative project in mind? Reach out to Ishant directly.</p>
+
+        <!-- Direct Contact Info Strip -->
+        <div class="nf-contact-details-bar">
+          <div class="nf-contact-card">
+            <div class="nf-contact-label">EMAIL</div>
+            <a href="mailto:${SITE_CONFIG.author.email}" class="nf-contact-value">${SITE_CONFIG.author.email}</a>
+          </div>
+          <div class="nf-contact-card">
+            <div class="nf-contact-label">PHONE</div>
+            <a href="tel:${SITE_CONFIG.author.phone}" class="nf-contact-value">${SITE_CONFIG.author.phone}</a>
+          </div>
+          <div class="nf-contact-card">
+            <div class="nf-contact-label">LOCATION</div>
+            <div class="nf-contact-value">${SITE_CONFIG.author.location}</div>
+          </div>
+          <div class="nf-contact-card">
+            <div class="nf-contact-label">ACADEMIC REFERENCE</div>
+            <div class="nf-contact-value" style="font-size: 13px;">${SITE_CONFIG.author.reference.name} (${SITE_CONFIG.author.reference.title}, ${SITE_CONFIG.author.reference.institution})</div>
+          </div>
+        </div>
+
         <form class="nf-contact-form" id="nf-inquiry-form">
           <div class="nf-form-grid">
             <input class="nf-input" type="text" name="name" placeholder="Your name" required>
             <input class="nf-input" type="email" name="email" placeholder="Email address" required>
             <select class="nf-select nf-form-full" name="projectType">
-              <option value="3D Motion Graphics">3D Motion Graphics</option>
-              <option value="Video Editing">Commercial Video Editing</option>
-              <option value="Reels & Shorts">High-Retention Reels / Shorts</option>
-              <option value="Showreel / Brand Film">Showreel / Brand Film</option>
+              <option value="Commercials">Commercials &amp; Brand Ads</option>
+              <option value="Events">Event Coverage &amp; Wedding Films</option>
+              <option value="3D Motion Graphics">3D Motion Graphics &amp; VFX</option>
+              <option value="Personal Projects">Personal / Creative Projects</option>
             </select>
-            <textarea class="nf-textarea nf-form-full" name="message" rows="4" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
+            <textarea class="nf-textarea nf-form-full" name="message" rows="4" placeholder="Tell me about your project, timeline, and requirements..." required></textarea>
             <div class="nf-form-full">
-              <button type="submit" class="nf-submit-btn">Send Request</button>
+              <button type="submit" class="nf-submit-btn">Send Message</button>
               <div class="nf-form-feedback" id="nf-form-success">
-                ✓ Request received! (Prototype mode: Connected to client frontend)
+                ✓ Message received! Thank you for reaching out to Ishant.
               </div>
             </div>
           </div>
@@ -237,12 +311,33 @@ export class NetflixTheme {
       <!-- Footer -->
       <footer class="nf-footer">
         <div>© 2026 ${SITE_CONFIG.author.name} · ${SITE_CONFIG.author.role}</div>
-        <div>Cinematic Netflix-inspired creative portfolio. All media placeholders prepared for final assets.</div>
+        <div>Raipur, Chhattisgarh · AAFT University of Media and Arts</div>
       </footer>
     `;
 
     this.bindEvents();
     this.startHeroCarousel();
+  }
+
+  renderProjectCard(p) {
+    return `
+      <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}">
+        <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+        <div class="nf-card-title-overlay">${p.title}</div>
+        <div class="nf-card-hover-drawer">
+          <div class="nf-card-hover-icons">
+            <div class="nf-hover-circle-btn play-btn" data-play-project="${p.id}" title="Play preview">▶</div>
+            <div class="nf-hover-circle-btn" title="Add to Watchlist">+</div>
+            <div class="nf-hover-circle-btn" title="Like">♥</div>
+          </div>
+          <div class="nf-card-hover-meta">
+            <span class="match">${p.match}</span>
+            <span class="duration">${p.duration}</span>
+          </div>
+          <div class="nf-card-hover-tags">${(p.tags || []).join(' · ')}</div>
+        </div>
+      </div>
+    `;
   }
 
   bindEvents() {
@@ -259,14 +354,16 @@ export class NetflixTheme {
       profileCards.forEach(c => {
         c.classList.toggle('selected', c.dataset.profileId === profile.id);
       });
-      document.body.classList.remove('profile-active');
+
+      const navAvatar = document.getElementById('nf-nav-avatar');
+      const navName = document.getElementById('nf-nav-profile-name');
+      if (navAvatar) navAvatar.src = profile.avatar;
+      if (navName) navName.textContent = profile.name;
+
       if (profileOverlay) {
         profileOverlay.classList.add('hidden');
       }
-      const avatarEl = document.getElementById('nf-nav-avatar');
-      const nameEl = document.getElementById('nf-nav-profile-name');
-      if (avatarEl) avatarEl.src = profile.avatar;
-      if (nameEl) nameEl.textContent = profile.name;
+      document.body.classList.remove('profile-active');
     };
 
     profileCards.forEach(card => {
@@ -296,7 +393,7 @@ export class NetflixTheme {
     if (switchProfileBtn) switchProfileBtn.addEventListener('click', showProfileSelector);
     if (profilePill) profilePill.addEventListener('click', showProfileSelector);
 
-    // 2. Smooth scrolling for nav links on window
+    // 2. Smooth scrolling for nav links
     this.container.querySelectorAll('[data-scroll-to]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -330,7 +427,7 @@ export class NetflixTheme {
         return;
       }
 
-      const card = e.target.closest('.nf-card') || e.target.closest('.nf-top-item');
+      const card = e.target.closest('.nf-card');
       if (card && card.dataset.projectId) {
         projectModal.open(card.dataset.projectId);
         return;
@@ -342,58 +439,61 @@ export class NetflixTheme {
       }
     });
 
-    // 4. Window scroll detection for navbar styling
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('nf-nav');
-      if (nav) {
-        nav.classList.toggle('scrolled', window.scrollY > 40);
-      }
-    }, { passive: true });
-
-    // 5. Contact form submission
+    // 4. Contact form submission
     const form = document.getElementById('nf-inquiry-form');
     if (form) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const success = document.getElementById('nf-form-success');
         if (success) {
-          success.style.display = 'block';
+          success.classList.add('visible');
           form.reset();
+          setTimeout(() => success.classList.remove('visible'), 5000);
         }
       });
     }
+
+    // 5. Navbar scroll state
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nf-nav');
+      if (nav) {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      }
+    }, { passive: true });
   }
 
   startHeroCarousel() {
     clearInterval(this.heroInterval);
     this.heroInterval = setInterval(() => {
-      const nextIndex = (this.currentHeroIndex + 1) % this.heroSlides.length;
-      this.goToHeroSlide(nextIndex);
-    }, 6500);
+      if (!this.hasSelectedProfile) return;
+      this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroSlides.length;
+      this.updateHeroSlide();
+    }, 7000);
   }
 
   goToHeroSlide(index) {
     this.currentHeroIndex = index;
-    const slides = this.container.querySelectorAll('.nf-hero-slide');
-    const dots = this.container.querySelectorAll('.nf-hero-dot');
-    const np = document.getElementById('nf-hero-np');
-
-    slides.forEach((s, idx) => {
-      s.classList.toggle('active', idx === index);
-    });
-
-    dots.forEach((d, idx) => {
-      d.classList.toggle('active', idx === index);
-    });
-
-    if (np && this.heroSlides[index]) {
-      const project = this.heroSlides[index];
-      np.dataset.playProject = project.id;
-      np.innerHTML = `<span>▶ Now Featured: <b>${project.title}</b></span>`;
-    }
+    this.updateHeroSlide();
+    this.startHeroCarousel();
   }
 
-  destroy() {
-    clearInterval(this.heroInterval);
+  updateHeroSlide() {
+    const slides = this.container.querySelectorAll('.nf-hero-slide');
+    const dots = this.container.querySelectorAll('.nf-hero-dot');
+    const npTitle = document.getElementById('nf-hero-np');
+
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle('active', idx === this.currentHeroIndex);
+    });
+
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === this.currentHeroIndex);
+    });
+
+    if (npTitle && this.heroSlides[this.currentHeroIndex]) {
+      const cur = this.heroSlides[this.currentHeroIndex];
+      npTitle.innerHTML = `<span>▶ Now Featured: <b>${cur.title}</b></span>`;
+      npTitle.dataset.playProject = cur.id;
+    }
   }
 }

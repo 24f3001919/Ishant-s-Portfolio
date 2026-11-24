@@ -1,38 +1,72 @@
 /**
- * Centralized Configuration & Profile Data for Ishant's Portfolio
- * Edit this file to update profile metadata, tools, and asset paths.
+ * Centralized Configuration & Profile Data for Ishant Singh's Portfolio
+ * Sourced directly from Ishant Singh's official resume.
  */
 
 export const SITE_CONFIG = {
   author: {
-    name: "Ishant",
+    name: "Ishant Singh",
     shortName: "Ishant",
-    role: "Video Editor & 3D Motion Graphics Artist",
-    subRole: "Cinematic Editing · 3D Motion · Commercials · High-Retention Reels",
-    bio: "Cinematic cuts, rhythmic timing, silky transitions, and 3D motion design that elevate brands and captivate audiences. Focused on high-impact visual storytelling across commercials, motion identity, and digital-first content.",
-    education: "Design & Media Arts / Institute Details Here",
-    location: "India / Available Worldwide",
-    emailPlaceholder: "ishant.studio.work@gmail.com",
+    role: "Video Editor | Motion Graphics Artist",
+    subRole: "Commercials · Events · Visual Design · Trend-Aware Social Edits",
+    bio: "Video Editor and Motion Graphics Artist with approximately 2 years of professional video editing experience, including over 1 year of freelance work. Experienced in creating engaging video content, developing trend-aware social media edits, and supporting brand and event-based projects through creative visual content. Currently pursuing a B.Sc. in 3D Animation and VFX at AAFT University of Media and Arts.",
+    education: "B.Sc. in 3D Animation and VFX (2023 – 2027), AAFT University of Media and Arts, Raipur",
+    higherSecondary: "Higher Secondary Education (2022 – 2023), Chhattisgarh Board of Secondary Education (CGBSE)",
+    location: "Raipur, Chhattisgarh",
+    phone: "+91 7828638613",
+    email: "ishant6398@gmail.com",
+    languages: ["English", "Hindi"],
+    experience: [
+      {
+        role: "Freelance Video Editor & Motion Graphics Artist",
+        period: "2025 – 2026",
+        highlights: [
+          "Produced and edited video content for diverse creative, event, and social media requirements.",
+          "Applied current social media trends and audience-focused editing approaches to maximize viewer engagement.",
+          "Developed creative editing concepts with dedicated attention to pacing, visual presentation, and platform-appropriate delivery.",
+          "Adapted editing style and visual treatments across multiple projects."
+        ]
+      },
+      {
+        role: "Video Editor & Social Media Handler",
+        company: "Elvn8 (Clothing Brand Project)",
+        period: "Nov 2025 – May 2026",
+        highlights: [
+          "Primary video editor and social media handler for the emerging clothing brand Elvn8.",
+          "Developed creative video concepts and social media content to strengthen online brand presence.",
+          "Implemented ongoing social media trends to build viewer retention and attract target audiences.",
+          "Contributed directly to brand social growth through trend-led visual content."
+        ]
+      }
+    ],
+    selectedProjects: [
+      "Promotional Reel – FarmHouse | Villa Omnia",
+      "Rajyostav Mela, Raipur — Video content covering the event and its visual highlights"
+    ],
     software: [
-      "Adobe After Effects",
       "Adobe Premiere Pro",
-      "Blender 3D",
-      "Cinema 4D",
+      "Adobe After Effects",
       "DaVinci Resolve",
-      "Photoshop & Illustrator"
+      "Adobe Photoshop"
     ],
     skills: [
-      "3D Modeling & Animation",
-      "Rhythmic Video Editing",
-      "Commercial & Brand Films",
-      "Vertical High-Retention Reels",
-      "Motion Typography & Stings",
-      "Sound Design & Audio Mixing",
-      "Color Grading & Post-Production"
-    ]
+      "Video Editing",
+      "Motion Graphics",
+      "Visual Design",
+      "Interactive Video Editing",
+      "Social Media Content Strategy",
+      "Trend & Content Research"
+    ],
+    reference: {
+      name: "Mr. Himanshu Pathak",
+      title: "Sr. Manager, CRC",
+      institution: "AAFT University",
+      phone: "+91 9140462422",
+      email: "himanshu.p@aaft.edu.in"
+    }
   },
 
-  // Centralized asset paths for easy replacement
+  // Centralized asset paths
   assets: {
     profilePhoto: "assets/images/profiles/ishant-profile.jpg",
     heroBanner: "assets/images/hero/hero-banner.svg",
@@ -44,18 +78,18 @@ export const SITE_CONFIG = {
     {
       id: "recruiter",
       name: "Recruiter",
-      badge: "Looking for Talent",
+      badge: "Hiring Talent",
       color: "#2472e9",
       avatar: "assets/images/profiles/avatar-recruiter.svg",
-      welcomeMessage: "Looking to hire? Explore full showreels, client commercial edits, and production workflows."
+      welcomeMessage: "Looking to hire? Review Ishant's professional timeline, verified brand commercial edits, and academic VFX credentials."
     },
     {
       id: "client",
       name: "Client",
-      badge: "Commissioning Work",
+      badge: "Brand Commercials",
       color: "#e50914",
       avatar: "assets/images/profiles/avatar-client.svg",
-      welcomeMessage: "Ready to elevate your brand? Discover high-converting commercials, product stings, and social campaigns."
+      welcomeMessage: "Ready to promote your venue or brand? Explore real promotional work like the Villa Omnia FarmHouse campaign."
     },
     {
       id: "collaborator",
@@ -63,38 +97,23 @@ export const SITE_CONFIG = {
       badge: "Creative Partner",
       color: "#2bb857",
       avatar: "assets/images/profiles/avatar-collaborator.svg",
-      welcomeMessage: "Fellow creator or director? Check out the breakdown of 3D pipelines, VFX passes, and timeline pacing."
+      welcomeMessage: "Fellow editor or director? Explore timeline pacing, event highlights, and Premiere Pro / After Effects workflows."
     },
     {
       id: "guest",
       name: "Guest",
-      badge: "Casual Visitor",
+      badge: "Visitor",
       color: "#6c757d",
       avatar: "assets/images/profiles/avatar-guest.svg",
-      welcomeMessage: "Welcome! Browse through the Netflix-style catalog of Ishant's creative projects."
+      welcomeMessage: "Welcome! Browse Ishant Singh's Netflix-style creative portfolio catalog."
     }
   ],
 
-  // Portfolio Categories
+  // Exactly the 4 required categories
   categories: [
     "Commercials",
-    "Video Editing",
-    "Reels & Shorts"
-  ],
-
-  // Background Gradients used for cards and hero backdrops
-  gradients: [
-    ["#2b1b5e", "#e0679a"],
-    ["#f7971e", "#3a1c71"],
-    ["#0f4c5c", "#5fc9b8"],
-    ["#3a1c71", "#d76d77"],
-    ["#134e5e", "#a8c86a"],
-    ["#1b1b24", "#e8a06b"],
-    ["#1d2b64", "#f0b8d0"],
-    ["#4b134f", "#e0604b"],
-    ["#232526", "#414345"],
-    ["#182848", "#4b6cb7"],
-    ["#1d2671", "#c33764"],
-    ["#2b5876", "#4e4376"]
+    "Events",
+    "3D Motion Graphics",
+    "Personal Projects"
   ]
 };

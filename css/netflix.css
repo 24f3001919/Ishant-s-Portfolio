@@ -896,6 +896,12 @@
   color: #cccccc;
 }
 
+.nf-pill.skill-pill {
+  background: rgba(229, 9, 20, 0.12);
+  border-color: rgba(229, 9, 20, 0.35);
+  color: #ffb4b7;
+}
+
 .nf-about-actions {
   display: flex;
   gap: 16px;
@@ -904,13 +910,104 @@
 }
 
 /* ==========================================================================
-   7. Contact Form ("Request a New Title")
+   3D Motion Graphics Academic Showcase Card
+   ========================================================================== */
+
+.nf-3d-showcase-card {
+  flex: 0 0 clamp(320px, 60vw, 600px);
+  min-height: 200px;
+  background: linear-gradient(135deg, #1c1c20 0%, #101012 100%);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  border-left: 5px solid var(--nf-red);
+  border-radius: 8px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.nf-3d-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--nf-red);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.nf-3d-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  line-height: 1.1;
+}
+
+.nf-3d-desc {
+  font-size: 14px;
+  color: #c0c0c0;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.nf-3d-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #888888;
+}
+
+/* ==========================================================================
+   7. Contact Section & Direct Details Strip
    ========================================================================== */
 
 .nf-contact-section {
   padding: 40px 4% 80px 4%;
-  max-width: 780px;
+  max-width: 860px;
   margin: 0 auto;
+}
+
+.nf-contact-details-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.nf-contact-card {
+  background: #1c1c1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nf-contact-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #777777;
+  text-transform: uppercase;
+}
+
+.nf-contact-value {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.nf-contact-value a {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .nf-contact-section h2 {
