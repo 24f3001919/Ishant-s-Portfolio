@@ -1,7 +1,6 @@
 /**
  * Netflix-Style Welcome Intro Animation Component
- * Seamless Transformation: Red Ribbon N -> ISHANT Wordmark Assembly -> Sharp Profile Reveal
- * The initial red N remains the exact same persistent element throughout the animation.
+ * Centered Ribbon N -> Continuous ISHANT Assembly -> Sharp Profile Reveal
  */
 
 export class WelcomeIntro {
@@ -33,54 +32,54 @@ export class WelcomeIntro {
     this.overlayEl.innerHTML = `
       <button class="nf-intro-skip-btn" id="nf-skip-intro" aria-label="Skip Introduction">Skip Intro ✕</button>
       <div class="nf-intro-stage">
-        <!-- Ambient Red Atmosphere -->
+        <!-- Clean, Subtle, Symmetrical Ambient Radial Glow -->
         <div class="nf-intro-ambient-glow"></div>
 
-        <!-- Vertical Light Streaks behind N -->
-        <div class="nf-vertical-streaks">
-          <div class="nf-light-column-left"></div>
-          <div class="nf-light-column-right"></div>
-        </div>
-
-        <!-- The Continuous Wordmark Assembly -->
-        <div class="nf-brand-assembly">
-          <div class="nf-word-letters-row">
-            <span class="nf-letter-char nf-letter-i">I</span>
-            <span class="nf-letter-char nf-letter-s">S</span>
-            <span class="nf-letter-char nf-letter-h">H</span>
-            <span class="nf-letter-char nf-letter-a">A</span>
+        <!-- Master Brand Lockup (N is at exact viewport center, then ISHANT expands around it) -->
+        <div class="nf-brand-lockup">
+          <div class="nf-wordmark-track">
+            <!-- Left Letters: I S H A -->
+            <div class="nf-letters-group nf-letters-left">
+              <span class="nf-char nf-char-i">I</span>
+              <span class="nf-char nf-char-s">S</span>
+              <span class="nf-char nf-char-h">H</span>
+              <span class="nf-char nf-char-a">A</span>
+            </div>
 
             <!-- The Persistent Dimensional Red Ribbon N -->
-            <div class="nf-ribbon-n-box">
-              <svg class="nf-intro-n-svg" viewBox="0 0 100 140" width="100" height="140">
+            <div class="nf-ribbon-n-cell">
+              <svg class="nf-intro-n-svg" viewBox="0 0 70 100">
                 <defs>
-                  <linearGradient id="nLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="nStemLeftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#b1060f"/>
                     <stop offset="100%" stop-color="#e50914"/>
                   </linearGradient>
-                  <linearGradient id="nDiag" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ff222b"/>
-                    <stop offset="50%" stop-color="#e50914"/>
+                  <linearGradient id="nDiagRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff252e"/>
+                    <stop offset="45%" stop-color="#e50914"/>
                     <stop offset="100%" stop-color="#b1060f"/>
                   </linearGradient>
-                  <linearGradient id="nRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="nStemRightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#83060c"/>
                     <stop offset="100%" stop-color="#b1060f"/>
                   </linearGradient>
-                  <filter id="nShadow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feDropShadow dx="-4" dy="0" stdDeviation="5" flood-color="#000000" flood-opacity="0.85"/>
+                  <filter id="nFoldShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="-3" dy="0" stdDeviation="3.5" flood-color="#000000" flood-opacity="0.85"/>
                   </filter>
                 </defs>
-                <rect class="n-stem-left" x="8" y="8" width="25" height="124" fill="url(#nLeft)"/>
-                <rect class="n-stem-right" x="67" y="8" width="25" height="124" fill="url(#nRight)"/>
-                <polygon class="n-diagonal" points="8,8 33,8 92,132 67,132" fill="url(#nDiag)" filter="url(#nShadow)"/>
+                <rect class="n-stem-left" x="3" y="0" width="18" height="100" rx="1" fill="url(#nStemLeftGrad)"/>
+                <rect class="n-stem-right" x="49" y="0" width="18" height="100" rx="1" fill="url(#nStemRightGrad)"/>
+                <polygon class="n-diagonal" points="3,0 21,0 67,100 49,100" fill="url(#nDiagRibbonGrad)" filter="url(#nFoldShadow)"/>
               </svg>
             </div>
 
-            <span class="nf-letter-char nf-letter-t">T</span>
+            <!-- Right Letter: T -->
+            <div class="nf-letters-group nf-letters-right">
+              <span class="nf-char nf-char-t">T</span>
+            </div>
           </div>
 
-          <!-- Subtitle -->
+          <!-- Centered Subtitle -->
           <div class="nf-brand-subtitle">VIDEO EDITOR &amp; 3D MOTION GRAPHICS</div>
         </div>
       </div>

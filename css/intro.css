@@ -1,20 +1,16 @@
 /* ==========================================================================
    Netflix-Style Welcome Intro Animation
-   Continuous Ribbon N -> ISHANT Wordmark Assembly -> Sharp Profile Reveal
-   Zero blur artefacts, hardware-accelerated transforms, pure opacity transition
+   Centered Ribbon N -> Continuous ISHANT Wordmark Assembly -> Sharp Profile Screen
    ========================================================================== */
-
-:root {
-  --n-center-offset: 68px;
-}
 
 .nf-intro-overlay {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 10000;
   background-color: #000000;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -27,7 +23,7 @@
 .nf-intro-overlay.fade-out {
   opacity: 0;
   pointer-events: none;
-  /* Strictly NO transform: scale() to prevent GPU rasterization blur */
+  /* Strictly NO transform: scale() to prevent any GPU rasterization blur */
 }
 
 .nf-intro-overlay.hidden {
@@ -68,63 +64,11 @@
   to { opacity: 1; }
 }
 
-/* Ambient Radial Glow (Pure Gradient, No Filter Blur) */
-.nf-intro-ambient-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(750px, 90vw);
-  height: min(750px, 90vw);
-  border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(229, 9, 20, 0.28) 0%, rgba(229, 9, 20, 0.06) 45%, transparent 70%);
-  opacity: 0;
-  will-change: opacity;
-  animation: ambientGlowPulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  pointer-events: none;
-}
-
-@keyframes ambientGlowPulse {
-  0% { opacity: 0; }
-  30% { opacity: 1; }
-  75% { opacity: 0.9; }
-  100% { opacity: 0.3; }
-}
-
-/* Vertical Light Columns */
-.nf-vertical-streaks {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(140px, 20vw, 200px);
-  height: clamp(220px, 35vh, 320px);
-  pointer-events: none;
-  display: flex;
-  justify-content: space-between;
-  opacity: 0;
-  animation: streaksSequence 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-}
-
-.nf-light-column-left,
-.nf-light-column-right {
-  width: 32px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent 0%, rgba(229, 9, 20, 0.35) 30%, rgba(255, 60, 70, 0.75) 50%, rgba(229, 9, 20, 0.35) 70%, transparent 100%);
-  opacity: 0.6;
-}
-
-@keyframes streaksSequence {
-  0% { opacity: 0; transform: scaleY(0.4); }
-  35% { opacity: 1; transform: scaleY(1.2); }
-  80% { opacity: 0.8; transform: scaleY(1); }
-  100% { opacity: 0; transform: scaleY(0.8); }
-}
-
-/* The Unified Wordmark Stage */
+/* Center Stage - Exactly filling viewport and centering its contents */
 .nf-intro-stage {
   position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,107 +76,156 @@
   pointer-events: none;
 }
 
-.nf-brand-assembly {
+/* Symmetrical, Subtle Ambient Radial Glow (Clean gradient, zero vertical lines) */
+.nf-intro-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(650px, 85vw);
+  height: min(650px, 85vw);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(229, 9, 20, 0.22) 0%, rgba(229, 9, 20, 0.05) 45%, transparent 70%);
+  opacity: 0;
+  will-change: opacity;
+  animation: ambientGlowFade 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  pointer-events: none;
+}
+
+@keyframes ambientGlowFade {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  75% { opacity: 0.85; }
+  100% { opacity: 0.3; }
+}
+
+/* Master Brand Lockup */
+.nf-brand-lockup {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* Initially offsets container so N is dead center, then centers full ISHANT */
-  transform: translateX(var(--n-center-offset));
-  animation: lockupCenter 0.75s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
-  will-change: transform;
 }
 
-@keyframes lockupCenter {
-  0% {
-    transform: translateX(var(--n-center-offset));
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* Letters Row */
-.nf-word-letters-row {
-  display: inline-flex;
+/* Wordmark Track - Flex container holding Left Letters, Ribbon N, and Right Letter */
+.nf-wordmark-track {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(4px, 1vw, 10px);
+  gap: clamp(3px, 0.8vw, 6px);
   position: relative;
 }
 
-/* Common Letter Styling */
-.nf-letter-char {
+/* Left Group (I, S, H, A) - Expands smoothly from N */
+.nf-letters-group.nf-letters-left {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(3px, 0.8vw, 6px);
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  will-change: width, opacity;
+  animation: expandLeftGroup 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
+}
+
+@keyframes expandLeftGroup {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    width: clamp(170px, 32vw, 240px);
+    opacity: 1;
+  }
+}
+
+/* Right Group (T) - Expands smoothly from N */
+.nf-letters-group.nf-letters-right {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  will-change: width, opacity;
+  animation: expandRightGroup 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
+}
+
+@keyframes expandRightGroup {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    width: clamp(40px, 8vw, 60px);
+    opacity: 1;
+  }
+}
+
+/* Letter Characters */
+.nf-char {
   font-family: var(--font-display);
-  font-size: clamp(64px, 13vw, 115px);
+  font-size: clamp(56px, 11vw, 92px);
   color: var(--nf-red);
   line-height: 1;
   margin: 0;
   padding: 0;
-  text-shadow: 0 4px 25px rgba(229, 9, 20, 0.7), 0 0 45px rgba(229, 9, 20, 0.35);
-  display: inline-block;
-  opacity: 0;
-  will-change: transform, opacity;
+  text-shadow: 0 4px 20px rgba(229, 9, 20, 0.65), 0 0 35px rgba(229, 9, 20, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
 }
 
-/* Left Letters (I, S, H, A) slide out from N to left */
-.nf-letter-i {
-  animation: letterSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.85s forwards;
-}
-.nf-letter-s {
-  animation: letterSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.75s forwards;
-}
-.nf-letter-h {
-  animation: letterSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.65s forwards;
-}
-.nf-letter-a {
-  animation: letterSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
-}
+.nf-char-i { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.85s both; }
+.nf-char-s { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both; }
+.nf-char-h { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.65s both; }
+.nf-char-a { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s both; }
+.nf-char-t { animation: letterSlideFromNRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s both; }
 
-@keyframes letterSlideLeft {
+@keyframes letterSlideFromNLeft {
   0% {
-    opacity: 0;
-    transform: translateX(30px) scale(0.95);
-  }
-  30% {
-    opacity: 1;
+    transform: translateX(24px);
+    opacity: 0.4;
   }
   100% {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateX(0) scale(1);
   }
 }
 
-/* Right Letter (T) slides out from N to right */
-.nf-letter-t {
-  animation: letterSlideRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
-}
-
-@keyframes letterSlideRight {
+@keyframes letterSlideFromNRight {
   0% {
-    opacity: 0;
-    transform: translateX(-30px) scale(0.95);
-  }
-  30% {
-    opacity: 1;
+    transform: translateX(-24px);
+    opacity: 0.4;
   }
   100% {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateX(0) scale(1);
   }
 }
 
-/* The Dimensional Ribbon N Wrapper */
-.nf-ribbon-n-box {
+/* The Dimensional Ribbon N Cell */
+.nf-ribbon-n-cell {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
   opacity: 0;
   transform: scale(0.9);
-  animation: nInitialReveal 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  animation: nInitialReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
   will-change: transform, opacity;
 }
 
@@ -251,10 +244,12 @@
   }
 }
 
+/* Ribbon N SVG - Exact 0.71 factor matching Bebas Neue cap-height */
 .nf-intro-n-svg {
-  width: clamp(52px, 10.5vw, 94px);
-  height: clamp(64px, 13vw, 115px);
-  filter: drop-shadow(0 0 20px rgba(229, 9, 20, 0.7)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.9));
+  height: calc(clamp(56px, 11vw, 92px) * 0.71);
+  width: auto;
+  aspect-ratio: 70 / 100;
+  filter: drop-shadow(0 0 16px rgba(229, 9, 20, 0.7)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.9));
   display: block;
 }
 
@@ -295,7 +290,7 @@
   font-size: clamp(10px, 1.8vw, 13px);
   font-weight: 600;
   letter-spacing: clamp(3px, 0.8vw, 6px);
-  color: #b0b0b0;
+  color: #a8a8a8;
   margin-top: 18px;
   text-transform: uppercase;
   opacity: 0;
@@ -315,34 +310,16 @@
   }
 }
 
-/* Responsive Offsets for Screen Widths */
-@media (max-width: 900px) {
-  :root {
-    --n-center-offset: 54px;
-  }
-}
-@media (max-width: 600px) {
-  :root {
-    --n-center-offset: 42px;
-  }
-}
-@media (max-width: 400px) {
-  :root {
-    --n-center-offset: 34px;
-  }
-}
-
 /* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .nf-intro-overlay {
     transition: opacity 0.15s ease !important;
   }
-  .nf-brand-assembly,
-  .nf-ribbon-n-box,
-  .nf-letter-char,
+  .nf-ribbon-n-cell,
+  .nf-letters-group,
+  .nf-char,
   .nf-brand-subtitle,
-  .nf-intro-ambient-glow,
-  .nf-vertical-streaks {
+  .nf-intro-ambient-glow {
     animation-duration: 0.05s !important;
     animation-delay: 0s !important;
   }
