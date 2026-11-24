@@ -28,11 +28,16 @@ export class NetflixTheme {
       <!-- Profile Selection Screen ("Who's watching?") -->
       <div class="nf-profile-overlay ${this.hasSelectedProfile ? 'hidden' : ''}" id="nf-profile-screen">
         <div class="nf-profile-content">
+          <div class="nf-profile-header-bar">
+            <button class="nf-direct-entry-top-btn" id="nf-direct-entry-top" aria-label="Skip profile selection and enter portfolio">
+              Direct Entry / Skip to Work ➔
+            </button>
+          </div>
           <h1>Who's watching?</h1>
           <p class="sub">Choose a profile tailored to your visit to Ishant Singh's creative portfolio.</p>
           <div class="nf-profiles-grid">
             ${SITE_CONFIG.profiles.map(p => `
-              <div class="nf-profile-card ${p.id === this.currentProfile.id ? 'selected' : ''}" data-profile-id="${p.id}" tabindex="0" style="--profile-accent: ${p.color};">
+              <div class="nf-profile-card ${p.id === this.currentProfile.id ? 'selected' : ''}" data-profile-id="${p.id}" tabindex="0" role="button" aria-label="Select ${p.name} profile" style="--profile-accent: ${p.color};">
                 <div class="nf-profile-avatar-wrap">
                   <img src="${p.avatar}" alt="${p.name}">
                   <div class="nf-profile-active-indicator" title="Selected Profile">
@@ -46,7 +51,10 @@ export class NetflixTheme {
               </div>
             `).join('')}
           </div>
-          <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter Portfolio</button>
+          <div class="nf-profile-actions">
+            <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter as <span id="nf-btn-profile-name">${this.currentProfile.name}</span></button>
+            <button class="nf-direct-entry-btn" id="nf-direct-entry-main">Direct Entry (All Projects) ➔</button>
+          </div>
         </div>
       </div>
 
@@ -92,11 +100,15 @@ export class NetflixTheme {
               </div>
               <p class="nf-hero-desc">${p.description}</p>
               <div class="nf-hero-actions">
-                <button class="nf-btn nf-btn-primary" data-play-project="${p.id}">
+                <button class="nf-btn nf-btn-primary" data-play-project="${p.id}" aria-label="Play Featured Video">
                   <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   Play Video
                 </button>
-                <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-about-anchor">
+                <button class="nf-btn nf-btn-showreel" data-trigger-showreel="true" aria-label="Watch Ishant's Master Showreel">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+                  Watch Showreel
+                </button>
+                <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-about-anchor" aria-label="View About Ishant section">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                   About Ishant
                 </button>
@@ -357,15 +369,22 @@ export class NetflixTheme {
           <p class="sub">Have a commercial, event film, or creative project in mind? Send Ishant an inquiry.</p>
         </div>
 
-        <form class="nf-contact-form" id="nf-inquiry-form">
+        <form class="nf-contact-form" id="nf-inquiry-form" novalidate>
+          <!-- Honeypot anti-spam field (hidden from legitimate users) -->
+          <div class="nf-hp-field" style="display: none !important;" aria-hidden="true">
+            <input type="text" name="_gotcha" id="contact-gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
           <div class="nf-form-grid">
-            <div class="nf-input-group">
-              <label for="contact-name" class="nf-input-label">Your Name</label>
-              <input class="nf-input" id="contact-name" type="text" name="name" placeholder="Your name" required>
+            <div class="nf-input-group" id="group-name">
+              <label for="contact-name" class="nf-input-label">Your Name <span class="nf-req">*</span></label>
+              <input class="nf-input" id="contact-name" type="text" name="name" placeholder="Your name" required autocomplete="name">
+              <span class="nf-field-error" id="name-error">Please enter your name.</span>
             </div>
-            <div class="nf-input-group">
-              <label for="contact-email" class="nf-input-label">Email Address</label>
-              <input class="nf-input" id="contact-email" type="email" name="email" placeholder="name@example.com" required>
+            <div class="nf-input-group" id="group-email">
+              <label for="contact-email" class="nf-input-label">Email Address <span class="nf-req">*</span></label>
+              <input class="nf-input" id="contact-email" type="email" name="email" placeholder="name@example.com" required autocomplete="email">
+              <span class="nf-field-error" id="email-error">Please enter a valid email address.</span>
             </div>
             <div class="nf-input-group nf-form-full">
               <label for="contact-project-type" class="nf-input-label">Project Type</label>
@@ -374,17 +393,17 @@ export class NetflixTheme {
                 <option value="Events">Events &amp; Celebration Films</option>
                 <option value="3D Motion Graphics">3D Motion Graphics &amp; VFX</option>
                 <option value="Personal Projects">Personal / Creative Projects</option>
+                <option value="Other Inquiries">Other Creative Inquiry</option>
               </select>
             </div>
-            <div class="nf-input-group nf-form-full">
-              <label for="contact-message" class="nf-input-label">Project Description / Message</label>
+            <div class="nf-input-group nf-form-full" id="group-message">
+              <label for="contact-message" class="nf-input-label">Project Description / Message <span class="nf-req">*</span></label>
               <textarea class="nf-textarea" id="contact-message" name="message" rows="5" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
+              <span class="nf-field-error" id="message-error">Please enter your project message (at least 10 characters).</span>
             </div>
             <div class="nf-form-full">
-              <button type="submit" class="nf-submit-btn">Submit Inquiry</button>
-              <div class="nf-form-feedback" id="nf-form-success">
-                ✓ Inquiry received! Thank you for reaching out to Ishant.
-              </div>
+              <button type="submit" class="nf-submit-btn" id="nf-submit-btn">Submit Inquiry</button>
+              <div class="nf-form-feedback" id="nf-form-feedback"></div>
             </div>
           </div>
         </form>
@@ -395,6 +414,27 @@ export class NetflixTheme {
         <div>© 2026 ${SITE_CONFIG.author.name} · ${SITE_CONFIG.author.role}</div>
         <div>Raipur, Chhattisgarh · AAFT University of Media and Arts</div>
       </footer>
+
+      <!-- Showreel Dialog Placement Modal -->
+      <div class="nf-showreel-modal" id="nf-showreel-modal" style="display: none;">
+        <div class="nf-showreel-dialog" role="dialog" aria-modal="true" aria-labelledby="nf-showreel-title">
+          <button class="nf-showreel-close" id="nf-showreel-close-btn" aria-label="Close dialog">✕</button>
+          <div class="nf-showreel-icon">
+            <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#e50914" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="10 8 16 12 10 16 10 8" fill="#e50914"/>
+            </svg>
+          </div>
+          <h3 id="nf-showreel-title">Master Showreel Placement</h3>
+          <p>
+            Ishant's dedicated 2026 Master Showreel placement is ready. Awaiting the standalone master showreel video file. In the meantime, you can experience the featured luxury commercial or the 06:30 long-format film below!
+          </p>
+          <div class="nf-showreel-actions">
+            <button class="nf-btn nf-btn-primary" id="nf-sr-play-featured">▶ Play Featured Commercial</button>
+            <button class="nf-btn nf-btn-secondary" id="nf-sr-dismiss">Explore Projects</button>
+          </div>
+        </div>
+      </div>
     `;
 
     this.bindEvents();
@@ -464,6 +504,19 @@ export class NetflixTheme {
 
     if (skipBtn) {
       skipBtn.addEventListener('click', () => {
+        selectProfile(this.currentProfile || SITE_CONFIG.profiles[0]);
+      });
+    }
+
+    const directEntryTop = document.getElementById('nf-direct-entry-top');
+    const directEntryMain = document.getElementById('nf-direct-entry-main');
+    if (directEntryTop) {
+      directEntryTop.addEventListener('click', () => {
+        selectProfile(SITE_CONFIG.profiles[0]);
+      });
+    }
+    if (directEntryMain) {
+      directEntryMain.addEventListener('click', () => {
         selectProfile(SITE_CONFIG.profiles[0]);
       });
     }
@@ -651,17 +704,177 @@ export class NetflixTheme {
       }
     });
 
-    // 7. Contact form submission
+    // 7. Showreel Trigger and Dialog
+    const showreelModal = document.getElementById('nf-showreel-modal');
+    const showreelCloseBtn = document.getElementById('nf-showreel-close-btn');
+    const showreelDismissBtn = document.getElementById('nf-sr-dismiss');
+    const showreelPlayFeaturedBtn = document.getElementById('nf-sr-play-featured');
+
+    const openShowreelModal = () => {
+      if (SITE_CONFIG.assets.heroShowreel) {
+        projectModal.open(SITE_CONFIG.assets.heroShowreel);
+      } else if (showreelModal) {
+        showreelModal.style.display = 'flex';
+      }
+    };
+
+    const closeShowreelModal = () => {
+      if (showreelModal) showreelModal.style.display = 'none';
+    };
+
+    this.container.querySelectorAll('[data-trigger-showreel]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openShowreelModal();
+      });
+    });
+
+    if (showreelCloseBtn) showreelCloseBtn.addEventListener('click', closeShowreelModal);
+    if (showreelDismissBtn) showreelDismissBtn.addEventListener('click', closeShowreelModal);
+    if (showreelModal) {
+      showreelModal.addEventListener('click', (e) => {
+        if (e.target === showreelModal) closeShowreelModal();
+      });
+    }
+    if (showreelPlayFeaturedBtn) {
+      showreelPlayFeaturedBtn.addEventListener('click', () => {
+        closeShowreelModal();
+        projectModal.open('villa-omnia-resort');
+      });
+    }
+
+    // 8. Contact Form Submission & Production Validation
     const form = document.getElementById('nf-inquiry-form');
     if (form) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const success = document.getElementById('nf-form-success');
-        if (success) {
-          success.classList.add('visible');
-          form.reset();
-          setTimeout(() => success.classList.remove('visible'), 5000);
+      const nameInput = document.getElementById('contact-name');
+      const emailInput = document.getElementById('contact-email');
+      const messageInput = document.getElementById('contact-message');
+      const projectTypeInput = document.getElementById('contact-project-type');
+      const gotchaInput = document.getElementById('contact-gotcha');
+      const feedbackEl = document.getElementById('nf-form-feedback');
+      const submitBtn = document.getElementById('nf-submit-btn');
+
+      const clearErrors = () => {
+        document.querySelectorAll('.nf-input-group').forEach(g => g.classList.remove('has-error'));
+        document.querySelectorAll('.nf-input, .nf-textarea').forEach(i => i.classList.remove('is-invalid'));
+      };
+
+      [nameInput, emailInput, messageInput].forEach(inp => {
+        if (inp) {
+          inp.addEventListener('input', () => {
+            const group = inp.closest('.nf-input-group');
+            if (group) group.classList.remove('has-error');
+            inp.classList.remove('is-invalid');
+          });
         }
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearErrors();
+
+        // Anti-spam honeypot: if filled, silently succeed
+        if (gotchaInput && gotchaInput.value.trim() !== '') {
+          if (feedbackEl) {
+            feedbackEl.className = 'nf-form-feedback visible';
+            feedbackEl.textContent = '✓ Inquiry received. Thank you!';
+          }
+          form.reset();
+          return;
+        }
+
+        let hasError = false;
+        const nameVal = nameInput ? nameInput.value.trim() : '';
+        const emailVal = emailInput ? emailInput.value.trim() : '';
+        const messageVal = messageInput ? messageInput.value.trim() : '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (nameVal.length < 2) {
+          const grp = document.getElementById('group-name');
+          if (grp) grp.classList.add('has-error');
+          if (nameInput) nameInput.classList.add('is-invalid');
+          hasError = true;
+        }
+
+        if (!emailRegex.test(emailVal)) {
+          const grp = document.getElementById('group-email');
+          if (grp) grp.classList.add('has-error');
+          if (emailInput) emailInput.classList.add('is-invalid');
+          hasError = true;
+        }
+
+        if (messageVal.length < 10) {
+          const grp = document.getElementById('group-message');
+          if (grp) grp.classList.add('has-error');
+          if (messageInput) messageInput.classList.add('is-invalid');
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+        }
+
+        const endpoint = SITE_CONFIG.formspreeEndpoint;
+        const targetEmail = SITE_CONFIG.author.email || 'ishant.edit@gmail.com';
+
+        const triggerMailtoFallback = () => {
+          const subject = encodeURIComponent(`Portfolio Inquiry: ${nameVal} [${projectTypeInput ? projectTypeInput.value : 'General'}]`);
+          const body = encodeURIComponent(`Client Name: ${nameVal}\nEmail: ${emailVal}\nProject Focus: ${projectTypeInput ? projectTypeInput.value : 'General'}\n\nProject Scope & Message:\n${messageVal}`);
+          const mailtoUrl = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+
+          if (feedbackEl) {
+            feedbackEl.className = 'nf-form-feedback visible';
+            feedbackEl.textContent = `✓ Inquiry ready! Opening your email app to deliver to ${targetEmail}...`;
+          }
+
+          setTimeout(() => {
+            window.location.href = mailtoUrl;
+          }, 350);
+
+          form.reset();
+        };
+
+        if (endpoint && endpoint.trim().length > 0) {
+          try {
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: nameVal,
+                email: emailVal,
+                projectType: projectTypeInput ? projectTypeInput.value : 'General',
+                message: messageVal
+              })
+            });
+
+            if (res.ok) {
+              if (feedbackEl) {
+                feedbackEl.className = 'nf-form-feedback visible';
+                feedbackEl.textContent = `✓ Inquiry sent directly to Ishant's inbox (${targetEmail})!`;
+              }
+              form.reset();
+            } else {
+              triggerMailtoFallback();
+            }
+          } catch (err) {
+            triggerMailtoFallback();
+          }
+        } else {
+          triggerMailtoFallback();
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Inquiry';
+        }
+
+        setTimeout(() => {
+          if (feedbackEl) feedbackEl.classList.remove('visible');
+        }, 8000);
       });
     }
 

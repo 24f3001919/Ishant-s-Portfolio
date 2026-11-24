@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://24f3001919.github.io/Ishant-s-Portfolio/sitemap.xml

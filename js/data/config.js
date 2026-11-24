@@ -13,7 +13,8 @@ export const SITE_CONFIG = {
     education: "B.Sc. in 3D Animation and VFX (2023 – 2027), AAFT University of Media and Arts, Raipur",
     location: "Raipur, Chhattisgarh",
     phone: "+91 7828638613",
-    email: "ishant6398@gmail.com",
+    email: "ishant.edit@gmail.com",
+    secondaryEmail: "ishant6398@gmail.com",
     languages: ["English", "Hindi"],
     experience: [
       {
@@ -55,8 +56,11 @@ export const SITE_CONFIG = {
   assets: {
     profilePhoto: "assets/images/profiles/ishant-profile.jpg",
     heroBanner: "assets/images/hero/hero-banner.svg",
-    heroShowreel: "assets/videos/farm-reel.mp4"
+    // Dedicated showreel master video placement (pending user upload; set to null until provided)
+    heroShowreel: null
   },
+  // Formspree endpoint (optional: provide Formspree Form ID e.g. "https://formspree.io/f/YOUR_ID")
+  formspreeEndpoint: "",
 
   // Netflix Profile Options
   profiles: [
