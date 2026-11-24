@@ -1,6 +1,6 @@
-# Ishant – Personal Creative Portfolio (Netflix & Google Themes)
+# Ishant – Personal Creative Portfolio (Netflix Theme)
 
-A responsive, modular personal portfolio website crafted for **Ishant (Video Editor & 3D Motion Graphics Artist)**. Features a cinematic **Netflix-inspired browsing experience** and a clean **Google-inspired search engine experience**, complete with interactive profile selection, carousels, responsive project modal with video player, search filtering, and clean placeholder assets.
+A responsive, modular personal portfolio website crafted for **Ishant (Video Editor & 3D Motion Graphics Artist)**. Features a cinematic **Netflix-inspired browsing experience**, complete with interactive profile selection, hero carousel, category rails, responsive project modal with video player, and clean placeholder assets.
 
 ---
 
@@ -35,16 +35,7 @@ Then open `http://localhost:3000` in your web browser.
 - **About Ishant**: Profile photo frame, bio, roles, education, location, software tools, and creative specializations.
 - **"Request a New Title" Contact Form**: Interactive inquiry form with feedback status.
 
-### 2. Google Search Experience
-- **Google Homepage**: Multi-color *Ishant* brand logo, search bar with autocomplete suggestions, *Ishant Search*, *I'm Feeling Lucky* (opens a random project modal), and quick capability chips.
-- **Google Search Results**:
-  - **All Tab**: Search query stats, Proof of work featured snippet carousel, organic result cards with duration tags, expandable *People also ask* accordions, and sticky desktop *Knowledge Panel* with profile photo and direct action buttons.
-  - **Videos Tab**: Category filter chips (*All*, *3D Motion Graphics*, *Video Editing*, *Commercials*, *Reels & Shorts*) with responsive video card grid.
-  - **About Tab**: Expanded knowledge panel and biography breakdown.
-  - **Contact Tab**: Google Material-style contact form.
-
-### 3. Video Preview Modal
-- Universal modal supporting both Netflix dark mode and Google clean theme.
+### 2. Video Preview Modal
 - Displays project title, category, match rating, 4K UHD badge, tags, and full description.
 - Plays HTML5 `<video>` when mp4 files are present, or runs an interactive simulated preview with playback controls and scrub bar.
 - Fully accessible with keyboard ESC and backdrop dismiss.
@@ -58,18 +49,16 @@ Then open `http://localhost:3000` in your web browser.
 ├── package.json                         # npm start scripts
 ├── README.md                            # Documentation & asset specifications
 ├── css/
-│   ├── base.css                         # Global variables, typography, theme switcher bar
+│   ├── base.css                         # Global variables, typography
 │   ├── netflix.css                      # Netflix layout, hero carousel, rails, cards
-│   ├── google.css                       # Google search home, results, knowledge panel, tabs
-│   └── modal.css                        # Universal video player and project details modal
+│   └── modal.css                        # Video player and project details modal
 ├── js/
-│   ├── app.js                           # App orchestrator, hotkeys (Shift+T), theme state
+│   ├── app.js                           # App orchestrator
 │   ├── data/
 │   │   ├── config.js                    # Author bio, tools, profiles, asset paths
 │   │   └── projects.js                  # Projects catalog with titles, tags, and metadata
 │   └── components/
 │       ├── netflixTheme.js              # Netflix UI renderer & event handling
-│       ├── googleTheme.js               # Google UI renderer, search logic, tabs
 │       └── projectModal.js              # Video player and modal manager
 └── assets/
     ├── images/

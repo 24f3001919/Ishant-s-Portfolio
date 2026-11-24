@@ -91,17 +91,13 @@ class ProjectModalManager {
     return this.modalEl.classList.contains('active');
   }
 
-  open(projectId, theme = 'netflix') {
+  open(projectId) {
     const project = typeof projectId === 'string'
       ? PROJECTS.find(p => p.id === projectId)
       : PROJECTS[projectId];
 
     if (!project) return;
     this.currentProject = project;
-
-    // Set theme class
-    this.modalEl.classList.remove('theme-netflix', 'theme-google');
-    this.modalEl.classList.add(theme === 'google' ? 'theme-google' : 'theme-netflix');
 
     // Populate data
     const poster = this.modalEl.querySelector('.pv-player-poster');

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base Styles, Theme Switcher & Global Variables
+   Base Styles & Global Variables
    ========================================================================== */
 
 :root {
@@ -12,41 +12,36 @@
   --nf-border: #333333;
   --nf-green: #46d369;
 
-  --gg-bg: #ffffff;
-  --gg-text: #202124;
-  --gg-text-sub: #4d5156;
-  --gg-text-muted: #70757a;
-  --gg-blue: #1a73e8;
-  --gg-blue-hover: #1765c9;
-  --gg-border: #dadce0;
-  --gg-border-light: #ebebeb;
-  --gg-surface: #f8f9fa;
-
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
-  --font-brand: 'Poppins', sans-serif;
-
-  --switch-height: 48px;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 *, *::before, *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  background-color: var(--nf-bg);
+}
+
+body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100vh;
   font-family: var(--font-sans);
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--nf-bg);
+  color: var(--nf-text);
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body.profile-active {
+  overflow: hidden;
 }
 
 button {
@@ -61,135 +56,21 @@ a {
   text-decoration: none;
 }
 
-/* ==========================================================================
-   Top Theme Switcher Bar
-   ========================================================================== */
-
-.theme-switcher-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--switch-height);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  background: rgba(10, 10, 10, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 13px;
+/* Custom Scrollbar for the page */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-.theme-switcher-bar .brand-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #888888;
-  font-weight: 500;
+::-webkit-scrollbar-track {
+  background: #141414;
 }
 
-.theme-switcher-bar .brand-badge {
-  background: rgba(229, 9, 20, 0.2);
-  color: #ff3844;
-  border: 1px solid rgba(229, 9, 20, 0.4);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 2px 7px;
-  border-radius: 4px;
-  text-transform: uppercase;
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 5px;
 }
 
-.theme-switcher-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #1c1c1e;
-  padding: 3px;
-  border-radius: 999px;
-  border: 1px solid #333333;
-}
-
-.theme-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #aaaaaa;
-  background: transparent;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.theme-btn:hover {
-  color: #ffffff;
-}
-
-.theme-btn.active {
-  background: #ffffff;
-  color: #000000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.theme-btn svg {
-  width: 14px;
-  height: 14px;
-}
-
-.theme-action-pill {
-  color: #888;
-  font-size: 12px;
-}
-
-/* ==========================================================================
-   Theme Containers
-   ========================================================================== */
-
-.theme-view {
-  display: none;
-  position: absolute;
-  top: var(--switch-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-.theme-view.active {
-  display: block;
-}
-
-/* Custom Scrollbar */
-.theme-view::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.theme-view::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.theme-view::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-.theme-view::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-/* Utility Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.4s ease forwards;
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
 }

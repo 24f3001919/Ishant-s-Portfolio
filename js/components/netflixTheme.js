@@ -1,6 +1,6 @@
 /**
  * Netflix Theme Component
- * Handles Profile Selection, Hero Carousel, Category Rails, and Interactions
+ * Handles Profile Selection, Hero Carousel, Category Rails, and Smooth Page Scrolling
  */
 
 import { SITE_CONFIG } from '../data/config.js';
@@ -101,7 +101,7 @@ export class NetflixTheme {
       </header>
 
       <!-- Top 8 Projects This Week -->
-      <section class="nf-section-row first-row">
+      <section class="nf-section-row first-row" id="nf-top8-section">
         <div class="nf-row-header">
           <h2 class="nf-row-title">Top 8 Projects This Week</h2>
         </div>
@@ -211,7 +211,7 @@ export class NetflixTheme {
       <!-- Footer -->
       <footer class="nf-footer">
         <div>© 2026 ${SITE_CONFIG.author.name} · ${SITE_CONFIG.author.role}</div>
-        <div>Personal portfolio built with Netflix & Google Themes. All media placeholders prepared for final assets.</div>
+        <div>Cinematic Netflix-inspired creative portfolio. All media placeholders prepared for final assets.</div>
       </footer>
     `;
 
@@ -221,18 +221,21 @@ export class NetflixTheme {
 
   bindEvents() {
     // 1. Profile selection clicks
-    const profileOverlay = this.container.querySelector('#nf-profile-screen');
+    const profileOverlay = document.getElementById('nf-profile-screen');
     const profileCards = this.container.querySelectorAll('.nf-profile-card');
-    const skipBtn = this.container.querySelector('#nf-skip-profiles');
-    const switchProfileBtn = this.container.querySelector('#nf-switch-profile-btn');
-    const profilePill = this.container.querySelector('#nf-profile-pill');
+    const skipBtn = document.getElementById('nf-skip-profiles');
+    const switchProfileBtn = document.getElementById('nf-switch-profile-btn');
+    const profilePill = document.getElementById('nf-profile-pill');
 
     const selectProfile = (profile) => {
       this.currentProfile = profile;
       this.hasSelectedProfile = true;
-      profileOverlay.classList.add('hidden');
-      const avatarEl = this.container.querySelector('#nf-nav-avatar');
-      const nameEl = this.container.querySelector('#nf-nav-profile-name');
+      document.body.classList.remove('profile-active');
+      if (profileOverlay) {
+        profileOverlay.classList.add('hidden');
+      }
+      const avatarEl = document.getElementById('nf-nav-avatar');
+      const nameEl = document.getElementById('nf-nav-profile-name');
       if (avatarEl) avatarEl.src = profile.avatar;
       if (nameEl) nameEl.textContent = profile.name;
     };
@@ -255,20 +258,36 @@ export class NetflixTheme {
     }
 
     const showProfileSelector = () => {
-      profileOverlay.classList.remove('hidden');
+      document.body.classList.add('profile-active');
+      if (profileOverlay) {
+        profileOverlay.classList.remove('hidden');
+      }
     };
 
     if (switchProfileBtn) switchProfileBtn.addEventListener('click', showProfileSelector);
     if (profilePill) profilePill.addEventListener('click', showProfileSelector);
 
-    // 2. Smooth scrolling for nav links
+    // 2. Smooth scrolling for nav links on window
     this.container.querySelectorAll('[data-scroll-to]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = link.dataset.scrollTo;
-        const targetEl = this.container.querySelector(`#${targetId}`);
+        const targetEl = document.getElementById(targetId);
         if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const navHeight = document.getElementById('nf-nav')?.offsetHeight || 70;
+          const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = targetId === 'nf-hero-anchor' ? 0 : elementPosition - navHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          // Update active link styling
+          this.container.querySelectorAll('.nf-nav-links a').forEach(a => a.classList.remove('active'));
+          if (link.closest('.nf-nav-links')) {
+            link.classList.add('active');
+          }
         }
       });
     });
@@ -278,13 +297,13 @@ export class NetflixTheme {
       const playBtn = e.target.closest('[data-play-project]');
       if (playBtn) {
         e.stopPropagation();
-        projectModal.open(playBtn.dataset.playProject, 'netflix');
+        projectModal.open(playBtn.dataset.playProject);
         return;
       }
 
       const card = e.target.closest('.nf-card') || e.target.closest('.nf-top-item');
       if (card && card.dataset.projectId) {
-        projectModal.open(card.dataset.projectId, 'netflix');
+        projectModal.open(card.dataset.projectId);
         return;
       }
 
@@ -294,20 +313,20 @@ export class NetflixTheme {
       }
     });
 
-    // 4. Navbar scroll class
-    this.container.addEventListener('scroll', () => {
-      const nav = this.container.querySelector('#nf-nav');
+    // 4. Window scroll detection for navbar styling
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nf-nav');
       if (nav) {
-        nav.classList.toggle('scrolled', this.container.scrollTop > 50);
+        nav.classList.toggle('scrolled', window.scrollY > 40);
       }
-    });
+    }, { passive: true });
 
     // 5. Contact form submission
-    const form = this.container.querySelector('#nf-inquiry-form');
+    const form = document.getElementById('nf-inquiry-form');
     if (form) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const success = this.container.querySelector('#nf-form-success');
+        const success = document.getElementById('nf-form-success');
         if (success) {
           success.style.display = 'block';
           form.reset();
@@ -328,7 +347,7 @@ export class NetflixTheme {
     this.currentHeroIndex = index;
     const slides = this.container.querySelectorAll('.nf-hero-slide');
     const dots = this.container.querySelectorAll('.nf-hero-dot');
-    const np = this.container.querySelector('#nf-hero-np');
+    const np = document.getElementById('nf-hero-np');
 
     slides.forEach((s, idx) => {
       s.classList.toggle('active', idx === index);

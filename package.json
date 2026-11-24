@@ -1,7 +1,7 @@
 {
   "name": "ishant-portfolio",
   "version": "1.0.0",
-  "description": "Ishant's Personal Creative Portfolio with Netflix and Google Themes",
+  "description": "Ishant's Personal Creative Portfolio with Netflix Theme",
   "scripts": {
     "start": "npx serve -l 3000 .",
     "dev": "python3 -m http.server 3000"
@@ -9,7 +9,6 @@
   "keywords": [
     "portfolio",
     "netflix-theme",
-    "google-theme",
     "video-editor",
     "3d-motion-graphics"
   ],
