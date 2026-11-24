@@ -175,5 +175,28 @@ export const PROJECTS = [
     hasRealVideo: true,
     isHeroFeatured: false,
     isVertical: true
+  },
+
+  // ==========================================
+  // 5. Featured Long-Format Continue Watching
+  // ==========================================
+  {
+    id: "khatu-shyam-full-highlight",
+    title: "Khatu Shyam Bhajan Mahotsav – Full Event Highlight",
+    category: "Continue Watching",
+    formatLabel: "FEATURED LONG-FORMAT FILM",
+    duration: "06:30",
+    rawDurationSeconds: 390,
+    year: "2026",
+    match: "99% Match",
+    tags: ["Long-Format", "Event Film", "Khatu Shyam", "Devotional Kirtan", "Full Highlight", "Multi-Cam Edit"],
+    description: "Extended 6:30 long-format cinematic film capturing the sacred floral shringar, devotional bhajan performances, crowd energy, and spiritual atmosphere of the Khatu Shyam Mahotsav.",
+    fullDescription: "Master cinematic cut crafted for long-format storytelling. Features multi-sequence pacing, live audio mastering, devotional bhajan sync, slow-motion floral offerings, and seamless scene transitions capturing the full evening celebration.",
+    thumbnail: "assets/images/thumbnails/continue-watching-highlight.jpg",
+    videoUrl: "assets/videos/highlight-final-optimized.mp4",
+    hasRealVideo: true,
+    isVertical: false
   }
 ];
+
+export const CONTINUE_WATCHING_PROJECT = PROJECTS.find(p => p.id === "khatu-shyam-full-highlight");

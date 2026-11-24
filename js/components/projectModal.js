@@ -139,19 +139,15 @@ class ProjectModalManager {
       playBarBtn.textContent = '❚❚ Pause';
     });
 
-    videoEl.addEventListener('pause', () => {
-      this.isPlaying = false;
-      playerContainer.classList.remove('is-playing');
-      playActionBtn.textContent = '▶';
-      playBarBtn.textContent = '▶ Play Video';
-    });
-
     videoEl.addEventListener('ended', () => {
       this.isPlaying = false;
       playerContainer.classList.remove('is-playing');
       playActionBtn.textContent = '▶';
       playBarBtn.textContent = '▶ Replay';
       this.updateScrubber(100);
+      if (this.currentProject && this.currentProject.id === 'khatu-shyam-full-highlight') {
+        this.saveContinueWatchingProgress(videoEl.duration || 390, videoEl.duration || 390, true);
+      }
     });
 
     videoEl.addEventListener('timeupdate', () => {
@@ -161,6 +157,31 @@ class ProjectModalManager {
       const curr = this.formatTime(videoEl.currentTime);
       const dur = this.formatTime(videoEl.duration);
       timeIndicator.textContent = `${curr} / ${dur}`;
+
+      // Throttled persistence for Continue Watching
+      if (this.currentProject && this.currentProject.id === 'khatu-shyam-full-highlight') {
+        const now = Date.now();
+        if (!this._lastSaveTime || now - this._lastSaveTime > 600) {
+          this._lastSaveTime = now;
+          this.saveContinueWatchingProgress(videoEl.currentTime, videoEl.duration);
+        }
+      }
+    });
+
+    videoEl.addEventListener('pause', () => {
+      this.isPlaying = false;
+      playerContainer.classList.remove('is-playing');
+      playActionBtn.textContent = '▶';
+      playBarBtn.textContent = '▶ Play Video';
+      if (this.currentProject && this.currentProject.id === 'khatu-shyam-full-highlight') {
+        this.saveContinueWatchingProgress(videoEl.currentTime, videoEl.duration);
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if (this.currentProject && this.currentProject.id === 'khatu-shyam-full-highlight' && videoEl) {
+        this.saveContinueWatchingProgress(videoEl.currentTime, videoEl.duration);
+      }
     });
 
     // Scrubber click to seek
@@ -197,7 +218,7 @@ class ProjectModalManager {
     this.open(PROJECTS[nextIdx].id);
   }
 
-  open(projectId) {
+  open(projectId, options = {}) {
     const project = typeof projectId === 'string'
       ? PROJECTS.find(p => p.id === projectId)
       : PROJECTS[projectId];
@@ -261,6 +282,29 @@ class ProjectModalManager {
       videoEl.classList.add('has-source');
       poster.style.display = 'none';
       backdropBlur.style.display = 'block';
+
+      // Resume / seek handling for Continue Watching or options.startAt
+      const seekTarget = options.startAt !== undefined
+        ? options.startAt
+        : (project.id === 'khatu-shyam-full-highlight' ? (this.getContinueWatchingProgress()?.currentTime || 0) : 0);
+
+      const applySeek = () => {
+        if (seekTarget > 0 && seekTarget < (videoEl.duration || 390)) {
+          videoEl.currentTime = seekTarget;
+          const pct = (videoEl.currentTime / (videoEl.duration || 390)) * 100;
+          this.updateScrubber(pct);
+          timeIndicator.textContent = `${this.formatTime(videoEl.currentTime)} / ${this.formatTime(videoEl.duration || 390)}`;
+        }
+        if (options.autoplay) {
+          videoEl.play().catch(() => {});
+        }
+      };
+
+      if (videoEl.readyState >= 1) {
+        applySeek();
+      } else {
+        videoEl.addEventListener('loadedmetadata', applySeek, { once: true });
+      }
     } else {
       videoEl.removeAttribute('src');
       videoEl.classList.remove('has-source');
@@ -270,6 +314,43 @@ class ProjectModalManager {
 
     this.modalEl.classList.add('active');
     document.body.style.overflow = 'hidden';
+  }
+
+  getContinueWatchingProgress() {
+    try {
+      const raw = localStorage.getItem('ishant_cw_progress_v1');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  saveContinueWatchingProgress(currentTime, duration, forceCompleted = false) {
+    const dur = duration || 390;
+    const cur = Math.max(0, Math.min(currentTime || 0, dur));
+    const percent = Math.min(100, Math.round((cur / dur) * 100));
+    const isCompleted = forceCompleted || percent >= 95;
+    const state = {
+      currentTime: Math.floor(cur * 10) / 10,
+      duration: Math.round(dur),
+      percent: isCompleted ? 100 : percent,
+      completed: isCompleted,
+      updatedAt: Date.now()
+    };
+    try {
+      localStorage.setItem('ishant_cw_progress_v1', JSON.stringify(state));
+      window.dispatchEvent(new CustomEvent('continue-watching-updated', { detail: state }));
+    } catch (e) {}
+  }
+
+  close() {
+    const videoEl = this.modalEl.querySelector('.pv-video-element');
+    if (videoEl && this.currentProject && this.currentProject.id === 'khatu-shyam-full-highlight') {
+      this.saveContinueWatchingProgress(videoEl.currentTime, videoEl.duration || 390);
+    }
+    this.stopPlayback();
+    this.modalEl.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   togglePlayback() {
@@ -286,7 +367,6 @@ class ProjectModalManager {
       return;
     }
 
-    // Fallback simulated player
     if (this.isPlaying) {
       this.stopPlayback();
       playActionBtn.textContent = '▶';
@@ -335,12 +415,6 @@ class ProjectModalManager {
     if (scrubberFill) {
       scrubberFill.style.width = `${percent}%`;
     }
-  }
-
-  close() {
-    this.stopPlayback();
-    this.modalEl.classList.remove('active');
-    document.body.style.overflow = '';
   }
 }
 

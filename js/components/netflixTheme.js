@@ -10,7 +10,7 @@
  */
 
 import { SITE_CONFIG } from '../data/config.js';
-import { PROJECTS } from '../data/projects.js';
+import { PROJECTS, CONTINUE_WATCHING_PROJECT } from '../data/projects.js';
 import { projectModal } from './projectModal.js';
 
 export class NetflixTheme {
@@ -184,11 +184,11 @@ export class NetflixTheme {
           </div>
 
           <div class="nf-about-actions">
-            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-category-commercials">
+            <button class="nf-btn nf-btn-primary" data-scroll-to="nf-continue-watching">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
               </svg>
-              Explore Commercials
+              Continue Watching
             </button>
             <button class="nf-btn nf-btn-secondary" data-scroll-to="nf-contact-anchor">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -196,6 +196,64 @@ export class NetflixTheme {
               </svg>
               Get In Touch
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- Dedicated Continue Watching Section        -->
+      <!-- Featured Long-Format Production (06:30)    -->
+      <!-- ========================================== -->
+      <section class="nf-cw-section" id="nf-continue-watching">
+        <div class="nf-cw-header">
+          <div class="nf-cw-title-wrap">
+            <h2 class="nf-cw-title">CONTINUE WATCHING</h2>
+            <span class="nf-cw-badge">Featured Long-Format</span>
+          </div>
+          <div class="nf-cw-duration-chip">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            06:30 Master Cut
+          </div>
+        </div>
+
+        <div class="nf-cw-card" id="nf-cw-card">
+          <div class="nf-cw-thumb-box" id="nf-cw-thumb-box" data-play-project="${CONTINUE_WATCHING_PROJECT.id}" title="Click to play film">
+            <img class="nf-cw-thumb-img" src="${CONTINUE_WATCHING_PROJECT.thumbnail}" alt="${CONTINUE_WATCHING_PROJECT.title}">
+            <div class="nf-cw-thumb-overlay">
+              <div class="nf-cw-play-circle" id="nf-cw-play-circle" title="Play / Resume Film">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><polygon points="7 4 20 12 7 20 7 4"/></svg>
+              </div>
+            </div>
+            <div class="nf-cw-progress-wrap" title="Playback Progress">
+              <div class="nf-cw-progress-fill" id="nf-cw-progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="nf-cw-info">
+            <div class="nf-cw-meta">
+              <span class="match">${CONTINUE_WATCHING_PROJECT.match}</span>
+              <span class="badge-hd">HD 1080P</span>
+              <span class="duration-badge">${CONTINUE_WATCHING_PROJECT.duration}</span>
+              <span class="year">${CONTINUE_WATCHING_PROJECT.year}</span>
+              <span class="format-badge">Full Multi-Cam Highlight</span>
+            </div>
+            <h3 class="nf-cw-title-text">${CONTINUE_WATCHING_PROJECT.title}</h3>
+            <p class="nf-cw-desc">${CONTINUE_WATCHING_PROJECT.description}</p>
+            
+            <div class="nf-cw-status-row">
+              <span class="nf-cw-status-text" id="nf-cw-status-text">Ready to watch · 06:30</span>
+            </div>
+
+            <div class="nf-cw-actions">
+              <button class="nf-btn nf-btn-primary" id="nf-cw-resume-btn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                <span id="nf-cw-btn-label">Play Film</span>
+              </button>
+              <button class="nf-btn nf-btn-secondary" id="nf-cw-restart-btn" style="display: none;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                Start from Beginning
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -614,6 +672,96 @@ export class NetflixTheme {
         nav.classList.toggle('scrolled', window.scrollY > 40);
       }
     }, { passive: true });
+
+    // 9. Continue Watching Interactions & Sync
+    const cwThumb = document.getElementById('nf-cw-thumb-box');
+    const cwResumeBtn = document.getElementById('nf-cw-resume-btn');
+    const cwRestartBtn = document.getElementById('nf-cw-restart-btn');
+
+    if (cwThumb) {
+      cwThumb.addEventListener('click', (e) => {
+        e.stopPropagation();
+        projectModal.open(CONTINUE_WATCHING_PROJECT.id, { autoplay: true });
+      });
+    }
+
+    if (cwResumeBtn) {
+      cwResumeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        projectModal.open(CONTINUE_WATCHING_PROJECT.id, { autoplay: true });
+      });
+    }
+
+    if (cwRestartBtn) {
+      cwRestartBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        projectModal.open(CONTINUE_WATCHING_PROJECT.id, { startAt: 0, autoplay: true });
+      });
+    }
+
+    window.addEventListener('continue-watching-updated', () => {
+      this.updateContinueWatchingUI();
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'ishant_cw_progress_v1') {
+        this.updateContinueWatchingUI();
+      }
+    });
+
+    // Initial check on load
+    this.updateContinueWatchingUI();
+  }
+
+  formatTime(secs) {
+    if (isNaN(secs)) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  updateContinueWatchingUI() {
+    const card = document.getElementById('nf-cw-card');
+    if (!card) return;
+
+    const progressFill = document.getElementById('nf-cw-progress-fill');
+    const statusText = document.getElementById('nf-cw-status-text');
+    const btnLabel = document.getElementById('nf-cw-btn-label');
+    const restartBtn = document.getElementById('nf-cw-restart-btn');
+
+    let state = null;
+    try {
+      const raw = localStorage.getItem('ishant_cw_progress_v1');
+      if (raw) state = JSON.parse(raw);
+    } catch (e) {}
+
+    const totalDur = state?.duration || 390;
+    const curTime = state?.currentTime || 0;
+    const pct = state?.percent || 0;
+    const isCompleted = state?.completed || pct >= 95;
+
+    if (isCompleted) {
+      if (progressFill) progressFill.style.width = '100%';
+      if (statusText) {
+        statusText.innerHTML = '<span style="color: #46d369;">✓ Completed</span> · 06:30 Master Cut · Replay Available';
+      }
+      if (btnLabel) btnLabel.textContent = 'Replay Film';
+      if (restartBtn) restartBtn.style.display = 'none';
+    } else if (curTime >= 5 && pct < 95) {
+      if (progressFill) progressFill.style.width = `${pct}%`;
+      if (statusText) {
+        statusText.innerHTML = `<span style="color: #e50914;">▶ In Progress:</span> Watched ${this.formatTime(curTime)} of ${this.formatTime(totalDur)} (${pct}%)`;
+      }
+      if (btnLabel) btnLabel.textContent = `Resume at ${this.formatTime(curTime)}`;
+      if (restartBtn) restartBtn.style.display = 'inline-flex';
+    } else {
+      if (progressFill) progressFill.style.width = '0%';
+      if (statusText) {
+        statusText.innerHTML = 'Ready to watch · 06:30 Master Cut';
+      }
+      if (btnLabel) btnLabel.textContent = 'Play Film';
+      if (restartBtn) restartBtn.style.display = 'none';
+    }
   }
 
   startHeroCarousel() {
