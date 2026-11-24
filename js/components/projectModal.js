@@ -5,7 +5,7 @@
  * Video Buffering Indicators, Error Handling, and Resource Cleanup.
  */
 
-import { PROJECTS } from '../data/projects.js';
+import { PROJECTS, resolveVideoUrl } from '../data/projects.js';
 import { SITE_CONFIG } from '../data/config.js';
 
 class ProjectModalManager {
@@ -173,8 +173,10 @@ class ProjectModalManager {
     if (retryBtn) {
       retryBtn.addEventListener('click', () => {
         errorOverlay.style.display = 'none';
+        if (spinner) spinner.classList.add('is-buffering');
         if (this.currentProject && this.currentProject.videoUrl) {
-          videoEl.src = this.currentProject.videoUrl;
+          const finalUrl = resolveVideoUrl(this.currentProject.videoUrl);
+          videoEl.src = finalUrl + (finalUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
           videoEl.load();
           videoEl.play().catch(() => {});
         }
@@ -210,8 +212,17 @@ class ProjectModalManager {
 
     videoEl.addEventListener('error', () => {
       if (spinner) spinner.classList.remove('is-buffering');
-      if (videoEl.error && videoEl.currentSrc && this.isPlaying) {
-        if (errorOverlay) errorOverlay.style.display = 'flex';
+      if (errorOverlay) {
+        errorOverlay.style.display = 'flex';
+        const errorMsg = this.modalEl.querySelector('.pv-error-msg');
+        if (errorMsg) {
+          const isLfsPointer = videoEl.networkState === 3 || (videoEl.error && videoEl.error.code === 4);
+          if (isLfsPointer && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            errorMsg.innerHTML = 'Video stream is currently syncing from storage.<br><small style="color:#aaa;font-size:12px;margin-top:6px;display:block;">If you manage this site, enable Git LFS in Vercel Project Settings or configure mediaBaseUrl.</small>';
+          } else {
+            errorMsg.textContent = 'Video playback stream unavailable. Please retry.';
+          }
+        }
       }
     });
 
@@ -402,7 +413,8 @@ class ProjectModalManager {
 
     // Handle video player source
     if (project.hasRealVideo && project.videoUrl) {
-      videoEl.src = project.videoUrl;
+      const finalVideoUrl = resolveVideoUrl(project.videoUrl);
+      videoEl.src = finalVideoUrl;
       videoEl.classList.add('has-source');
       poster.style.display = 'block';
       backdropBlur.style.display = 'block';

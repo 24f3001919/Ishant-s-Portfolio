@@ -59,6 +59,10 @@ export const SITE_CONFIG = {
     // Dedicated showreel master video placement (Set to Showreel #1: Ramayan Walk)
     heroShowreel: "ramayana-forest-journey"
   },
+  // Production Media CDN / Object Storage Base URL
+  // Example: "https://pub-xxxxxx.r2.dev" or "https://media.yourdomain.com"
+  // When empty (""), relative paths are used (local media server or Vercel static with Git LFS enabled)
+  mediaBaseUrl: "",
   // Formspree endpoint (optional: provide Formspree Form ID e.g. "https://formspree.io/f/YOUR_ID")
   formspreeEndpoint: "",
 

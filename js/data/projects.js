@@ -4,6 +4,25 @@
  * Categorized into: Commercials, Events, 3D Motion Graphics, Personal Projects.
  */
 
+import { SITE_CONFIG } from './config.js';
+
+/**
+ * Resolves a video path to its production URL if mediaBaseUrl is configured,
+ * or returns the relative asset path for local / Git LFS static hosting.
+ */
+export function resolveVideoUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) {
+    return url;
+  }
+  if (SITE_CONFIG.mediaBaseUrl && SITE_CONFIG.mediaBaseUrl.trim().length > 0) {
+    const base = SITE_CONFIG.mediaBaseUrl.replace(/\/+$/, '');
+    const cleanPath = url.replace(/^\/+/, '');
+    return `${base}/${cleanPath}`;
+  }
+  return url;
+}
+
 export const PROJECTS = [
   // ==========================================
   // 1. Commercials

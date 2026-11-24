@@ -10,7 +10,7 @@
  */
 
 import { SITE_CONFIG } from '../data/config.js';
-import { PROJECTS, CONTINUE_WATCHING_PROJECT, SHOWREEL_PROJECTS } from '../data/projects.js';
+import { PROJECTS, CONTINUE_WATCHING_PROJECT, SHOWREEL_PROJECTS, resolveVideoUrl } from '../data/projects.js';
 import { projectModal } from './projectModal.js';
 
 export class NetflixTheme {
@@ -280,7 +280,7 @@ export class NetflixTheme {
           </button>
           <div class="nf-carousel-track nf-showreel-track">
             ${SHOWREEL_PROJECTS.map((p, idx) => `
-              <div class="nf-card nf-showreel-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${p.videoUrl || ''}">
+              <div class="nf-card nf-showreel-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${resolveVideoUrl(p.videoUrl) || ''}">
                 <div class="nf-showreel-rank-badge">0${idx + 1}</div>
                 <div class="nf-card-media-wrap">
                   <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
@@ -469,7 +469,7 @@ export class NetflixTheme {
 
   renderProjectCard(p) {
     return `
-      <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${p.videoUrl || ''}">
+      <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${resolveVideoUrl(p.videoUrl) || ''}">
         <div class="nf-card-media-wrap">
           <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
           ${p.hasRealVideo ? '<div class="nf-card-video-slot"></div>' : ''}
