@@ -798,24 +798,26 @@
    ========================================================================== */
 
 .nf-about-section {
-  padding: 30px 4% 50px 4%;
+  padding: 24px 4% 36px 4%;
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 48px;
-  align-items: center;
-  max-width: 1150px;
-  margin: 0 auto 30px auto;
+  grid-template-columns: 250px 1fr;
+  gap: 36px;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto 20px auto;
   position: relative;
   z-index: 5;
 }
 
 .nf-about-poster-wrap {
+  width: 100%;
+  max-width: 250px;
   aspect-ratio: 3 / 4;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(229, 9, 20, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(229, 9, 20, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background-color: #1c1c1e;
 }
 
@@ -829,18 +831,18 @@
 
 .nf-about-info h2 {
   font-family: var(--font-display);
-  font-size: clamp(48px, 6vw, 68px);
-  letter-spacing: 1.5px;
-  margin: 0 0 10px 0;
+  font-size: clamp(38px, 4.5vw, 54px);
+  letter-spacing: 1.2px;
+  margin: 0 0 6px 0;
   line-height: 1;
 }
 
 .nf-about-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  font-size: 14px;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
 }
 
 .nf-about-meta .match {
@@ -849,63 +851,170 @@
 }
 
 .nf-about-meta .badge {
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 1px 6px;
   border-radius: 3px;
   font-size: 11px;
 }
 
 .nf-about-bio {
-  color: #d2d2d2;
-  font-size: 16px;
-  line-height: 1.6;
-  margin: 0 0 24px 0;
-  max-width: 640px;
+  color: #d6d6d6;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0 0 16px 0;
+  max-width: 680px;
 }
 
 .nf-specs-list {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 12px 18px;
-  font-size: 14px;
-  margin: 0 0 24px 0;
+  grid-template-columns: 95px 1fr;
+  gap: 10px 16px;
+  font-size: 13.5px;
+  margin: 0 0 18px 0;
 }
 
 .nf-specs-list dt {
   color: #777777;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding-top: 2px;
 }
 
 .nf-specs-list dd {
   margin: 0;
   color: #ffffff;
+  line-height: 1.45;
+}
+
+.nf-spec-sub {
+  color: #8c8c8c;
+  font-size: 12.5px;
+}
+
+.nf-experience-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nf-exp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nf-exp-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nf-exp-period {
+  color: #999999;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.nf-exp-desc {
+  color: #b5b5b5;
+  font-size: 12.5px;
+}
+
+.nf-contact-link {
+  color: var(--nf-red);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nf-contact-link:hover {
+  text-decoration: underline;
+}
+
+.nf-sep {
+  color: #555555;
+  margin: 0 6px;
+}
+
+.nf-phone-val {
+  color: #dddddd;
+}
+
+/* Two Separated Skill Blocks */
+.nf-skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.nf-skills-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nf-skills-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nf-skills-label.software-label {
+  color: #5bb3e8;
+}
+
+.nf-skills-label.creative-label {
+  color: #e06d75;
 }
 
 .nf-pills-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
-.nf-pill {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+/* Cool-Toned Software Pills (Muted Teal/Blue) */
+.nf-pill-software {
+  background: rgba(33, 97, 156, 0.18);
+  border: 1px solid rgba(77, 155, 222, 0.35);
+  color: #bfe0ff;
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 12px;
-  color: #cccccc;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
 }
 
-.nf-pill.skill-pill {
-  background: rgba(229, 9, 20, 0.12);
-  border-color: rgba(229, 9, 20, 0.35);
-  color: #ffb4b7;
+.nf-pill-software:hover {
+  background: rgba(33, 97, 156, 0.3);
+  border-color: rgba(77, 155, 222, 0.6);
+}
+
+/* Warm-Toned Editing & Creative Pills (Muted Coral/Red) */
+.nf-pill-creative {
+  background: rgba(184, 45, 52, 0.16);
+  border: 1px solid rgba(229, 9, 20, 0.35);
+  color: #ffb8bb;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nf-pill-creative:hover {
+  background: rgba(184, 45, 52, 0.28);
+  border-color: rgba(229, 9, 20, 0.6);
 }
 
 .nf-about-actions {
   display: flex;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 14px;
+  margin-top: 18px;
   flex-wrap: wrap;
 }
 
@@ -1123,22 +1232,19 @@
   }
   .nf-about-section {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 24px 4% 40px 4%;
+    gap: 20px;
+    padding: 20px 4% 32px 4%;
   }
   .nf-about-poster-wrap {
-    max-width: 240px;
+    max-width: 200px;
     margin: 0 auto;
+  }
+  .nf-specs-list {
+    grid-template-columns: 80px 1fr;
+    gap: 8px 12px;
   }
   .nf-about-actions {
     justify-content: flex-start;
-  }
-  .nf-top-rank-number {
-    font-size: 140px;
-    margin-right: -16px;
-  }
-  .nf-top-poster {
-    width: 110px;
   }
   .nf-form-grid {
     grid-template-columns: 1fr;

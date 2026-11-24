@@ -129,46 +129,58 @@ export class NetflixTheme {
             <span class="badge-hd">RAIPUR, CHHATTISGARH</span>
             <span>2026</span>
           </div>
-          <p class="nf-about-bio">${SITE_CONFIG.author.bio}</p>
+          <p class="nf-about-bio">Video Editor and Motion Graphics Artist with 2+ years of experience creating engaging visual content for brands, events and social media. Currently pursuing a B.Sc. in 3D Animation and VFX at AAFT University of Media and Arts.</p>
 
           <dl class="nf-specs-list">
-            <dt>Role</dt>
-            <dd>${SITE_CONFIG.author.role}</dd>
             <dt>Education</dt>
             <dd>
               <strong>B.Sc. in 3D Animation and VFX</strong> (2023 – 2027)<br>
-              AAFT University of Media and Arts, Raipur, Chhattisgarh<br>
-              <span style="color:#888; font-size:12px;">Higher Secondary (2022–2023), CGBSE</span>
+              <span class="nf-spec-sub">AAFT University of Media and Arts, Raipur</span>
             </dd>
             <dt>Experience</dt>
-            <dd>
-              <strong>Freelance Video Editor &amp; Motion Graphics Artist</strong> (2025 – 2026)<br>
-              <span style="color:#bbb; font-size:13px;">Social media edits, event coverage &amp; audience-focused pacing</span><br>
-              <strong>Video Editor &amp; Social Media Handler</strong> — Elvn8 Clothing Brand (Nov 2025 – May 2026)<br>
-              <span style="color:#bbb; font-size:13px;">Primary editor &amp; social handler; creative trend-led content strategy</span>
-            </dd>
-            <dt>Selected Work</dt>
-            <dd>
-              • Promotional Reel — FarmHouse | Villa Omnia<br>
-              • Rajyostav Mela, Raipur — Event video coverage &amp; visual highlights
+            <dd class="nf-experience-compact">
+              <div class="nf-exp-item">
+                <div class="nf-exp-header">
+                  <strong>Freelance Video Editor &amp; Motion Graphics Artist</strong>
+                  <span class="nf-exp-period">2025–2026</span>
+                </div>
+                <div class="nf-exp-desc">• Video editing, motion graphics and social media content.</div>
+              </div>
+              <div class="nf-exp-item">
+                <div class="nf-exp-header">
+                  <strong>Video Editor &amp; Social Media Handler | Elvn8 Clothing Brand</strong>
+                  <span class="nf-exp-period">Nov 2025 – May 2026</span>
+                </div>
+                <div class="nf-exp-desc">• Editing and social media content strategy.</div>
+              </div>
             </dd>
             <dt>Location</dt>
             <dd>${SITE_CONFIG.author.location}</dd>
-            <dt>Languages</dt>
-            <dd>${SITE_CONFIG.author.languages.join(' · ')}</dd>
             <dt>Contact</dt>
             <dd>
-              <a href="mailto:${SITE_CONFIG.author.email}" style="color:var(--nf-red); text-decoration:none;">${SITE_CONFIG.author.email}</a>
-              · <span>${SITE_CONFIG.author.phone}</span>
+              <a href="mailto:${SITE_CONFIG.author.email}" class="nf-contact-link">${SITE_CONFIG.author.email}</a>
+              <span class="nf-sep">·</span>
+              <span class="nf-phone-val">${SITE_CONFIG.author.phone}</span>
             </dd>
           </dl>
 
-          <div style="margin-bottom: 12px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
-            Core Software &amp; Editing Skills
-          </div>
-          <div class="nf-pills-wrap">
-            ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill">${s}</span>`).join('')}
-            ${SITE_CONFIG.author.skills.map(s => `<span class="nf-pill skill-pill">${s}</span>`).join('')}
+          <!-- Separate Skill Blocks -->
+          <div class="nf-skills-container">
+            <!-- 1. Core Software (Cool-Toned Palette: Muted Teal/Blue) -->
+            <div class="nf-skills-block">
+              <div class="nf-skills-label software-label">Core Software</div>
+              <div class="nf-pills-wrap">
+                ${SITE_CONFIG.author.software.map(s => `<span class="nf-pill nf-pill-software">${s}</span>`).join('')}
+              </div>
+            </div>
+
+            <!-- 2. Editing & Creative Skills (Warm-Toned Palette: Muted Coral/Red) -->
+            <div class="nf-skills-block">
+              <div class="nf-skills-label creative-label">Editing &amp; Creative Skills</div>
+              <div class="nf-pills-wrap">
+                ${SITE_CONFIG.author.skills.map(s => `<span class="nf-pill nf-pill-creative">${s}</span>`).join('')}
+              </div>
+            </div>
           </div>
 
           <div class="nf-about-actions">
