@@ -278,7 +278,7 @@ export class NetflixTheme {
       <section class="nf-section-row" id="nf-category-commercials">
         <div class="nf-row-header">
           <h2 class="nf-row-title">Commercials</h2>
-          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Commercials').length} Projects</span>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Commercials').length} ${PROJECTS.filter(p => p.category === 'Commercials').length === 1 ? 'Project' : 'Projects'}</span>
         </div>
         <div class="nf-carousel-wrapper">
           <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
@@ -297,7 +297,7 @@ export class NetflixTheme {
       <section class="nf-section-row" id="nf-category-events">
         <div class="nf-row-header">
           <h2 class="nf-row-title">Events</h2>
-          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Events').length} Projects</span>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Events').length} ${PROJECTS.filter(p => p.category === 'Events').length === 1 ? 'Project' : 'Projects'}</span>
         </div>
         <div class="nf-carousel-wrapper">
           <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
@@ -316,7 +316,7 @@ export class NetflixTheme {
       <section class="nf-section-row" id="nf-category-3d-motion-graphics">
         <div class="nf-row-header">
           <h2 class="nf-row-title">3D Motion Graphics</h2>
-          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === '3D Motion Graphics').length} Projects</span>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === '3D Motion Graphics').length} ${PROJECTS.filter(p => p.category === '3D Motion Graphics').length === 1 ? 'Project' : 'Projects'}</span>
         </div>
         <div class="nf-carousel-wrapper">
           <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
@@ -335,7 +335,7 @@ export class NetflixTheme {
       <section class="nf-section-row" id="nf-category-personal-projects">
         <div class="nf-row-header">
           <h2 class="nf-row-title">Personal Projects</h2>
-          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Personal Projects').length} Projects</span>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Personal Projects').length} ${PROJECTS.filter(p => p.category === 'Personal Projects').length === 1 ? 'Project' : 'Projects'}</span>
         </div>
         <div class="nf-carousel-wrapper">
           <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
