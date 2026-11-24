@@ -99,7 +99,7 @@
   100% { opacity: 0.3; }
 }
 
-/* Master Brand Lockup */
+/* Master Brand Lockup - Centered using bounding box of entire ISHANT wordmark */
 .nf-brand-lockup {
   position: relative;
   display: flex;
@@ -107,73 +107,22 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-/* Wordmark Track - Flex container holding Left Letters, Ribbon N, and Right Letter */
+/* Wordmark Track - Single flat flex container holding all 6 letters (I, S, H, A, N, T) with zero phantom widths */
 .nf-wordmark-track {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: clamp(3px, 0.8vw, 6px);
   position: relative;
+  margin: 0;
+  padding: 0;
 }
 
-/* Left Group (I, S, H, A) - Expands smoothly from N */
-.nf-letters-group.nf-letters-left {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: clamp(3px, 0.8vw, 6px);
-  width: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  will-change: width, opacity;
-  animation: expandLeftGroup 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
-}
-
-@keyframes expandLeftGroup {
-  0% {
-    width: 0;
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    width: clamp(170px, 32vw, 240px);
-    opacity: 1;
-  }
-}
-
-/* Right Group (T) - Expands smoothly from N */
-.nf-letters-group.nf-letters-right {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  will-change: width, opacity;
-  animation: expandRightGroup 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
-}
-
-@keyframes expandRightGroup {
-  0% {
-    width: 0;
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    width: clamp(40px, 8vw, 60px);
-    opacity: 1;
-  }
-}
-
-/* Letter Characters */
+/* Letter Characters (I, S, H, A, T) */
 .nf-char {
   font-family: var(--font-display);
   font-size: clamp(56px, 11vw, 92px);
@@ -185,19 +134,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  will-change: transform;
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
-.nf-char-i { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.85s both; }
-.nf-char-s { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both; }
-.nf-char-h { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.65s both; }
-.nf-char-a { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s both; }
-.nf-char-t { animation: letterSlideFromNRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s both; }
+/* Letters glide in from N to complete the cohesive wordmark */
+.nf-char-i { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.85s forwards; }
+.nf-char-s { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.75s forwards; }
+.nf-char-h { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.65s forwards; }
+.nf-char-a { animation: letterSlideFromNLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards; }
+.nf-char-t { animation: letterSlideFromNRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards; }
 
 @keyframes letterSlideFromNLeft {
   0% {
-    transform: translateX(24px);
-    opacity: 0.4;
+    transform: translateX(20px);
+    opacity: 0;
   }
   100% {
     transform: translateX(0);
@@ -207,8 +158,8 @@
 
 @keyframes letterSlideFromNRight {
   0% {
-    transform: translateX(-24px);
-    opacity: 0.4;
+    transform: translateX(-20px);
+    opacity: 0;
   }
   100% {
     transform: translateX(0);

@@ -35,16 +35,13 @@ export class WelcomeIntro {
         <!-- Clean, Subtle, Symmetrical Ambient Radial Glow -->
         <div class="nf-intro-ambient-glow"></div>
 
-        <!-- Master Brand Lockup (N is at exact viewport center, then ISHANT expands around it) -->
+        <!-- Master Brand Lockup (Centered using bounding box of entire ISHANT wordmark) -->
         <div class="nf-brand-lockup">
           <div class="nf-wordmark-track">
-            <!-- Left Letters: I S H A -->
-            <div class="nf-letters-group nf-letters-left">
-              <span class="nf-char nf-char-i">I</span>
-              <span class="nf-char nf-char-s">S</span>
-              <span class="nf-char nf-char-h">H</span>
-              <span class="nf-char nf-char-a">A</span>
-            </div>
+            <span class="nf-char nf-char-i">I</span>
+            <span class="nf-char nf-char-s">S</span>
+            <span class="nf-char nf-char-h">H</span>
+            <span class="nf-char nf-char-a">A</span>
 
             <!-- The Persistent Dimensional Red Ribbon N -->
             <div class="nf-ribbon-n-cell">
@@ -73,10 +70,7 @@ export class WelcomeIntro {
               </svg>
             </div>
 
-            <!-- Right Letter: T -->
-            <div class="nf-letters-group nf-letters-right">
-              <span class="nf-char nf-char-t">T</span>
-            </div>
+            <span class="nf-char nf-char-t">T</span>
           </div>
 
           <!-- Centered Subtitle -->
