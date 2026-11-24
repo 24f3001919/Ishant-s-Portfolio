@@ -1,6 +1,6 @@
 /**
  * Netflix-Style Welcome Intro Animation Component
- * The Red Light Sequence: Black Screen -> Anamorphic Beam -> ISHANT Illumination -> Seamless Profile Transition
+ * Original Concept Restored: Black Screen -> Dimensional Ribbon N -> ISHANT Wordmark -> Sharp Profile Reveal
  */
 
 export class WelcomeIntro {
@@ -33,21 +33,45 @@ export class WelcomeIntro {
       <button class="nf-intro-skip-btn" id="nf-skip-intro" aria-label="Skip Introduction">Skip Intro ✕</button>
       <div class="nf-intro-stage">
         <!-- Ambient Red Atmosphere -->
-        <div class="nf-ambient-flare"></div>
+        <div class="nf-intro-ambient-glow"></div>
 
-        <!-- Anamorphic Horizontal Red Light Beam -->
-        <div class="nf-light-beam"></div>
+        <!-- Vertical Light Streaks -->
+        <div class="nf-vertical-streaks">
+          <div class="nf-light-column-left"></div>
+          <div class="nf-light-column-right"></div>
+        </div>
 
-        <!-- ISHANT Wordmark with Light Sweep & Studio Reflection -->
-        <div class="nf-brand-container">
-          <div class="nf-brand-reveal">
-            <h1 class="nf-brand-text">ISHANT</h1>
-            <div class="nf-light-sweep"></div>
-          </div>
-          <div class="nf-brand-reflection" aria-hidden="true">
-            <div class="nf-brand-text">ISHANT</div>
-          </div>
-          <div class="nf-brand-sub">Video Editor &amp; 3D Motion Graphics</div>
+        <!-- Phase 1: Dimensional Red Ribbon N Logo -->
+        <div class="nf-intro-n-wrap">
+          <svg class="nf-intro-n-svg" viewBox="0 0 120 180" width="120" height="180">
+            <defs>
+              <linearGradient id="nLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#b1060f"/>
+                <stop offset="100%" stop-color="#e50914"/>
+              </linearGradient>
+              <linearGradient id="nDiag" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff1e27"/>
+                <stop offset="50%" stop-color="#e50914"/>
+                <stop offset="100%" stop-color="#b1060f"/>
+              </linearGradient>
+              <linearGradient id="nRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#83060c"/>
+                <stop offset="100%" stop-color="#b1060f"/>
+              </linearGradient>
+              <filter id="nShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="-4" dy="0" stdDeviation="6" flood-color="#000000" flood-opacity="0.85"/>
+              </filter>
+            </defs>
+            <rect class="n-stem-left" x="10" y="10" width="30" height="160" fill="url(#nLeft)"/>
+            <rect class="n-stem-right" x="80" y="10" width="30" height="160" fill="url(#nRight)"/>
+            <polygon class="n-diagonal" points="10,10 40,10 110,170 80,170" fill="url(#nDiag)" filter="url(#nShadow)"/>
+          </svg>
+        </div>
+
+        <!-- Phase 2: Bold Red ISHANT Wordmark -->
+        <div class="nf-intro-wordmark-wrap">
+          <h1 class="nf-intro-wordmark">ISHANT</h1>
+          <div class="nf-intro-subtitle">Video Editor &amp; 3D Motion Graphics</div>
         </div>
       </div>
     `;
@@ -63,10 +87,10 @@ export class WelcomeIntro {
       });
     }
 
-    // Schedule sequence completion (~2.7s reveal, then 450ms clean fade)
+    // Schedule sequence completion (~2.75s, followed by 450ms clean opacity fade)
     this.timeoutId = setTimeout(() => {
       this.finish(false);
-    }, 2700);
+    }, 2750);
   }
 
   finish(instant = false) {
