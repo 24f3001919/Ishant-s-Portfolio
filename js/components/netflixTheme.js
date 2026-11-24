@@ -276,44 +276,38 @@ export class NetflixTheme {
 
       <!-- Contact Section -->
       <section class="nf-contact-section" id="nf-contact-anchor">
-        <h2>GET IN TOUCH</h2>
-        <p class="sub">Have a commercial, event film, or creative project in mind? Reach out to Ishant directly.</p>
-
-        <!-- Direct Contact Info Strip -->
-        <div class="nf-contact-details-bar">
-          <div class="nf-contact-card">
-            <div class="nf-contact-label">EMAIL</div>
-            <a href="mailto:${SITE_CONFIG.author.email}" class="nf-contact-value">${SITE_CONFIG.author.email}</a>
-          </div>
-          <div class="nf-contact-card">
-            <div class="nf-contact-label">PHONE</div>
-            <a href="tel:${SITE_CONFIG.author.phone}" class="nf-contact-value">${SITE_CONFIG.author.phone}</a>
-          </div>
-          <div class="nf-contact-card">
-            <div class="nf-contact-label">LOCATION</div>
-            <div class="nf-contact-value">${SITE_CONFIG.author.location}</div>
-          </div>
-          <div class="nf-contact-card">
-            <div class="nf-contact-label">ACADEMIC REFERENCE</div>
-            <div class="nf-contact-value" style="font-size: 13px;">${SITE_CONFIG.author.reference.name} (${SITE_CONFIG.author.reference.title}, ${SITE_CONFIG.author.reference.institution})</div>
-          </div>
+        <div class="nf-contact-header">
+          <h2>GET IN TOUCH</h2>
+          <p class="sub">Have a commercial, event film, or creative project in mind? Send Ishant an inquiry.</p>
         </div>
 
         <form class="nf-contact-form" id="nf-inquiry-form">
           <div class="nf-form-grid">
-            <input class="nf-input" type="text" name="name" placeholder="Your name" required>
-            <input class="nf-input" type="email" name="email" placeholder="Email address" required>
-            <select class="nf-select nf-form-full" name="projectType">
-              <option value="Commercials">Commercials &amp; Brand Ads</option>
-              <option value="Events">Event Coverage &amp; Wedding Films</option>
-              <option value="3D Motion Graphics">3D Motion Graphics &amp; VFX</option>
-              <option value="Personal Projects">Personal / Creative Projects</option>
-            </select>
-            <textarea class="nf-textarea nf-form-full" name="message" rows="4" placeholder="Tell me about your project, timeline, and requirements..." required></textarea>
+            <div class="nf-input-group">
+              <label for="contact-name" class="nf-input-label">Your Name</label>
+              <input class="nf-input" id="contact-name" type="text" name="name" placeholder="Your name" required>
+            </div>
+            <div class="nf-input-group">
+              <label for="contact-email" class="nf-input-label">Email Address</label>
+              <input class="nf-input" id="contact-email" type="email" name="email" placeholder="name@example.com" required>
+            </div>
+            <div class="nf-input-group nf-form-full">
+              <label for="contact-project-type" class="nf-input-label">Project Type</label>
+              <select class="nf-select" id="contact-project-type" name="projectType">
+                <option value="Commercials">Commercials &amp; Brand Ads</option>
+                <option value="Events">Events &amp; Celebration Films</option>
+                <option value="3D Motion Graphics">3D Motion Graphics &amp; VFX</option>
+                <option value="Personal Projects">Personal / Creative Projects</option>
+              </select>
+            </div>
+            <div class="nf-input-group nf-form-full">
+              <label for="contact-message" class="nf-input-label">Project Description / Message</label>
+              <textarea class="nf-textarea" id="contact-message" name="message" rows="5" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
+            </div>
             <div class="nf-form-full">
-              <button type="submit" class="nf-submit-btn">Send Message</button>
+              <button type="submit" class="nf-submit-btn">Submit Inquiry</button>
               <div class="nf-form-feedback" id="nf-form-success">
-                ✓ Message received! Thank you for reaching out to Ishant.
+                ✓ Inquiry received! Thank you for reaching out to Ishant.
               </div>
             </div>
           </div>

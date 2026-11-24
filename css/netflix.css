@@ -1072,115 +1072,125 @@
 }
 
 /* ==========================================================================
-   7. Contact Section & Direct Details Strip
+   7. Contact Section & Centered Inquiry Form
    ========================================================================== */
 
 .nf-contact-section {
-  padding: 40px 4% 80px 4%;
-  max-width: 860px;
+  padding: 40px 4% 90px 4%;
+  max-width: 640px;
   margin: 0 auto;
+  text-align: center;
 }
 
-.nf-contact-details-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
-  margin-bottom: 30px;
-}
-
-.nf-contact-card {
-  background: #1c1c1f;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.nf-contact-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: #777777;
-  text-transform: uppercase;
-}
-
-.nf-contact-value {
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  word-break: break-all;
-}
-
-.nf-contact-value a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.nf-contact-section h2 {
+.nf-contact-header h2 {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 56px);
+  font-size: clamp(38px, 5vw, 52px);
   margin: 0 0 8px 0;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
+  color: #ffffff;
 }
 
-.nf-contact-section .sub {
-  color: #aaaaaa;
+.nf-contact-header .sub {
+  color: #a0a0a0;
   font-size: 15px;
-  margin: 0 0 28px 0;
+  line-height: 1.5;
+  margin: 0 auto 32px auto;
+  max-width: 520px;
+}
+
+.nf-contact-form {
+  text-align: left;
+  background: rgba(22, 22, 24, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 32px 28px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
 .nf-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 18px 14px;
 }
 
 .nf-form-full {
   grid-column: 1 / -1;
 }
 
+.nf-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nf-input-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #b0b0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
 .nf-input,
 .nf-select,
 .nf-textarea {
   width: 100%;
-  padding: 16px;
+  padding: 13px 16px;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14.5px;
   color: #ffffff;
-  background: #333333;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 5px;
   outline: none;
-  transition: background 0.2s, border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.nf-input::placeholder,
+.nf-textarea::placeholder {
+  color: #666666;
 }
 
 .nf-input:focus,
 .nf-select:focus,
 .nf-textarea:focus {
-  background: #444444;
-  border-color: #777777;
+  background: #202024;
+  border-color: var(--nf-red);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
 }
 
 .nf-select option {
-  background: #222222;
+  background: #1f1f23;
   color: #ffffff;
 }
 
 .nf-submit-btn {
+  width: 100%;
   background: var(--nf-red);
   color: #ffffff;
-  padding: 14px 34px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 4px;
-  transition: background 0.2s;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(229, 9, 20, 0.35);
+  margin-top: 6px;
 }
 
 .nf-submit-btn:hover {
-  background: var(--nf-red-hover);
+  background: #ff121f;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(229, 9, 20, 0.5);
+}
+
+.nf-submit-btn:active {
+  transform: translateY(0);
 }
 
 .nf-form-feedback {
@@ -1188,7 +1198,12 @@
   color: var(--nf-green);
   font-size: 14px;
   margin-top: 14px;
-  font-weight: 500;
+  text-align: center;
+  font-weight: 600;
+}
+
+.nf-form-feedback.visible {
+  display: block;
 }
 
 /* ==========================================================================
@@ -1255,6 +1270,9 @@
 }
 
 @media (max-width: 600px) {
+  .nf-contact-form {
+    padding: 24px 18px;
+  }
   .nf-profiles-grid {
     gap: 20px 24px;
     max-width: 330px;
