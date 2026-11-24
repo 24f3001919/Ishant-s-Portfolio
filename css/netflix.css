@@ -206,14 +206,18 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 4%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
-  transition: background-color 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .nf-navbar.scrolled {
-  background: #141414;
+  background: rgba(14, 14, 14, 0.96);
   padding: 10px 4%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nf-navbar-left {
@@ -236,7 +240,7 @@
 .nf-nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -244,16 +248,33 @@
 
 .nf-nav-links li a {
   font-size: 14px;
-  font-weight: 400;
-  color: #e5e5e5;
+  font-weight: 500;
+  color: #b3b3b3;
   cursor: pointer;
-  transition: color 0.2s;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
 }
 
-.nf-nav-links li a:hover,
+.nf-nav-links li a:hover {
+  color: #ffffff;
+}
+
 .nf-nav-links li a.active {
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.nf-nav-links li a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--nf-red);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.7);
 }
 
 .nf-navbar-right {
@@ -584,6 +605,51 @@
   position: relative;
 }
 
+.nf-carousel-nav-btn {
+  position: absolute;
+  top: 24px;
+  bottom: 36px;
+  width: 44px;
+  background: rgba(18, 18, 18, 0.78);
+  backdrop-filter: blur(8px);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 25;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nf-carousel-wrapper:hover .nf-carousel-nav-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nf-carousel-nav-btn:hover {
+  background: rgba(229, 9, 20, 0.88);
+}
+
+.nf-carousel-nav-btn:disabled {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.nf-carousel-prev {
+  left: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.nf-carousel-next {
+  right: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
 .nf-carousel-track {
   display: flex;
   gap: 12px;
@@ -615,17 +681,52 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
 }
 
-/* Dedicated Vertical Aspect Ratio for Reels & Shorts Rails */
+/* Vertical 9:16 Cards (Reels, Mobile Ads & Highlights) */
+.nf-card.is-vertical-card,
 .nf-reels-rail .nf-card {
-  flex: 0 0 180px;
+  flex: 0 0 190px;
   aspect-ratio: 9 / 16;
 }
 
+.nf-card.is-vertical-card .nf-card-title-overlay,
 .nf-reels-rail .nf-card .nf-card-title-overlay {
-  font-size: 20px;
+  font-size: 19px;
   bottom: 10px;
   left: 10px;
-  line-height: 1.1;
+  line-height: 1.15;
+}
+
+.nf-card-media-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.nf-card-video-slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  background: #000000;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nf-card.has-preview .nf-card-video-slot {
+  opacity: 1;
+}
+
+.nf-hover-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nf-card.has-preview .nf-card-title-overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .nf-card-thumb {
@@ -1234,11 +1335,56 @@
    ========================================================================== */
 
 @media (max-width: 900px) {
+  .nf-navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 4% 8px 4%;
+    gap: 8px;
+  }
   .nf-navbar-left {
-    gap: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+  .nf-navbar-right {
+    display: none;
   }
   .nf-nav-links {
-    display: none; /* Mobile nav menu can be toggled or minimalist */
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 8px;
+    padding: 2px 0 6px 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nf-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+  .nf-nav-links li a {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    display: inline-block;
+  }
+  .nf-nav-links li a.active {
+    background: var(--nf-red);
+    color: #ffffff;
+  }
+  .nf-nav-links li a.active::after {
+    display: none;
+  }
+  .nf-carousel-nav-btn {
+    display: none;
+  }
+  .nf-card {
+    flex: 0 0 210px;
+  }
+  .nf-card.is-vertical-card {
+    flex: 0 0 160px;
   }
   .nf-hero {
     height: auto;
@@ -1270,6 +1416,12 @@
 }
 
 @media (max-width: 600px) {
+  .nf-card {
+    flex: 0 0 175px;
+  }
+  .nf-card.is-vertical-card {
+    flex: 0 0 135px;
+  }
   .nf-contact-form {
     padding: 24px 18px;
   }

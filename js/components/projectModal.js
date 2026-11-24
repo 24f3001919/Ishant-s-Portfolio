@@ -1,6 +1,7 @@
 /**
  * Project Details & Video Preview Modal Component
- * Netflix-Style Cinematic Modal with Vertical & Landscape Video Support
+ * Netflix-Style Cinematic Modal with Vertical & Landscape Video Support,
+ * Previous / Next Project Navigation, and Keyboard Controls
  */
 
 import { PROJECTS } from '../data/projects.js';
@@ -21,13 +22,21 @@ class ProjectModalManager {
     this.modalEl = document.createElement('div');
     this.modalEl.className = 'pv-modal-overlay';
     this.modalEl.innerHTML = `
-      <div class="pv-modal-box" role="dialog" aria-modal="true">
-        <button class="pv-modal-close-btn" aria-label="Close modal">✕</button>
+      <div class="pv-modal-box" role="dialog" aria-modal="true" aria-labelledby="pv-title">
+        <!-- Close & Navigation Controls -->
+        <button class="pv-modal-close-btn" aria-label="Close modal (Esc)" title="Close (Esc)">✕</button>
+        <button class="pv-nav-arrow pv-nav-prev" aria-label="Previous project (Left Arrow)" title="Previous Project (←)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="pv-nav-arrow pv-nav-next" aria-label="Next project (Right Arrow)" title="Next Project (→)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+
         <div class="pv-player-container" id="pv-player-container">
           <!-- Ambient blurred backdrop for atmospheric glow -->
           <img class="pv-player-backdrop-blur" src="" alt="" aria-hidden="true">
           <img class="pv-player-poster" src="" alt="Project Poster">
-          <video class="pv-video-element" playsinline controls controlsList="nodownload"></video>
+          <video class="pv-video-element" playsinline controls controlsList="nodownload" preload="metadata"></video>
           <div class="pv-player-vignette"></div>
           <div class="pv-player-controls-overlay">
             <div class="pv-player-top-bar">
@@ -35,10 +44,10 @@ class ProjectModalManager {
               <span class="pv-ratio-badge">VERTICAL 9:16</span>
             </div>
             <div class="pv-player-center-action">
-              <button class="pv-play-action-btn" aria-label="Play Video">▶</button>
+              <button class="pv-play-action-btn" aria-label="Play Video (Spacebar)" title="Play / Pause (Spacebar)">▶</button>
             </div>
             <div class="pv-player-bottom-bar">
-              <h2 class="pv-player-title"></h2>
+              <h2 class="pv-player-title" id="pv-title"></h2>
               <div class="pv-scrubber-track">
                 <div class="pv-scrubber-fill"></div>
               </div>
@@ -52,18 +61,19 @@ class ProjectModalManager {
         <div class="pv-modal-body">
           <div class="pv-modal-meta-row">
             <span class="pv-meta-match"></span>
-            <span class="pv-meta-year"></span>
-            <span class="pv-meta-duration"></span>
-            <span class="pv-meta-hd">4K UHD</span>
             <span class="pv-meta-category"></span>
+            <span class="pv-meta-duration"></span>
+            <span class="pv-meta-hd">HD 1080P</span>
+            <span class="pv-meta-year"></span>
           </div>
           <p class="pv-modal-desc"></p>
           <div class="pv-tags-container">
-            <span class="pv-tag-label">Tools & Tags:</span>
+            <span class="pv-tag-label">Tags &amp; Focus:</span>
             <div class="pv-tags-list"></div>
           </div>
           <div class="pv-modal-actions">
-            <button class="pv-btn pv-btn-play">▶ Play Full Preview</button>
+            <button class="pv-btn pv-btn-play">▶ Play Video</button>
+            <div class="pv-modal-nav-hint">Tip: Use <b>←</b> and <b>→</b> keys to switch projects</div>
           </div>
         </div>
       </div>
@@ -75,6 +85,17 @@ class ProjectModalManager {
     const closeBtn = this.modalEl.querySelector('.pv-modal-close-btn');
     closeBtn.addEventListener('click', () => this.close());
 
+    const prevBtn = this.modalEl.querySelector('.pv-nav-prev');
+    const nextBtn = this.modalEl.querySelector('.pv-nav-next');
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.navigateProject(-1);
+    });
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.navigateProject(1);
+    });
+
     this.modalEl.addEventListener('click', (e) => {
       if (e.target === this.modalEl) {
         this.close();
@@ -82,8 +103,19 @@ class ProjectModalManager {
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isOpen()) {
+      if (!this.isOpen()) return;
+
+      if (e.key === 'Escape') {
         this.close();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        this.navigateProject(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        this.navigateProject(1);
+      } else if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        this.togglePlayback();
       }
     });
 
@@ -111,7 +143,7 @@ class ProjectModalManager {
       this.isPlaying = false;
       playerContainer.classList.remove('is-playing');
       playActionBtn.textContent = '▶';
-      playBarBtn.textContent = '▶ Play Full Preview';
+      playBarBtn.textContent = '▶ Play Video';
     });
 
     videoEl.addEventListener('ended', () => {
@@ -157,6 +189,14 @@ class ProjectModalManager {
     return this.modalEl.classList.contains('active');
   }
 
+  navigateProject(direction) {
+    if (!this.currentProject) return;
+    const idx = PROJECTS.findIndex(p => p.id === this.currentProject.id);
+    if (idx === -1) return;
+    const nextIdx = (idx + direction + PROJECTS.length) % PROJECTS.length;
+    this.open(PROJECTS[nextIdx].id);
+  }
+
   open(projectId) {
     const project = typeof projectId === 'string'
       ? PROJECTS.find(p => p.id === projectId)
@@ -191,7 +231,7 @@ class ProjectModalManager {
     category.textContent = project.category;
     desc.textContent = project.fullDescription || project.description;
     timeIndicator.textContent = `0:00 / ${project.duration}`;
-    sourceIndicator.textContent = project.hasRealVideo ? 'Master ProRes/HEVC stream' : 'Concept Preview';
+    sourceIndicator.textContent = project.hasRealVideo ? 'Master ProRes / MP4 Stream' : 'Concept Preview';
 
     // Vertical format styling
     if (project.isVertical) {
@@ -246,11 +286,11 @@ class ProjectModalManager {
       return;
     }
 
-    // Fallback simulated player for concept 3D placeholders
+    // Fallback simulated player
     if (this.isPlaying) {
       this.stopPlayback();
       playActionBtn.textContent = '▶';
-      playBarBtn.textContent = '▶ Play Full Preview';
+      playBarBtn.textContent = '▶ Play Video';
     } else {
       this.isPlaying = true;
       playActionBtn.textContent = '❚❚';
@@ -282,7 +322,7 @@ class ProjectModalManager {
     const playActionBtn = this.modalEl.querySelector('.pv-play-action-btn');
     const playBarBtn = this.modalEl.querySelector('.pv-btn-play');
     if (playActionBtn) playActionBtn.textContent = '▶';
-    if (playBarBtn) playBarBtn.textContent = '▶ Play Full Preview';
+    if (playBarBtn) playBarBtn.textContent = '▶ Play Video';
 
     const videoEl = this.modalEl.querySelector('.pv-video-element');
     if (videoEl) {

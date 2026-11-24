@@ -211,9 +211,15 @@ export class NetflixTheme {
           <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Commercials').length} Projects</span>
         </div>
         <div class="nf-carousel-wrapper">
+          <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
           <div class="nf-carousel-track">
             ${PROJECTS.filter(p => p.category === 'Commercials').map(p => this.renderProjectCard(p)).join('')}
           </div>
+          <button class="nf-carousel-nav-btn nf-carousel-next" aria-label="Next items">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </section>
 
@@ -224,9 +230,15 @@ export class NetflixTheme {
           <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Events').length} Projects</span>
         </div>
         <div class="nf-carousel-wrapper">
+          <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
           <div class="nf-carousel-track">
             ${PROJECTS.filter(p => p.category === 'Events').map(p => this.renderProjectCard(p)).join('')}
           </div>
+          <button class="nf-carousel-nav-btn nf-carousel-next" aria-label="Next items">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </section>
 
@@ -268,9 +280,15 @@ export class NetflixTheme {
           <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === 'Personal Projects').length} Projects</span>
         </div>
         <div class="nf-carousel-wrapper">
+          <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
           <div class="nf-carousel-track">
             ${PROJECTS.filter(p => p.category === 'Personal Projects').map(p => this.renderProjectCard(p)).join('')}
           </div>
+          <button class="nf-carousel-nav-btn nf-carousel-next" aria-label="Next items">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </section>
 
@@ -327,8 +345,11 @@ export class NetflixTheme {
 
   renderProjectCard(p) {
     return `
-      <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}">
-        <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+      <div class="nf-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${p.videoUrl || ''}">
+        <div class="nf-card-media-wrap">
+          <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+          ${p.hasRealVideo ? '<div class="nf-card-video-slot"></div>' : ''}
+        </div>
         <div class="nf-card-title-overlay">${p.title}</div>
         <div class="nf-card-hover-drawer">
           <div class="nf-card-hover-icons">
@@ -424,8 +445,135 @@ export class NetflixTheme {
       });
     });
 
-    // 3. Project Click to Open Modal
+    // 3. Carousel Chevron Scroll Controls
+    this.container.querySelectorAll('.nf-carousel-wrapper').forEach(wrapper => {
+      const track = wrapper.querySelector('.nf-carousel-track');
+      const prevBtn = wrapper.querySelector('.nf-carousel-prev');
+      const nextBtn = wrapper.querySelector('.nf-carousel-next');
+      if (!track || !prevBtn || !nextBtn) return;
+
+      const updateArrows = () => {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        prevBtn.disabled = track.scrollLeft <= 6;
+        nextBtn.disabled = track.scrollLeft >= maxScroll - 6 || maxScroll <= 0;
+      };
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: -(track.clientWidth * 0.75), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: track.clientWidth * 0.75, behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows, { passive: true });
+      setTimeout(updateArrows, 150);
+    });
+
+    // 4. Desktop Hover Video Previews (Debounced, Muted, Single Active Instance)
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let hoverTimer = null;
+    let activeHoverCard = null;
+
+    const stopHoverPreview = () => {
+      if (hoverTimer) {
+        clearTimeout(hoverTimer);
+        hoverTimer = null;
+      }
+      if (activeHoverCard) {
+        const slot = activeHoverCard.querySelector('.nf-card-video-slot');
+        if (slot) slot.innerHTML = '';
+        activeHoverCard.classList.remove('has-preview');
+        activeHoverCard = null;
+      }
+    };
+
+    if (canHover) {
+      this.container.querySelectorAll('.nf-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          const videoUrl = card.dataset.videoUrl;
+          if (!videoUrl) return;
+
+          stopHoverPreview();
+          activeHoverCard = card;
+
+          hoverTimer = setTimeout(() => {
+            if (activeHoverCard !== card) return;
+            const slot = card.querySelector('.nf-card-video-slot');
+            if (!slot) return;
+
+            const video = document.createElement('video');
+            video.className = 'nf-hover-video';
+            video.src = videoUrl;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.setAttribute('playsinline', '');
+            video.preload = 'auto';
+
+            video.play().then(() => {
+              if (activeHoverCard === card) {
+                card.classList.add('has-preview');
+              } else {
+                video.pause();
+                video.remove();
+              }
+            }).catch(() => {
+              // Ignore abort or autoplay restrictions
+            });
+
+            slot.appendChild(video);
+          }, 280);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          if (activeHoverCard === card) {
+            stopHoverPreview();
+          }
+        });
+      });
+
+      window.addEventListener('scroll', stopHoverPreview, { passive: true });
+    }
+
+    // 5. Active Section Scroll-Spy via IntersectionObserver
+    const navLinks = this.container.querySelectorAll('.nf-nav-links a');
+    const sections = [
+      document.getElementById('nf-hero-anchor'),
+      document.getElementById('nf-about-anchor'),
+      document.getElementById('nf-category-commercials'),
+      document.getElementById('nf-category-events'),
+      document.getElementById('nf-category-3d-motion-graphics'),
+      document.getElementById('nf-category-personal-projects'),
+      document.getElementById('nf-contact-anchor')
+    ].filter(Boolean);
+
+    if ('IntersectionObserver' in window && sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const targetId = entry.target.id;
+            navLinks.forEach(link => {
+              link.classList.toggle('active', link.dataset.scrollTo === targetId);
+            });
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(sec => observer.observe(sec));
+    }
+
+    // 6. Project Click to Open Modal
     this.container.addEventListener('click', (e) => {
+      stopHoverPreview();
+
       const playBtn = e.target.closest('[data-play-project]');
       if (playBtn) {
         e.stopPropagation();
@@ -445,7 +593,7 @@ export class NetflixTheme {
       }
     });
 
-    // 4. Contact form submission
+    // 7. Contact form submission
     const form = document.getElementById('nf-inquiry-form');
     if (form) {
       form.addEventListener('submit', (e) => {
@@ -459,7 +607,7 @@ export class NetflixTheme {
       });
     }
 
-    // 5. Navbar scroll state
+    // 8. Navbar scroll state
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('nf-nav');
       if (nav) {
