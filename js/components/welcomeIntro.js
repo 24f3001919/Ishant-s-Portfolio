@@ -1,6 +1,7 @@
 /**
  * Netflix-Style Welcome Intro Animation Component
- * Original Concept Restored: Black Screen -> Dimensional Ribbon N -> ISHANT Wordmark -> Sharp Profile Reveal
+ * Seamless Transformation: Red Ribbon N -> ISHANT Wordmark Assembly -> Sharp Profile Reveal
+ * The initial red N remains the exact same persistent element throughout the animation.
  */
 
 export class WelcomeIntro {
@@ -35,43 +36,52 @@ export class WelcomeIntro {
         <!-- Ambient Red Atmosphere -->
         <div class="nf-intro-ambient-glow"></div>
 
-        <!-- Vertical Light Streaks -->
+        <!-- Vertical Light Streaks behind N -->
         <div class="nf-vertical-streaks">
           <div class="nf-light-column-left"></div>
           <div class="nf-light-column-right"></div>
         </div>
 
-        <!-- Phase 1: Dimensional Red Ribbon N Logo -->
-        <div class="nf-intro-n-wrap">
-          <svg class="nf-intro-n-svg" viewBox="0 0 120 180" width="120" height="180">
-            <defs>
-              <linearGradient id="nLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b1060f"/>
-                <stop offset="100%" stop-color="#e50914"/>
-              </linearGradient>
-              <linearGradient id="nDiag" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ff1e27"/>
-                <stop offset="50%" stop-color="#e50914"/>
-                <stop offset="100%" stop-color="#b1060f"/>
-              </linearGradient>
-              <linearGradient id="nRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#83060c"/>
-                <stop offset="100%" stop-color="#b1060f"/>
-              </linearGradient>
-              <filter id="nShadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="-4" dy="0" stdDeviation="6" flood-color="#000000" flood-opacity="0.85"/>
-              </filter>
-            </defs>
-            <rect class="n-stem-left" x="10" y="10" width="30" height="160" fill="url(#nLeft)"/>
-            <rect class="n-stem-right" x="80" y="10" width="30" height="160" fill="url(#nRight)"/>
-            <polygon class="n-diagonal" points="10,10 40,10 110,170 80,170" fill="url(#nDiag)" filter="url(#nShadow)"/>
-          </svg>
-        </div>
+        <!-- The Continuous Wordmark Assembly -->
+        <div class="nf-brand-assembly">
+          <div class="nf-word-letters-row">
+            <span class="nf-letter-char nf-letter-i">I</span>
+            <span class="nf-letter-char nf-letter-s">S</span>
+            <span class="nf-letter-char nf-letter-h">H</span>
+            <span class="nf-letter-char nf-letter-a">A</span>
 
-        <!-- Phase 2: Bold Red ISHANT Wordmark -->
-        <div class="nf-intro-wordmark-wrap">
-          <h1 class="nf-intro-wordmark">ISHANT</h1>
-          <div class="nf-intro-subtitle">Video Editor &amp; 3D Motion Graphics</div>
+            <!-- The Persistent Dimensional Red Ribbon N -->
+            <div class="nf-ribbon-n-box">
+              <svg class="nf-intro-n-svg" viewBox="0 0 100 140" width="100" height="140">
+                <defs>
+                  <linearGradient id="nLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#b1060f"/>
+                    <stop offset="100%" stop-color="#e50914"/>
+                  </linearGradient>
+                  <linearGradient id="nDiag" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff222b"/>
+                    <stop offset="50%" stop-color="#e50914"/>
+                    <stop offset="100%" stop-color="#b1060f"/>
+                  </linearGradient>
+                  <linearGradient id="nRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#83060c"/>
+                    <stop offset="100%" stop-color="#b1060f"/>
+                  </linearGradient>
+                  <filter id="nShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="-4" dy="0" stdDeviation="5" flood-color="#000000" flood-opacity="0.85"/>
+                  </filter>
+                </defs>
+                <rect class="n-stem-left" x="8" y="8" width="25" height="124" fill="url(#nLeft)"/>
+                <rect class="n-stem-right" x="67" y="8" width="25" height="124" fill="url(#nRight)"/>
+                <polygon class="n-diagonal" points="8,8 33,8 92,132 67,132" fill="url(#nDiag)" filter="url(#nShadow)"/>
+              </svg>
+            </div>
+
+            <span class="nf-letter-char nf-letter-t">T</span>
+          </div>
+
+          <!-- Subtitle -->
+          <div class="nf-brand-subtitle">VIDEO EDITOR &amp; 3D MOTION GRAPHICS</div>
         </div>
       </div>
     `;
@@ -87,10 +97,10 @@ export class WelcomeIntro {
       });
     }
 
-    // Schedule sequence completion (~2.75s, followed by 450ms clean opacity fade)
+    // Schedule sequence completion (~2.8s total display, then 450ms clean opacity fade)
     this.timeoutId = setTimeout(() => {
       this.finish(false);
-    }, 2750);
+    }, 2800);
   }
 
   finish(instant = false) {
