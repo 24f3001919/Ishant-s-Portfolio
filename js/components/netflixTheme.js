@@ -21,20 +21,27 @@ export class NetflixTheme {
     this.container.innerHTML = `
       <!-- Profile Selection Screen -->
       <div class="nf-profile-overlay ${this.hasSelectedProfile ? 'hidden' : ''}" id="nf-profile-screen">
-        <h1>Who's watching?</h1>
-        <p class="sub">Choose a profile tailored to your visit to Ishant's creative portfolio.</p>
-        <div class="nf-profiles-grid">
-          ${SITE_CONFIG.profiles.map(p => `
-            <div class="nf-profile-card" data-profile-id="${p.id}" tabindex="0" style="--profile-accent: ${p.color};">
-              <div class="nf-profile-avatar-wrap">
-                <img src="${p.avatar}" alt="${p.name}">
+        <div class="nf-profile-content">
+          <h1>Who's watching?</h1>
+          <p class="sub">Choose a profile tailored to your visit to Ishant's creative portfolio.</p>
+          <div class="nf-profiles-grid">
+            ${SITE_CONFIG.profiles.map(p => `
+              <div class="nf-profile-card ${p.id === this.currentProfile.id ? 'selected' : ''}" data-profile-id="${p.id}" tabindex="0" style="--profile-accent: ${p.color};">
+                <div class="nf-profile-avatar-wrap">
+                  <img src="${p.avatar}" alt="${p.name}">
+                  <div class="nf-profile-active-indicator" title="Selected Profile">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#ffffff">
+                      <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="nf-profile-name">${p.name}</div>
+                <div class="nf-profile-badge">${p.badge}</div>
               </div>
-              <div class="nf-profile-name">${p.name}</div>
-              <div class="nf-profile-badge">${p.badge}</div>
-            </div>
-          `).join('')}
+            `).join('')}
+          </div>
+          <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter Portfolio</button>
         </div>
-        <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter Portfolio</button>
       </div>
 
       <!-- Main Netflix Interface -->
@@ -245,6 +252,9 @@ export class NetflixTheme {
     const selectProfile = (profile) => {
       this.currentProfile = profile;
       this.hasSelectedProfile = true;
+      profileCards.forEach(c => {
+        c.classList.toggle('selected', c.dataset.profileId === profile.id);
+      });
       document.body.classList.remove('profile-active');
       if (profileOverlay) {
         profileOverlay.classList.add('hidden');

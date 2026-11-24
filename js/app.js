@@ -23,10 +23,6 @@ class App {
       // 2. Play Netflix-style welcome intro animation on page load
       this.welcomeIntro = new WelcomeIntro(() => {
         // Callback after intro fades into "Who's watching?"
-        const firstProfileCard = document.querySelector('.nf-profile-card');
-        if (firstProfileCard) {
-          firstProfileCard.focus({ preventScroll: true });
-        }
       });
       this.welcomeIntro.play();
     }

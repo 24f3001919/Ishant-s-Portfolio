@@ -45,8 +45,8 @@ export const SITE_CONFIG = {
       id: "recruiter",
       name: "Recruiter",
       badge: "Looking for Talent",
-      color: "#4a90e2",
-      avatar: "assets/images/profiles/ishant-profile.jpg",
+      color: "#2472e9",
+      avatar: "assets/images/profiles/avatar-recruiter.svg",
       welcomeMessage: "Looking to hire? Explore full showreels, client commercial edits, and production workflows."
     },
     {
@@ -54,23 +54,23 @@ export const SITE_CONFIG = {
       name: "Client",
       badge: "Commissioning Work",
       color: "#e50914",
-      avatar: "assets/images/profiles/ishant-profile.jpg",
+      avatar: "assets/images/profiles/avatar-client.svg",
       welcomeMessage: "Ready to elevate your brand? Discover high-converting commercials, product stings, and social campaigns."
     },
     {
       id: "collaborator",
       name: "Collaborator",
       badge: "Creative Partner",
-      color: "#46d369",
-      avatar: "assets/images/profiles/ishant-profile.jpg",
+      color: "#2bb857",
+      avatar: "assets/images/profiles/avatar-collaborator.svg",
       welcomeMessage: "Fellow creator or director? Check out the breakdown of 3D pipelines, VFX passes, and timeline pacing."
     },
     {
       id: "guest",
       name: "Guest",
       badge: "Casual Visitor",
-      color: "#808080",
-      avatar: "assets/images/profiles/ishant-profile.jpg",
+      color: "#6c757d",
+      avatar: "assets/images/profiles/avatar-guest.svg",
       welcomeMessage: "Welcome! Browse through the Netflix-style catalog of Ishant's creative projects."
     }
   ],
