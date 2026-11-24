@@ -1,6 +1,6 @@
 /**
  * Projects Data Source
- * Sourced directly from Ishant Singh's extracted Google Drive portfolio.
+ * Sourced directly from Ishant Singh's verified video portfolio.
  * Categorized into: Commercials, Events, 3D Motion Graphics, Personal Projects.
  */
 
@@ -158,7 +158,119 @@ export const PROJECTS = [
   },
 
   // ==========================================
-  // 3. Personal Projects
+  // 3. 3D Motion Graphics (Updated from Google Drive)
+  // ==========================================
+  {
+    id: "orbital-spacewalk-vfx",
+    title: "Orbital Spacewalk – Zero Gravity VFX",
+    category: "3D Motion Graphics",
+    role: "3D VFX & Lighting Artist",
+    software: ["Blender", "After Effects"],
+    duration: "0:20",
+    year: "2026",
+    match: "99% Match",
+    tags: ["3D Animation", "Zero Gravity", "Astronaut", "Earth VFX", "Sci-Fi"],
+    description: "Cinematic sci-fi 3D animation featuring an astronaut conducting an extravehicular spacewalk outside an orbiting spacecraft viewport with detailed Earth rendering.",
+    fullDescription: "Comprehensive 3D sci-fi visual effects project featuring realistic astronaut suit materials, zero-gravity floating dynamics, space station viewport reflection mapping, and high-resolution Earth textures.",
+    thumbnail: "assets/images/thumbnails/3d-learning-2.jpg",
+    videoUrl: "assets/videos/3d-learning-2.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+  {
+    id: "cosmic-trinity-trimurti",
+    title: "Cosmic Trinity (Trimurti) – Mythological 3D VFX",
+    category: "3D Motion Graphics",
+    role: "3D Motion & Compositing Artist",
+    software: ["After Effects", "Blender"],
+    duration: "0:20",
+    year: "2026",
+    match: "98% Match",
+    tags: ["3D Motion", "Cosmic VFX", "Trimurti", "Particle Systems", "Nebula FX"],
+    description: "Epic mythological 3D motion design showcasing Brahma, Vishnu Vishwaroop, and Shiva amidst cosmic nebulae, particle energy beams, and celestial lighting.",
+    fullDescription: "Complex mythological visual effects composition combining 2.5D/3D depth mapping, volumetric space nebulae, glowing celestial particle bursts, and dynamic atmospheric grading.",
+    thumbnail: "assets/images/thumbnails/3d-trinity.jpg",
+    videoUrl: "assets/videos/3d-trinity.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+  {
+    id: "commercial-jet-flight",
+    title: "Commercial Jet Flight – 3D Simulation",
+    category: "3D Motion Graphics",
+    role: "3D Animation & Motion Artist",
+    software: ["Blender", "After Effects"],
+    duration: "0:20",
+    year: "2026",
+    match: "97% Match",
+    tags: ["3D Simulation", "Aviation", "Cloud Dynamics", "Lighting", "Aircraft"],
+    description: "3D animation of a commercial passenger jet soaring and descending through volumetric cloud layers with realistic lighting and landing gear deployment.",
+    fullDescription: "Photorealistic aviation 3D render showcasing aircraft wing physics, atmospheric cloud penetration, soft shadow falloff, and realistic landing gear mechanical animation.",
+    thumbnail: "assets/images/thumbnails/3d-learning-1.jpg",
+    videoUrl: "assets/videos/3d-learning-1.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+  {
+    id: "divine-flute-krishna",
+    title: "Divine Flute – Lord Krishna 3D Motion",
+    category: "3D Motion Graphics",
+    role: "3D Motion Graphics Artist",
+    software: ["Blender", "After Effects"],
+    duration: "0:08",
+    year: "2026",
+    match: "99% Match",
+    tags: ["3D Motion", "Devotional Art", "Lord Krishna", "Volumetric Fog", "Lotus Flower"],
+    description: "Devotional 3D motion art depicting Lord Krishna playing the flute surrounded by blooming lotus flowers, volumetric fog dynamics, and a radiant circular halo.",
+    fullDescription: "Intricate devotional motion piece featuring layered 3D depth, animated sacred geometric halo, floating ground mist, and soft golden backlight illuminating ornamental jewelry.",
+    thumbnail: "assets/images/thumbnails/3d-lord-krishna.jpg",
+    videoUrl: "assets/videos/3d-lord-krishna.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+  {
+    id: "gourmet-burger-commercial",
+    title: "Gourmet Burger 3D Commercial Animation",
+    category: "3D Motion Graphics",
+    role: "3D Motion Designer",
+    software: ["Blender", "After Effects"],
+    duration: "0:20",
+    year: "2026",
+    match: "96% Match",
+    tags: ["Product Animation", "Food Commercial", "Motion Graphics", "3D Modeling"],
+    description: "Dynamic 3D food commercial animation featuring a floating gourmet cheeseburger with slow-motion falling tomatoes, peppers, and garlic ingredients.",
+    fullDescription: "High-impact commercial motion piece designed for food advertising, showcasing organic ingredient scattering, realistic sesame seed and cheese textures, and commercial pacing.",
+    thumbnail: "assets/images/thumbnails/3d-practice-4.jpg",
+    videoUrl: "assets/videos/3d-practice-4.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+  {
+    id: "ramayana-forest-journey",
+    title: "Ramayana Forest Journey – Character Animation",
+    category: "3D Motion Graphics",
+    role: "Motion Graphics & 2D/3D Animator",
+    software: ["After Effects", "Adobe Illustrator"],
+    duration: "0:12",
+    year: "2026",
+    match: "96% Match",
+    tags: ["Character Animation", "Walk Cycle", "Parallax Scenery", "Stylized Motion"],
+    description: "Stylized character animation depicting the Ramayana exile journey of Rama, Sita, and Lakshmana through an illuminated forest with walking cycles and parallax scenery.",
+    fullDescription: "Artistic 2D/3D stylized character walk cycle animation featuring smooth rigging, multiplane parallax forest backgrounds, sunbeam lighting effects, and traditional mythological aesthetics.",
+    thumbnail: "assets/images/thumbnails/3d-ramayana-walk.jpg",
+    videoUrl: "assets/videos/3d-ramayana-walk.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
+
+  // ==========================================
+  // 4. Personal Projects
   // ==========================================
   {
     id: "mountain-escape",
@@ -198,7 +310,7 @@ export const PROJECTS = [
   },
 
   // ==========================================
-  // 4. Featured Long-Format Continue Watching
+  // 5. Featured Long-Format Continue Watching
   // ==========================================
   {
     id: "khatu-shyam-full-highlight",

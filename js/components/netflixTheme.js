@@ -316,30 +316,18 @@ export class NetflixTheme {
       <section class="nf-section-row" id="nf-category-3d-motion-graphics">
         <div class="nf-row-header">
           <h2 class="nf-row-title">3D Motion Graphics</h2>
-          <span class="nf-row-see-all">AAFT University of Media and Arts</span>
+          <span class="nf-row-see-all">${PROJECTS.filter(p => p.category === '3D Motion Graphics').length} Projects</span>
         </div>
         <div class="nf-carousel-wrapper">
+          <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
           <div class="nf-carousel-track">
-            <div class="nf-3d-showcase-card">
-              <div>
-                <span class="nf-3d-badge">Degree in Progress · 2023 – 2027</span>
-                <h3 class="nf-3d-title">B.Sc. in 3D Animation and VFX</h3>
-                <p class="nf-3d-desc">
-                  Currently pursuing academic training in 3D modeling, lighting, dynamics, and visual effects pipelines at AAFT University of Media and Arts, Raipur. Semester CGI showreels and procedural motion design projects are actively in production.
-                </p>
-                <div class="nf-3d-meta">
-                  <span>📍 AAFT University, Raipur</span>
-                  <span>•</span>
-                  <span>🎬 3D Motion Graphics &amp; VFX</span>
-                </div>
-              </div>
-              <div style="margin-top: 20px;">
-                <button class="nf-btn nf-btn-primary" data-scroll-to="nf-contact-anchor" style="font-size: 13px; padding: 9px 18px;">
-                  Inquire for 3D Projects &amp; Collaboration
-                </button>
-              </div>
-            </div>
+            ${PROJECTS.filter(p => p.category === '3D Motion Graphics').map(p => this.renderProjectCard(p)).join('')}
           </div>
+          <button class="nf-carousel-nav-btn nf-carousel-next" aria-label="Next items">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </section>
 
