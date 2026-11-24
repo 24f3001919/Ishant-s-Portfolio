@@ -10,7 +10,7 @@
  */
 
 import { SITE_CONFIG } from '../data/config.js';
-import { PROJECTS, CONTINUE_WATCHING_PROJECT } from '../data/projects.js';
+import { PROJECTS, CONTINUE_WATCHING_PROJECT, SHOWREEL_PROJECTS } from '../data/projects.js';
 import { projectModal } from './projectModal.js';
 
 export class NetflixTheme {
@@ -28,11 +28,6 @@ export class NetflixTheme {
       <!-- Profile Selection Screen ("Who's watching?") -->
       <div class="nf-profile-overlay ${this.hasSelectedProfile ? 'hidden' : ''}" id="nf-profile-screen">
         <div class="nf-profile-content">
-          <div class="nf-profile-header-bar">
-            <button class="nf-direct-entry-top-btn" id="nf-direct-entry-top" aria-label="Skip profile selection and enter portfolio">
-              Direct Entry / Skip to Work ➔
-            </button>
-          </div>
           <h1>Who's watching?</h1>
           <p class="sub">Choose a profile tailored to your visit to Ishant Singh's creative portfolio.</p>
           <div class="nf-profiles-grid">
@@ -53,7 +48,6 @@ export class NetflixTheme {
           </div>
           <div class="nf-profile-actions">
             <button class="nf-manage-profiles-btn" id="nf-skip-profiles">Enter as <span id="nf-btn-profile-name">${this.currentProfile.name}</span></button>
-            <button class="nf-direct-entry-btn" id="nf-direct-entry-main">Direct Entry (All Projects) ➔</button>
           </div>
         </div>
       </div>
@@ -65,6 +59,7 @@ export class NetflixTheme {
           <ul class="nf-nav-links">
             <li><a data-scroll-to="nf-hero-anchor" class="active">Home</a></li>
             <li><a data-scroll-to="nf-about-anchor">About</a></li>
+            <li><a data-scroll-to="nf-showreel-section">Showreel</a></li>
             <li><a data-scroll-to="nf-category-commercials">Commercials</a></li>
             <li><a data-scroll-to="nf-category-events">Events</a></li>
             <li><a data-scroll-to="nf-category-3d-motion-graphics">3D Motion Graphics</a></li>
@@ -104,7 +99,7 @@ export class NetflixTheme {
                   <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   Play Video
                 </button>
-                <button class="nf-btn nf-btn-showreel" data-trigger-showreel="true" aria-label="Watch Ishant's Master Showreel">
+                <button class="nf-btn nf-btn-showreel" data-scroll-to="nf-showreel-section" data-trigger-showreel="true" aria-label="Watch Ishant's Master Showreel">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
                   Watch Showreel
                 </button>
@@ -267,6 +262,49 @@ export class NetflixTheme {
               </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Dedicated Curated Showreel Section (Exactly 4 Signature Projects) -->
+      <section class="nf-section-row nf-showreel-section" id="nf-showreel-section">
+        <div class="nf-row-header nf-showreel-header">
+          <div class="nf-showreel-header-left">
+            <h2 class="nf-row-title">Showreel</h2>
+            <span class="nf-showreel-badge">Curated Highlights · 4 Signature Projects</span>
+          </div>
+          <span class="nf-row-see-all">01 - 04 Reel Order</span>
+        </div>
+        <div class="nf-carousel-wrapper">
+          <button class="nf-carousel-nav-btn nf-carousel-prev" aria-label="Previous items" disabled>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <div class="nf-carousel-track nf-showreel-track">
+            ${SHOWREEL_PROJECTS.map((p, idx) => `
+              <div class="nf-card nf-showreel-card ${p.isVertical ? 'is-vertical-card' : ''}" data-project-id="${p.id}" data-video-url="${p.videoUrl || ''}">
+                <div class="nf-showreel-rank-badge">0${idx + 1}</div>
+                <div class="nf-card-media-wrap">
+                  <img class="nf-card-thumb" src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+                  ${p.hasRealVideo ? '<div class="nf-card-video-slot"></div>' : ''}
+                </div>
+                <div class="nf-card-title-overlay">${p.title}</div>
+                <div class="nf-card-hover-drawer">
+                  <div class="nf-card-hover-icons">
+                    <div class="nf-hover-circle-btn play-btn" data-play-project="${p.id}" title="Play preview">▶</div>
+                    <div class="nf-hover-circle-btn" title="Add to Watchlist">+</div>
+                    <div class="nf-hover-circle-btn" title="Like">♥</div>
+                  </div>
+                  <div class="nf-card-hover-meta">
+                    <span class="match">${p.match}</span>
+                    <span class="duration">${p.duration}</span>
+                  </div>
+                  <div class="nf-card-hover-tags">${(p.tags || []).join(' · ')}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <button class="nf-carousel-nav-btn nf-carousel-next" aria-label="Next items">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </section>
 
@@ -480,6 +518,20 @@ export class NetflixTheme {
     };
 
     profileCards.forEach(card => {
+      const updateSelection = () => {
+        const pId = card.dataset.profileId;
+        const profile = SITE_CONFIG.profiles.find(p => p.id === pId);
+        if (profile) {
+          this.currentProfile = profile;
+          profileCards.forEach(c => c.classList.toggle('selected', c.dataset.profileId === profile.id));
+          const btnName = document.getElementById('nf-btn-profile-name');
+          if (btnName) btnName.textContent = profile.name;
+        }
+      };
+
+      card.addEventListener('mouseenter', updateSelection);
+      card.addEventListener('focus', updateSelection);
+
       card.addEventListener('click', () => {
         const pId = card.dataset.profileId;
         const profile = SITE_CONFIG.profiles.find(p => p.id === pId);
@@ -493,19 +545,6 @@ export class NetflixTheme {
     if (skipBtn) {
       skipBtn.addEventListener('click', () => {
         selectProfile(this.currentProfile || SITE_CONFIG.profiles[0]);
-      });
-    }
-
-    const directEntryTop = document.getElementById('nf-direct-entry-top');
-    const directEntryMain = document.getElementById('nf-direct-entry-main');
-    if (directEntryTop) {
-      directEntryTop.addEventListener('click', () => {
-        selectProfile(SITE_CONFIG.profiles[0]);
-      });
-    }
-    if (directEntryMain) {
-      directEntryMain.addEventListener('click', () => {
-        selectProfile(SITE_CONFIG.profiles[0]);
       });
     }
 
@@ -643,6 +682,7 @@ export class NetflixTheme {
     const sections = [
       document.getElementById('nf-hero-anchor'),
       document.getElementById('nf-about-anchor'),
+      document.getElementById('nf-showreel-section'),
       document.getElementById('nf-category-commercials'),
       document.getElementById('nf-category-events'),
       document.getElementById('nf-category-3d-motion-graphics'),
@@ -699,7 +739,15 @@ export class NetflixTheme {
     const showreelPlayFeaturedBtn = document.getElementById('nf-sr-play-featured');
 
     const openShowreelModal = () => {
-      if (SITE_CONFIG.assets.heroShowreel) {
+      const showreelSec = document.getElementById('nf-showreel-section');
+      if (showreelSec) {
+        const navHeight = document.getElementById('nf-nav')?.offsetHeight || 70;
+        const elementPosition = showreelSec.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementPosition - navHeight,
+          behavior: 'smooth'
+        });
+      } else if (SITE_CONFIG.assets.heroShowreel) {
         projectModal.open(SITE_CONFIG.assets.heroShowreel);
       } else if (showreelModal) {
         showreelModal.style.display = 'flex';

@@ -56,8 +56,8 @@ export const SITE_CONFIG = {
   assets: {
     profilePhoto: "assets/images/profiles/ishant-profile.jpg",
     heroBanner: "assets/images/hero/hero-banner.svg",
-    // Dedicated showreel master video placement (pending user upload; set to null until provided)
-    heroShowreel: null
+    // Dedicated showreel master video placement (Set to Showreel #1: Ramayan Walk)
+    heroShowreel: "ramayana-forest-journey"
   },
   // Formspree endpoint (optional: provide Formspree Form ID e.g. "https://formspree.io/f/YOUR_ID")
   formspreeEndpoint: "",

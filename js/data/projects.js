@@ -9,6 +9,24 @@ export const PROJECTS = [
   // 1. Commercials
   // ==========================================
   {
+    id: "eleven8-gym-apparel",
+    title: "Elvn8 – Gym & Fitness Apparel Commercial",
+    category: "Commercials",
+    role: "Video Editor & Colorist",
+    software: ["Adobe Premiere Pro", "DaVinci Resolve"],
+    duration: "0:30",
+    year: "2026",
+    match: "98% Match",
+    tags: ["Commercial", "Fitness Apparel", "Elvn8 Clothing", "Brand Campaign", "Color Grading"],
+    description: "4K commercial campaign edit showcasing Elvn8's athletic oversized tee collection across heavy gym workout sets and cinematic mirror reflections.",
+    fullDescription: "Cinematic gym commercial produced for Elvn8's activewear line. Combines slow-motion athletic lifts, high-contrast rim lighting, and clean color grading emphasizing apparel drape and fabric texture.",
+    thumbnail: "assets/images/thumbnails/eleven8-2.jpg",
+    videoUrl: "assets/videos/eleven8-2.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: true,
+    isVertical: true
+  },
+  {
     id: "villa-omnia-resort",
     title: "Promotional Reel – Villa Omnia",
     category: "Commercials",
@@ -40,24 +58,6 @@ export const PROJECTS = [
     fullDescription: "Produced for Elvn8 Clothing Brand's digital marketing campaign. Features dynamic multi-panel pacing, model styling cutaways, and synchronized hip-hop beat edits tailored for social conversion.",
     thumbnail: "assets/images/thumbnails/eleven8-1.jpg",
     videoUrl: "assets/videos/eleven8-1.mp4",
-    hasRealVideo: true,
-    isHeroFeatured: true,
-    isVertical: true
-  },
-  {
-    id: "eleven8-gym-apparel",
-    title: "Elvn8 – Gym & Fitness Apparel Commercial",
-    category: "Commercials",
-    role: "Video Editor & Colorist",
-    software: ["Adobe Premiere Pro", "DaVinci Resolve"],
-    duration: "0:30",
-    year: "2026",
-    match: "98% Match",
-    tags: ["Commercial", "Fitness Apparel", "Elvn8 Clothing", "Brand Campaign", "Color Grading"],
-    description: "4K commercial campaign edit showcasing Elvn8's athletic oversized tee collection across heavy gym workout sets and cinematic mirror reflections.",
-    fullDescription: "Cinematic gym commercial produced for Elvn8's activewear line. Combines slow-motion athletic lifts, high-contrast rim lighting, and clean color grading emphasizing apparel drape and fabric texture.",
-    thumbnail: "assets/images/thumbnails/eleven8-2.jpg",
-    videoUrl: "assets/videos/eleven8-2.mp4",
     hasRealVideo: true,
     isHeroFeatured: true,
     isVertical: true
@@ -102,6 +102,24 @@ export const PROJECTS = [
   // ==========================================
   // 2. Events
   // ==========================================
+  {
+    id: "divine-echoes-bhajan",
+    title: "Cultural Bhajan Mahotsav",
+    category: "Events",
+    role: "Cultural Event Editor & Colorist",
+    software: ["Adobe Premiere Pro", "DaVinci Resolve"],
+    duration: "0:44",
+    year: "2026",
+    match: "98% Match",
+    tags: ["Cultural Event", "Petal Procession", "Devotional Gathering", "Crowd Energy"],
+    description: "High-energy devotional cultural gathering featuring flower petal processions, crowd atmosphere, and traditional music.",
+    fullDescription: "Cultural and devotional festival edit capturing thousands of flower petals cascading over attendees, vibrant traditional chanting, and authentic crowd atmosphere.",
+    thumbnail: "assets/images/thumbnails/bhajan-reel.jpg",
+    videoUrl: "assets/videos/bhajan-reel.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: true,
+    isVertical: true
+  },
   {
     id: "college-event",
     title: "Campus Summit Keynote Event",
@@ -175,24 +193,6 @@ export const PROJECTS = [
     isVertical: true
   },
   {
-    id: "divine-echoes-bhajan",
-    title: "Cultural Bhajan Mahotsav",
-    category: "Events",
-    role: "Cultural Event Editor & Colorist",
-    software: ["Adobe Premiere Pro", "DaVinci Resolve"],
-    duration: "0:44",
-    year: "2026",
-    match: "98% Match",
-    tags: ["Cultural Event", "Petal Procession", "Devotional Gathering", "Crowd Energy"],
-    description: "High-energy devotional cultural gathering featuring flower petal processions, crowd atmosphere, and traditional music.",
-    fullDescription: "Cultural and devotional festival edit capturing thousands of flower petals cascading over attendees, vibrant traditional chanting, and authentic crowd atmosphere.",
-    thumbnail: "assets/images/thumbnails/bhajan-reel.jpg",
-    videoUrl: "assets/videos/bhajan-reel.mp4",
-    hasRealVideo: true,
-    isHeroFeatured: false,
-    isVertical: true
-  },
-  {
     id: "spiritual-glow-khatu-shyam",
     title: "Temple Festival Celebration",
     category: "Events",
@@ -214,6 +214,24 @@ export const PROJECTS = [
   // ==========================================
   // 3. 3D Motion Graphics (Updated from Google Drive)
   // ==========================================
+  {
+    id: "ramayana-forest-journey",
+    title: "Ramayan Walk – Character Animation",
+    category: "3D Motion Graphics",
+    role: "Motion Graphics & 2D/3D Animator",
+    software: ["After Effects", "Adobe Illustrator"],
+    duration: "0:12",
+    year: "2026",
+    match: "96% Match",
+    tags: ["Character Animation", "Walk Cycle", "Parallax Scenery", "Stylized Motion"],
+    description: "Stylized character animation depicting the Ramayana exile journey of Rama, Sita, and Lakshmana through an illuminated forest with walking cycles and parallax scenery.",
+    fullDescription: "Artistic 2D/3D stylized character walk cycle animation featuring smooth rigging, multiplane parallax forest backgrounds, sunbeam lighting effects, and traditional mythological aesthetics.",
+    thumbnail: "assets/images/thumbnails/3d-ramayana-walk.jpg",
+    videoUrl: "assets/videos/3d-ramayana-walk.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: false
+  },
   {
     id: "orbital-spacewalk-vfx",
     title: "Orbital Spacewalk – Zero Gravity VFX",
@@ -304,28 +322,28 @@ export const PROJECTS = [
     isHeroFeatured: false,
     isVertical: false
   },
-  {
-    id: "ramayana-forest-journey",
-    title: "Ramayana Forest Journey – Character Animation",
-    category: "3D Motion Graphics",
-    role: "Motion Graphics & 2D/3D Animator",
-    software: ["After Effects", "Adobe Illustrator"],
-    duration: "0:12",
-    year: "2026",
-    match: "96% Match",
-    tags: ["Character Animation", "Walk Cycle", "Parallax Scenery", "Stylized Motion"],
-    description: "Stylized character animation depicting the Ramayana exile journey of Rama, Sita, and Lakshmana through an illuminated forest with walking cycles and parallax scenery.",
-    fullDescription: "Artistic 2D/3D stylized character walk cycle animation featuring smooth rigging, multiplane parallax forest backgrounds, sunbeam lighting effects, and traditional mythological aesthetics.",
-    thumbnail: "assets/images/thumbnails/3d-ramayana-walk.jpg",
-    videoUrl: "assets/videos/3d-ramayana-walk.mp4",
-    hasRealVideo: true,
-    isHeroFeatured: false,
-    isVertical: false
-  },
 
   // ==========================================
   // 4. Personal Projects
   // ==========================================
+  {
+    id: "friends-nights-lifestyle",
+    title: "Friends & Nights – Lifestyle Edit",
+    category: "Personal Projects",
+    role: "Video Editor & Visual Effects",
+    software: ["Adobe Premiere Pro", "After Effects"],
+    duration: "1:08",
+    year: "2026",
+    match: "95% Match",
+    tags: ["Personal Projects", "Lifestyle Cut", "Social Gathering", "Flash FX", "Music Sync"],
+    description: "Creative youth lifestyle edit featuring nightclub lights, creative flash photography transitions, and rhythmic music synchronization.",
+    fullDescription: "High-voltage lifestyle creative cut packed with nightclub strobe effects, laughter, group moments, and synchronized beat-drops.",
+    thumbnail: "assets/images/thumbnails/group-reel.jpg",
+    videoUrl: "assets/videos/group-reel.mp4",
+    hasRealVideo: true,
+    isHeroFeatured: false,
+    isVertical: true
+  },
   {
     id: "mountain-escape",
     title: "Mountain Escape Travel Reel",
@@ -362,24 +380,6 @@ export const PROJECTS = [
     isHeroFeatured: false,
     isVertical: true
   },
-  {
-    id: "friends-nights-lifestyle",
-    title: "Friends & Nights – Lifestyle Edit",
-    category: "Personal Projects",
-    role: "Video Editor & Visual Effects",
-    software: ["Adobe Premiere Pro", "After Effects"],
-    duration: "1:08",
-    year: "2026",
-    match: "95% Match",
-    tags: ["Personal Projects", "Lifestyle Cut", "Social Gathering", "Flash FX", "Music Sync"],
-    description: "Creative youth lifestyle edit featuring nightclub lights, creative flash photography transitions, and rhythmic music synchronization.",
-    fullDescription: "High-voltage lifestyle creative cut packed with nightclub strobe effects, laughter, group moments, and synchronized beat-drops.",
-    thumbnail: "assets/images/thumbnails/group-reel.jpg",
-    videoUrl: "assets/videos/group-reel.mp4",
-    hasRealVideo: true,
-    isHeroFeatured: false,
-    isVertical: true
-  },
 
   // ==========================================
   // 5. Featured Long-Format Continue Watching
@@ -406,3 +406,20 @@ export const PROJECTS = [
 ];
 
 export const CONTINUE_WATCHING_PROJECT = PROJECTS.find(p => p.id === "khatu-shyam-full-highlight");
+
+// ==========================================
+// 6. Curated Master Showreel (4 Signature Cuts)
+// 1. Ramayan Walk (3D Motion Graphics)
+// 2. Cultural Bhajan Mahotsav (Events)
+// 3. Elvn8 – Gym & Fitness Apparel Commercial (Commercials)
+// 4. Friends & Nights – Lifestyle Edit (Personal Projects)
+// ==========================================
+export const SHOWREEL_PROJECT_IDS = [
+  "ramayana-forest-journey",
+  "divine-echoes-bhajan",
+  "eleven8-gym-apparel",
+  "friends-nights-lifestyle"
+];
+
+export const SHOWREEL_PROJECTS = SHOWREEL_PROJECT_IDS.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean);
+

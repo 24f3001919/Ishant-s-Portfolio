@@ -1804,62 +1804,16 @@
   flex-wrap: wrap;
 }
 
-/* Profile Selection Direct-Entry Option */
-.nf-profile-header-bar {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 12px;
-}
-
-.nf-direct-entry-top-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #e50914;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nf-direct-entry-top-btn:hover {
-  background: rgba(229, 9, 20, 0.15);
-  border-color: #e50914;
-  color: #ffffff;
-  transform: translateX(2px);
-}
-
+/* Profile Selection Action Button */
 .nf-profile-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
   margin-top: clamp(28px, 4.5vh, 44px);
 }
 
-.nf-direct-entry-btn {
-  border: 1.5px solid var(--nf-red);
-  background: rgba(229, 9, 20, 0.15);
-  color: #ffffff;
-  padding: 10px 24px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.nf-direct-entry-btn:hover {
-  background: var(--nf-red);
-  box-shadow: 0 0 18px rgba(229, 9, 20, 0.5);
-  transform: translateY(-1px);
+.nf-profile-actions .nf-manage-profiles-btn {
+  margin-top: 0;
 }
 
 /* Contact Form Validation & State */
@@ -1892,3 +1846,55 @@
 .nf-form-feedback.is-error {
   color: #ff5252;
 }
+
+/* Curated Showreel Section */
+.nf-showreel-section {
+  position: relative;
+  border-top: 1px solid rgba(229, 9, 20, 0.25);
+  margin-top: 18px;
+  padding-top: 18px;
+}
+
+.nf-showreel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.nf-showreel-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ff3b44;
+  background: rgba(229, 9, 20, 0.14);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.nf-showreel-card {
+  position: relative;
+}
+
+.nf-showreel-rank-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(229, 9, 20, 0.7);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-family: var(--font-display);
+  pointer-events: none;
+}
+
