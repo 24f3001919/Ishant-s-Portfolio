@@ -623,7 +623,18 @@ export class NetflixTheme {
       }
       if (activeHoverCard) {
         const slot = activeHoverCard.querySelector('.nf-card-video-slot');
-        if (slot) slot.innerHTML = '';
+        if (slot) {
+          const video = slot.querySelector('video');
+          if (video) {
+            try {
+              video.pause();
+              video.removeAttribute('src');
+              video.load();
+              video.remove();
+            } catch (e) {}
+          }
+          slot.innerHTML = '';
+        }
         activeHoverCard.classList.remove('has-preview');
         activeHoverCard = null;
       }
@@ -650,13 +661,15 @@ export class NetflixTheme {
             video.loop = true;
             video.playsInline = true;
             video.setAttribute('playsinline', '');
-            video.preload = 'auto';
+            video.preload = 'metadata';
 
             video.play().then(() => {
               if (activeHoverCard === card) {
                 card.classList.add('has-preview');
               } else {
                 video.pause();
+                video.removeAttribute('src');
+                video.load();
                 video.remove();
               }
             }).catch(() => {

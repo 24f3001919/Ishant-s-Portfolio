@@ -586,3 +586,6 @@ class ProjectModalManager {
 }
 
 export const projectModal = new ProjectModalManager();
+if (typeof window !== 'undefined') {
+  window.projectModal = projectModal;
+}
